@@ -5,14 +5,23 @@ import {
   UploadCloud,
   CheckCircle2,
   Trash2,
-  RefreshCw,
   Plus,
   ShieldCheck,
   ArrowRight,
+  ArrowLeft,
   Save,
   Check,
   Sparkles,
+  FileText,
   AlertCircle,
+  User,
+  GraduationCap,
+  FlaskConical,
+  BookOpen,
+  Award,
+  Calendar,
+  Building2,
+  Briefcase,
 } from 'lucide-react';
 import {
   ApplicationFormData,
@@ -33,9 +42,8 @@ interface ApplicationFormPageProps {
   onNavigateRequirement: () => void;
 }
 
-// Initial realistic pre-filled data based on TNU academic standard
 const initialFormData: ApplicationFormData = {
-  // Section 1: Personal
+  // Step 1: Personal
   firstName: 'Debashis',
   middleName: 'Kumar',
   lastName: 'Chatterjee',
@@ -46,13 +54,13 @@ const initialFormData: ApplicationFormData = {
   mobile: '+91 98301 24578',
   alternatePhone: '+91 33 2456 7890',
   currentAddress: 'Flat 4B, Heritage Towers, Jadavpur, Kolkata',
-  permanentAddress: 'Same as current residential address',
+  permanentAddress: 'Flat 4B, Heritage Towers, Jadavpur, Kolkata',
   city: 'Kolkata',
   state: 'West Bengal',
   country: 'India',
   pinCode: '700032',
 
-  // Section 2: Education
+  // Step 2: Education & Experience
   highestQualification: 'Ph.D. / Doctorate',
   qualifications: [
     {
@@ -75,18 +83,26 @@ const initialFormData: ApplicationFormData = {
       gradeScore: '88.6% (First Class Hons.)',
       isVerified: true,
     },
+    {
+      id: '3',
+      level: 'Bachelor',
+      degree: 'Bachelor of Technology (B.Tech)',
+      specialization: 'Computer Science & Engineering',
+      institution: 'MAKAUT (WBUT)',
+      yearOfPassing: '2011',
+      gradeScore: '8.72 DGPA',
+      isVerified: true,
+    },
   ],
-
-  // Section 3: Professional
   currentOrganization: 'Bengal Institute of Technology & Science',
   currentDesignation: 'Associate Professor (CSE)',
-  totalExperience: '11 Years 6 Months',
-  teachingExperience: '8.5',
-  researchExperience: '5.0',
-  industryExperience: '3.0',
+  totalExperience: '11.5 Years',
+  teachingExperience: '8.5 Years',
+  researchExperience: '5.0 Years',
+  industryExperience: '3.0 Years',
   primarySpecialization: 'Neural Network Architectures, Reinforcement Learning, Autonomous Robotics',
 
-  // Section 4: Research
+  // Step 3: Research & Publications
   publicationsCount: '24',
   sciScopusCount: '14',
   patentsCount: '03',
@@ -100,35 +116,35 @@ const initialFormData: ApplicationFormData = {
       authors: 'Co-authored with Dr. S. Bannerjee, IIT Kgp',
       citations: '42 Citations',
     },
+    {
+      id: '2',
+      title: '"Autonomous Multi-Agent Routing in High-Density Computing Infrastructures"',
+      venue: 'ACM Transactions on Autonomous Systems (2025)',
+      doi: '10.1145/3618920.362140',
+      authors: 'Primary Investigator • Indexed in Scopus',
+      citations: '18 Citations',
+    },
   ],
-
-  // Section 5: Languages
   languages: [
     { id: '1', language: 'English', read: true, write: true, speak: true },
     { id: '2', language: 'Bengali', read: true, write: true, speak: true },
     { id: '3', language: 'Hindi', read: true, write: true, speak: true },
   ],
-
-  // Section 6: Extracurricular
   awards: 'Gold Medalist in M.Tech (2013); Best Faculty Researcher Award 2023.',
   memberships: 'Senior Member IEEE (#948123); Fellow, Institution of Engineers India (FIE).',
   extracurricular: 'Faculty Advisor for Robotics Club, Convener of Hackathon 2024',
   additionalNotes: 'Available for joining within 30 days of appointment if offered tenure.',
-
-  // Section 7: Employment
   employmentHistory: [
     {
       id: '1',
       designation: 'Associate Professor',
       organization: 'Bengal Institute of Tech',
       period: 'Jul 2020 – Present',
-      description: 'Led the Departmental AI Lab, mentored 18 M.Tech theses, and secured sponsored grants worth ₹45 Lakhs.',
+      description: 'Led Departmental AI Lab, mentored 18 M.Tech theses, and secured sponsored grants.',
       focus: 'Post-Graduate Instruction & Research',
       isCurrent: true,
     },
   ],
-
-  // Section 8: References
   references: [
     {
       id: '1',
@@ -139,23 +155,12 @@ const initialFormData: ApplicationFormData = {
       email: 'akray@cse.iitkgp.ac.in',
       phone: '+91 3222 282 340',
     },
-    {
-      id: '2',
-      name: 'Dr. Sunrita Sen',
-      designation: 'Head of Department (CSE)',
-      organization: 'Jadavpur University',
-      relationship: 'M.Tech Mentor & Research Collaborator',
-      email: 's.sen@cse.jdvu.ac.in',
-      phone: '+91 33 2414 6666',
-    },
   ],
 
-  // CV / Resume
+  // Step 4: CV Upload & Declaration
   cvFileName: 'Dr_Debashis_Chatterjee_CV_2026.pdf',
   cvFileSize: '3.4 MB',
   cvUploaded: true,
-
-  // Declaration
   declarationAccepted: true,
 };
 
@@ -168,10 +173,9 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
   onNavigateRequirement,
 }) => {
   const [formData, setFormData] = useState<ApplicationFormData>(initialFormData);
+  const [currentStep, setCurrentStep] = useState<1 | 2 | 3 | 4>(1);
   const [isDragging, setIsDragging] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [newLangName, setNewLangName] = useState('');
-  const [showAddLangInput, setShowAddLangInput] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const currentCadre = position?.cadre || 'Assistant Professor / Associate Professor / Tutor Professor';
@@ -179,43 +183,33 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
 
   const showNotification = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 2800);
+    setTimeout(() => setToastMessage(null), 3500);
   };
 
-  // Text inputs updater
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // File Upload Handlers
-  const handleFileDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  // CV File Upload Handlers
+  const handleFileDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      processSelectedFile(e.dataTransfer.files[0]);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      processCvFile(e.dataTransfer.files[0]);
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      processSelectedFile(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      processCvFile(e.target.files[0]);
     }
   };
 
-  const processSelectedFile = (file: File) => {
+  const processCvFile = (file: File) => {
     const validTypes = [
       'application/pdf',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     ];
-    if (
-      !validTypes.includes(file.type) &&
-      !file.name.endsWith('.pdf') &&
-      !file.name.endsWith('.doc') &&
-      !file.name.endsWith('.docx')
-    ) {
-      showNotification('Please upload a valid PDF, DOC, or DOCX file.');
+
+    if (!validTypes.includes(file.type) && !file.name.match(/\.(pdf|doc|docx)$/i)) {
+      showNotification('Please upload a valid PDF or DOC/DOCX document.');
       return;
     }
 
@@ -231,7 +225,7 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
       cvFileSize: `${sizeInMb} MB`,
       cvUploaded: true,
     }));
-    showNotification('✓ CV / Resume uploaded and verified successfully');
+    showNotification('✓ Updated CV attached and verified successfully');
   };
 
   const handleRemoveCv = () => {
@@ -247,22 +241,23 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
     showNotification('CV removed.');
   };
 
-  // Dynamic Add Qualification
+  // Add Qualification
   const handleAddQualification = () => {
     const newQual: Qualification = {
       id: Date.now().toString(),
-      level: 'Bachelor',
-      degree: 'Bachelor of Technology (B.Tech)',
-      specialization: 'Computer Science & Engineering',
-      institution: 'State University of Technology',
-      yearOfPassing: '2011',
-      gradeScore: '84.2%',
+      level: 'Other Certification',
+      degree: 'Post-Doctoral Research Fellow',
+      specialization: 'Computational Intelligence',
+      institution: 'Eminent Academic Institution',
+      yearOfPassing: '2020',
+      gradeScore: 'Distinction',
+      isVerified: true,
     };
     setFormData((prev) => ({
       ...prev,
       qualifications: [...prev.qualifications, newQual],
     }));
-    showNotification('New qualification record added.');
+    showNotification('Qualification record added.');
   };
 
   const handleRemoveQualification = (id: string) => {
@@ -272,15 +267,15 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
     }));
   };
 
-  // Dynamic Add Publication
+  // Add Publication
   const handleAddPublication = () => {
     const newPub: PublicationItem = {
       id: Date.now().toString(),
-      title: '"Autonomous Multi-Agent Routing in High-Density Computing Infrastructures"',
-      venue: 'ACM Transactions on Autonomous Systems (2025)',
-      doi: '10.1145/3618920.362140',
-      authors: 'Primary Investigator • Indexed in Scopus',
-      citations: '18 Citations',
+      title: '"Advances in Neural Optimization for Computational Architectures"',
+      venue: 'Springer Lecture Notes in Computer Science (2025)',
+      doi: '10.1007/978-3-030-99999-9',
+      authors: 'Primary Investigator • Scopus Indexed',
+      citations: '12 Citations',
     };
     setFormData((prev) => ({
       ...prev,
@@ -289,121 +284,79 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
     showNotification('Publication record appended.');
   };
 
-  // Dynamic Add Language
-  const handleAddLanguageSubmit = () => {
-    if (!newLangName.trim()) return;
-    const newLang: LanguageRow = {
-      id: Date.now().toString(),
-      language: newLangName.trim(),
-      read: true,
-      write: true,
-      speak: true,
-    };
-    setFormData((prev) => ({
-      ...prev,
-      languages: [...prev.languages, newLang],
-    }));
-    setNewLangName('');
-    setShowAddLangInput(false);
-  };
-
-  const handleToggleLanguageCheck = (id: string, field: 'read' | 'write' | 'speak') => {
-    setFormData((prev) => ({
-      ...prev,
-      languages: prev.languages.map((l) => (l.id === id ? { ...l, [field]: !l[field] } : l)),
-    }));
-  };
-
-  // Dynamic Add Employment
-  const handleAddEmployment = () => {
-    const newEmp: EmploymentRecord = {
-      id: Date.now().toString(),
-      designation: 'Assistant Professor (Senior Scale)',
-      organization: 'National Technical Institute',
-      period: 'Jan 2018 – Jun 2020',
-      description: 'Delivered undergraduate courses in Data Structures, Algorithms, and Machine Learning.',
-      focus: 'Undergraduate Instruction',
-      isCurrent: false,
-    };
-    setFormData((prev) => ({
-      ...prev,
-      employmentHistory: [...prev.employmentHistory, newEmp],
-    }));
-    showNotification('Employment history record added.');
-  };
-
-  // Dynamic Add Reference
-  const handleAddReference = () => {
-    const newRef: ReferenceContact = {
-      id: Date.now().toString(),
-      name: 'Prof. (Dr.) B. Sengupta',
-      designation: 'Director of Academic Research',
-      organization: 'Indian Institute of Engineering Science',
-      relationship: 'Senior Colleague & Reviewer',
-      email: 'b.sengupta@iiest.ac.in',
-      phone: '+91 33 2668 4561',
-    };
-    setFormData((prev) => ({
-      ...prev,
-      references: [...prev.references, newRef],
-    }));
-    showNotification('Academic reference added.');
-  };
-
   // Save Draft
   const handleSaveDraft = () => {
     try {
       localStorage.setItem('tnu_faculty_application_draft', JSON.stringify(formData));
-      showNotification('✓ Application draft saved securely in browser cache.');
+      showNotification('✓ Application draft saved securely in browser.');
     } catch {
       showNotification('Draft saved.');
     }
   };
 
-  // Validation Checks
-  const isFormValid = Boolean(
-    formData.firstName.trim() &&
-      formData.lastName.trim() &&
-      formData.dateOfBirth &&
-      formData.gender &&
-      formData.nationality &&
-      formData.email.trim() &&
-      formData.mobile.trim() &&
-      formData.currentAddress.trim() &&
-      formData.cvUploaded &&
-      formData.declarationAccepted
-  );
+  // Step Navigations
+  const handleNextStep = () => {
+    if (currentStep === 1) {
+      if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.mobile.trim()) {
+        showNotification('Please provide mandatory name, email, and mobile contact fields.');
+        return;
+      }
+      setCurrentStep(2);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (currentStep === 2) {
+      if (formData.qualifications.length === 0) {
+        showNotification('Please list at least one educational qualification.');
+        return;
+      }
+      setCurrentStep(3);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (currentStep === 3) {
+      setCurrentStep(4);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handlePrevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep((prev) => (prev - 1) as 1 | 2 | 3 | 4);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Final Submit
+  const handleFinalSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isFormValid) {
-      showNotification('Please fill all mandatory fields, upload CV, and accept declaration.');
+    if (!formData.cvUploaded) {
+      showNotification('Please attach your updated CV before submitting.');
+      return;
+    }
+    if (!formData.declarationAccepted) {
+      showNotification('Please confirm the mandatory applicant declaration.');
       return;
     }
 
     const randomId = Math.floor(1000 + Math.random() * 9000);
     const appId = `FAC-2026-${randomId}`;
-
     onSubmitSuccess(formData, appId);
   };
 
   return (
-    <div className="w-full min-h-[calc(100vh-64px)] pb-24 relative z-10">
+    <div className="w-full bg-[#F8F6F0] min-h-[calc(100vh-64px)] pb-20 select-none">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-20 right-4 z-50 glass-panel text-[#292727] px-4 py-2.5 shadow-xl flex items-center gap-2 text-xs font-semibold animate-in fade-in slide-in-from-top-4 duration-300">
-          <Sparkles className="w-4 h-4 text-[#D83232]" />
+        <div className="fixed top-20 right-4 z-50 bg-[#292727] text-white px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 text-xs font-semibold animate-in fade-in slide-in-from-top-4 duration-300">
+          <Sparkles className="w-4 h-4 text-[#D9CC86]" />
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* Breadcrumb Context Bar */}
-      <div className="w-full bg-white/60 backdrop-blur-md border-b border-[#D9CC86]/45 px-4 sm:px-6 py-2.5 shadow-2xs">
+      <div className="w-full bg-[#FAF8F5] border-b border-[#EBE6DF] px-4 sm:px-6 py-2.5">
         <div className="max-w-4xl mx-auto flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-xs text-[#765331]">
           <button
             type="button"
             onClick={onNavigateHome}
-            className="breadcrumb-item gap-1 font-medium cursor-pointer"
+            className="hover:text-[#D83232] transition-colors flex items-center gap-1 font-medium cursor-pointer"
           >
             <Home className="w-3.5 h-3.5" />
             <span>Home</span>
@@ -412,15 +365,7 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
           <button
             type="button"
             onClick={onNavigateSchools}
-            className="breadcrumb-item font-medium cursor-pointer"
-          >
-            Career
-          </button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#B69A62]/60" />
-          <button
-            type="button"
-            onClick={onNavigateSchools}
-            className="breadcrumb-item font-medium cursor-pointer"
+            className="hover:text-[#D83232] transition-colors font-medium cursor-pointer"
           >
             Schools
           </button>
@@ -428,7 +373,7 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
           <button
             type="button"
             onClick={onNavigateVacancies}
-            className="breadcrumb-item font-medium cursor-pointer"
+            className="hover:text-[#D83232] transition-colors font-medium cursor-pointer"
           >
             Vacancies
           </button>
@@ -436,1004 +381,883 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
           <button
             type="button"
             onClick={onNavigateRequirement}
-            className="breadcrumb-item font-medium cursor-pointer"
+            className="hover:text-[#D83232] transition-colors font-medium cursor-pointer"
           >
-            Post Requirements
+            Post Details
           </button>
           <ChevronRight className="w-3.5 h-3.5 text-[#B69A62]/60" />
-          <span className="text-[#D83232] font-bold">Application</span>
+          <span className="text-[#D83232] font-bold">4-Step Application Form</span>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-5 sm:pt-7 flex flex-col gap-5 sm:gap-6">
-        {/* Dossier Title Block */}
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex flex-col gap-1 min-w-0">
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#765331] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D83232] animate-status-dot" />
-              Recruitment Dossier • Cycle 2026–27
-            </span>
-            <h1 className="font-serif-tnu text-2xl sm:text-3xl font-bold text-[#292727]">
-              Faculty Application Form
-            </h1>
-            <p className="text-xs sm:text-sm text-[#5B403D]">
-              Apply for {currentCadre}
-            </p>
-          </div>
-        </div>
-
-        {/* Application Summary Box (Glass Panel) */}
-        <div className="glass-panel p-4 sm:p-5 shadow-[0_6px_24px_rgba(41,39,39,0.04)] relative overflow-hidden flex flex-col gap-3">
-          <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#D83232]" />
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#765331]">
-              Opening Overview
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D83232]/10 border border-[#D83232]/25 text-[#D83232] text-[10px] sm:text-xs font-bold uppercase shadow-2xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D83232] animate-status-dot" />
-              Open Call
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-            <div className="bg-white/75 border border-[#D9CC86]/40 rounded-xl p-3 flex flex-col shadow-2xs">
-              <span className="text-[10px] uppercase tracking-wider text-[#765331] font-bold">
-                Academic Unit
-              </span>
-              <span className="font-bold text-xs sm:text-sm text-[#292727] truncate">
-                School of Technology
-              </span>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-5 sm:pt-7 flex flex-col gap-6">
+        {/* Post Applied Summary Banner */}
+        <div className="bg-white rounded-xl p-4 sm:p-5 border border-[#D9CC86]/60 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-lg bg-[#D83232]/10 border border-[#D83232]/20 flex items-center justify-center text-[#D83232] shrink-0">
+              <Briefcase className="w-5 h-5" />
             </div>
-
-            <div className="bg-white/75 border border-[#D9CC86]/40 rounded-xl p-3 flex flex-col shadow-2xs">
-              <span className="text-[10px] uppercase tracking-wider text-[#765331] font-bold">
-                Specialization Area
+            <div>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#765331]">
+                Candidature For
               </span>
-              <span className="font-bold text-xs sm:text-sm text-[#292727] truncate">
-                {currentArea}
-              </span>
-            </div>
-
-            <div className="bg-white/75 border border-[#D9CC86]/40 rounded-xl p-3 flex flex-col shadow-2xs">
-              <span className="text-[10px] uppercase tracking-wider text-[#765331] font-bold">
-                Target Cadre
-              </span>
-              <span className="font-bold text-xs sm:text-sm text-[#D83232] truncate">
+              <h2 className="font-bold text-sm sm:text-base text-[#292727] leading-tight">
                 {currentCadre}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* CV / RESUME UPLOAD SECTION (Glassmorphism Highlight) */}
-        <div className="glass-panel p-5 sm:p-6 shadow-[0_8px_30px_rgba(41,39,39,0.05)] flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-[#D83232]/10 text-[#D83232] flex items-center justify-center">
-                <UploadCloud className="w-4 h-4" />
-              </div>
-              <h2 className="font-serif-tnu text-base sm:text-lg font-bold text-[#292727]">
-                Upload Your Curriculum Vitae / Resume
               </h2>
+              <span className="text-xs text-[#D83232] font-semibold">{currentArea}</span>
             </div>
-            <span className="text-[#D83232] text-[10px] sm:text-xs font-bold uppercase tracking-wider">
-              Mandatory File *
-            </span>
           </div>
 
-          {/* Hidden File Input */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            accept=".pdf,.doc,.docx"
-            className="hidden"
-          />
-
-          {/* Large Rounded Glass Drag & Drop Container */}
-          <div
-            onDragOver={(e) => {
-              e.preventDefault();
-              setIsDragging(true);
-            }}
-            onDragLeave={() => setIsDragging(false)}
-            onDrop={handleFileDrop}
-            className={`rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center text-center gap-2.5 transition-all duration-300 border-1.5 border-dashed backdrop-blur-md cursor-pointer group ${
-              isDragging
-                ? 'border-[#D83232] bg-white/80 shadow-[0_0_24px_rgba(216,50,50,0.15)]'
-                : 'border-[#D9CC86]/70 bg-white/45 hover:border-[#D83232] hover:bg-white/65 hover:shadow-[0_4px_20px_rgba(216,50,50,0.06)]'
-            }`}
-          >
-            <div className="w-14 h-14 rounded-2xl bg-white text-[#D83232] flex items-center justify-center shadow-xs border border-[#D9CC86]/50 transition-transform duration-200 group-hover:scale-105">
-              <UploadCloud className="w-7 h-7" />
-            </div>
-
-            <div className="flex flex-col gap-0.5">
-              <span className="font-bold text-xs sm:text-sm text-[#292727]">
-                Drag & drop your CV file here
-              </span>
-              <span className="text-[11px] text-[#765331]">
-                or click below to browse from your device
-              </span>
-              <span className="text-[10px] text-[#765331]/80 mt-0.5">
-                Supported formats: PDF, DOC, DOCX • Maximum 10 MB
-              </span>
-            </div>
-
+          <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="btn-secondary-tnu mt-1 px-4 py-2 text-xs font-bold cursor-pointer"
+              onClick={handleSaveDraft}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D9CC86] bg-[#F8F6F0] text-[#765331] hover:text-[#292727] text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
             >
-              Browse Files
+              <Save className="w-3.5 h-3.5" />
+              <span>Save Draft</span>
             </button>
-
-            {/* Uploaded File Info Card (Clean Success Indication) */}
-            {formData.cvUploaded && (
-              <div className="w-full mt-3 bg-white/90 rounded-xl p-3.5 flex items-center justify-between border border-emerald-300 shadow-2xs gap-3 animate-in fade-in">
-                <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200 shadow-2xs">
-                    <CheckCircle2 className="w-5 h-5" />
-                  </div>
-                  <div className="flex flex-col text-left min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-xs sm:text-sm text-[#292727] truncate">
-                        {formData.cvFileName}
-                      </span>
-                      <span className="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full shrink-0">
-                        ✓ Uploaded Successfully
-                      </span>
-                    </div>
-                    <span className="text-[10px] text-[#765331]">
-                      {formData.cvFileSize} • Ready for departmental scrutiny
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="px-2.5 py-1 text-[#765331] hover:text-[#D83232] text-xs font-semibold rounded-lg hover:bg-[#FAF8F5] transition-colors cursor-pointer flex items-center gap-1"
-                  >
-                    <RefreshCw className="w-3 h-3" />
-                    <span>Replace</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleRemoveCv}
-                    className="px-2.5 py-1 text-[#D83232] hover:bg-[#D83232]/10 text-xs font-semibold rounded-lg transition-colors cursor-pointer flex items-center gap-1"
-                  >
-                    <Trash2 className="w-3 h-3" />
-                    <span>Remove</span>
-                  </button>
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
-        {/* 8 APPLICATION FORM GLASS SECTIONS */}
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 sm:gap-6">
-          {/* SECTION 1: Personal Information */}
-          <section className="glass-panel p-5 sm:p-6 shadow-[0_6px_24px_rgba(41,39,39,0.04)] flex flex-col gap-4">
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#D9CC86]/35">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-xl bg-[#D83232] text-white text-xs font-bold flex items-center justify-center shadow-2xs">
+        {/* ======================================================== */}
+        {/* 4-STEP PROGRESS TRACKER (Interactive & Clear)             */}
+        {/* ======================================================== */}
+        <div className="bg-white rounded-xl p-4 border border-[#D9CC86]/60 shadow-xs">
+          <div className="grid grid-cols-4 gap-2">
+            {[
+              { num: 1, title: 'Personal Info', icon: User },
+              { num: 2, title: 'Academics & Exp', icon: GraduationCap },
+              { num: 3, title: 'Research & Papers', icon: FlaskConical },
+              { num: 4, title: 'CV & Submit', icon: FileText },
+            ].map((step) => {
+              const isCurrent = currentStep === step.num;
+              const isDone = currentStep > step.num;
+              const StepIcon = step.icon;
+
+              return (
+                <button
+                  key={step.num}
+                  type="button"
+                  onClick={() => {
+                    // allow clicking to previous completed steps to edit
+                    if (step.num < currentStep) {
+                      setCurrentStep(step.num as 1 | 2 | 3 | 4);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                  }}
+                  disabled={step.num > currentStep}
+                  className={`flex flex-col items-center text-center p-2 rounded-lg transition-all ${
+                    isCurrent
+                      ? 'bg-[#D83232]/10 border border-[#D83232]/30'
+                      : isDone
+                      ? 'bg-[#FAF8F5] border border-[#D9CC86]/40 hover:bg-[#F2ECE4] cursor-pointer'
+                      : 'opacity-50 cursor-not-allowed'
+                  }`}
+                >
+                  <div
+                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm mb-1 ${
+                      isCurrent
+                        ? 'bg-[#D83232] text-white shadow-xs'
+                        : isDone
+                        ? 'bg-[#4A351F] text-white'
+                        : 'bg-[#EBE6DF] text-[#765331]'
+                    }`}
+                  >
+                    {isDone ? <Check className="w-4 h-4" /> : step.num}
+                  </div>
+                  <span
+                    className={`text-[10px] sm:text-xs font-bold leading-tight ${
+                      isCurrent ? 'text-[#D83232]' : isDone ? 'text-[#4A351F]' : 'text-[#765331]'
+                    }`}
+                  >
+                    {step.title}
+                  </span>
+                  <span className="text-[9px] text-[#765331]/80 hidden sm:inline">
+                    {isDone ? 'Edit' : isCurrent ? 'Active' : 'Step ' + step.num}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ======================================================== */}
+        {/* STEP 1: PERSONAL & CONTACT INFORMATION                   */}
+        {/* ======================================================== */}
+        {currentStep === 1 && (
+          <div
+            className="p-5 sm:p-7 rounded-[14px] border border-[#D9CC86]/70 bg-white/80 shadow-[0_8px_25px_rgba(41,39,39,0.04)] space-y-6"
+            style={{
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+            }}
+          >
+            <div className="border-b border-[#EBE6DF] pb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#D83232] text-white text-xs font-bold flex items-center justify-center">
                   1
                 </span>
-                <h3 className="font-serif-tnu text-base sm:text-lg font-bold text-[#292727]">
-                  Personal Information
+                <h3 className="font-serif-tnu font-bold text-base sm:text-lg text-[#292727]">
+                  Step 1: Personal & Contact Information
                 </h3>
               </div>
-              <span className="text-[11px] text-[#765331]">* Required fields</span>
+              <p className="text-xs text-[#765331] mt-1 ml-8">
+                Provide applicant identity, primary academic email, telephone, and residential communication address.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
                   First Name <span className="text-[#D83232]">*</span>
                 </label>
                 <input
                   type="text"
-                  name="firstName"
                   required
                   value={formData.firstName}
-                  onChange={handleInputChange}
-                  placeholder="First name"
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
+                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg focus:outline-none focus:border-[#D83232]"
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
                   Middle Name
                 </label>
                 <input
                   type="text"
-                  name="middleName"
                   value={formData.middleName}
-                  onChange={handleInputChange}
-                  placeholder="Middle name"
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
+                  onChange={(e) => setFormData({ ...formData, middleName: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg focus:outline-none focus:border-[#D83232]"
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
                   Last Name <span className="text-[#D83232]">*</span>
                 </label>
                 <input
                   type="text"
-                  name="lastName"
                   required
                   value={formData.lastName}
-                  onChange={handleInputChange}
-                  placeholder="Last name"
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
+                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg focus:outline-none focus:border-[#D83232]"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
                   Date of Birth <span className="text-[#D83232]">*</span>
                 </label>
                 <input
                   type="date"
-                  name="dateOfBirth"
                   required
                   value={formData.dateOfBirth}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
+                  onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg focus:outline-none focus:border-[#D83232]"
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
                   Gender <span className="text-[#D83232]">*</span>
                 </label>
                 <select
-                  name="gender"
-                  required
                   value={formData.gender}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
+                  onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg focus:outline-none focus:border-[#D83232] bg-white"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                  <option value="Prefer not to say">Prefer not to say</option>
+                  <option value="Other">Other / Prefer not to say</option>
                 </select>
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
                   Nationality <span className="text-[#D83232]">*</span>
                 </label>
                 <input
                   type="text"
-                  name="nationality"
                   required
                   value={formData.nationality}
-                  onChange={handleInputChange}
-                  placeholder="e.g. Indian"
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
+                  onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg focus:outline-none focus:border-[#D83232]"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Email Address <span className="text-[#D83232]">*</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                  Academic / Work Email <span className="text-[#D83232]">*</span>
                 </label>
                 <input
                   type="email"
-                  name="email"
                   required
                   value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="academic.email@domain.edu"
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg focus:outline-none focus:border-[#D83232]"
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Mobile Number <span className="text-[#D83232]">*</span>
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                  Mobile Number (with Country Code) <span className="text-[#D83232]">*</span>
                 </label>
                 <input
                   type="tel"
-                  name="mobile"
                   required
                   value={formData.mobile}
-                  onChange={handleInputChange}
-                  placeholder="+91 98300 00000"
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Alternate Phone
-                </label>
-                <input
-                  type="tel"
-                  name="alternatePhone"
-                  value={formData.alternatePhone}
-                  onChange={handleInputChange}
-                  placeholder="Landline / Office"
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
+                  onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg focus:outline-none focus:border-[#D83232]"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
                   Current Residential Address <span className="text-[#D83232]">*</span>
                 </label>
                 <textarea
-                  name="currentAddress"
+                  rows={2}
                   required
-                  rows={2}
                   value={formData.currentAddress}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2 resize-none"
+                  onChange={(e) => setFormData({ ...formData, currentAddress: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg focus:outline-none focus:border-[#D83232]"
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Permanent Address
-                </label>
-                <textarea
-                  name="permanentAddress"
-                  rows={2}
-                  value={formData.permanentAddress}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2 resize-none"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  City
-                </label>
-                <input
-                  type="text"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  State
-                </label>
-                <input
-                  type="text"
-                  name="state"
-                  value={formData.state}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Country
-                </label>
-                <input
-                  type="text"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  PIN Code
-                </label>
-                <input
-                  type="text"
-                  name="pinCode"
-                  value={formData.pinCode}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* SECTION 2: Educational Qualification */}
-          <section className="glass-panel p-5 sm:p-6 shadow-[0_6px_24px_rgba(41,39,39,0.04)] flex flex-col gap-4">
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#D9CC86]/35">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-xl bg-[#D83232] text-white text-xs font-bold flex items-center justify-center shadow-2xs">
-                  2
-                </span>
-                <h3 className="font-serif-tnu text-base sm:text-lg font-bold text-[#292727]">
-                  Educational Qualifications
-                </h3>
-              </div>
-              <span className="text-[11px] text-[#765331]">Chronological order</span>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              {formData.qualifications.map((q) => (
-                <div
-                  key={q.id}
-                  className="bg-white/80 border border-[#D9CC86]/45 rounded-xl p-3.5 flex flex-col gap-2 text-xs shadow-2xs animate-row-enter"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#D83232]/10 text-[#D83232] text-[10px] font-bold uppercase">
-                        {q.level}
-                      </span>
-                      <span className="font-bold text-sm text-[#292727]">{q.degree}</span>
-                    </div>
-                    {formData.qualifications.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveQualification(q.id)}
-                        className="text-[#765331] hover:text-[#D83232] p-1 cursor-pointer transition-colors"
-                        title="Remove record"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[#5B403D]">
-                    <div>
-                      <span className="font-semibold text-[#765331]">Field: </span>
-                      {q.specialization}
-                    </div>
-                    <div>
-                      <span className="font-semibold text-[#765331]">Institution: </span>
-                      {q.institution}
-                    </div>
-                    <div>
-                      <span className="font-semibold text-[#765331]">Score: </span>
-                      {q.gradeScore} ({q.yearOfPassing})
-                    </div>
-                  </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg"
+                  />
                 </div>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={handleAddQualification}
-              className="btn-secondary-tnu px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-2xs cursor-pointer group self-start"
-            >
-              <Plus className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-90 text-[#D83232]" />
-              <span>Add Qualification</span>
-            </button>
-          </section>
-
-          {/* SECTION 3: Professional Information */}
-          <section className="glass-panel p-5 sm:p-6 shadow-[0_6px_24px_rgba(41,39,39,0.04)] flex flex-col gap-4">
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#D9CC86]/35">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-xl bg-[#D83232] text-white text-xs font-bold flex items-center justify-center shadow-2xs">
-                  3
-                </span>
-                <h3 className="font-serif-tnu text-base sm:text-lg font-bold text-[#292727]">
-                  Professional Information & Experience
-                </h3>
-              </div>
-              <span className="text-[11px] text-[#765331]">Academic Cadre Assessment</span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Current Affiliated Organization
-                </label>
-                <input
-                  type="text"
-                  name="currentOrganization"
-                  value={formData.currentOrganization}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Current Designation / Role
-                </label>
-                <input
-                  type="text"
-                  name="currentDesignation"
-                  value={formData.currentDesignation}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
-                />
+                <div>
+                  <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.state}
+                    onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                    className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                    Country
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.country}
+                    onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                    className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                    Pin Code
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.pinCode}
+                    onChange={(e) => setFormData({ ...formData, pinCode: e.target.value })}
+                    className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Total Experience
-                </label>
-                <input
-                  type="text"
-                  name="totalExperience"
-                  value={formData.totalExperience}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Teaching (Yrs)
-                </label>
-                <input
-                  type="text"
-                  name="teachingExperience"
-                  value={formData.teachingExperience}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Research (Yrs)
-                </label>
-                <input
-                  type="text"
-                  name="researchExperience"
-                  value={formData.researchExperience}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Industry (Yrs)
-                </label>
-                <input
-                  type="text"
-                  name="industryExperience"
-                  value={formData.industryExperience}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                Primary Research Specialization & Competencies
-              </label>
-              <textarea
-                name="primarySpecialization"
-                rows={2}
-                value={formData.primarySpecialization}
-                onChange={handleInputChange}
-                className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5 resize-none"
-              />
-            </div>
-          </section>
-
-          {/* SECTION 4: Research & Publications */}
-          <section className="glass-panel p-5 sm:p-6 shadow-[0_6px_24px_rgba(41,39,39,0.04)] flex flex-col gap-4">
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#D9CC86]/35">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-xl bg-[#D83232] text-white text-xs font-bold flex items-center justify-center shadow-2xs">
-                  4
-                </span>
-                <h3 className="font-serif-tnu text-base sm:text-lg font-bold text-[#292727]">
-                  Research & Publications (SCI / Scopus)
-                </h3>
-              </div>
-              <span className="text-[11px] text-[#765331]">API Score Metric</span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Total Papers
-                </label>
-                <input
-                  type="text"
-                  name="publicationsCount"
-                  value={formData.publicationsCount}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5 font-bold"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  SCI / Scopus
-                </label>
-                <input
-                  type="text"
-                  name="sciScopusCount"
-                  value={formData.sciScopusCount}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5 font-bold text-[#D83232]"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Patents Filed / Granted
-                </label>
-                <input
-                  type="text"
-                  name="patentsCount"
-                  value={formData.patentsCount}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5 font-bold"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Funded Grants
-                </label>
-                <input
-                  type="text"
-                  name="projectsCount"
-                  value={formData.projectsCount}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs px-3.5 py-2.5 font-bold"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2.5">
-              <span className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                Select Representative Research Papers:
+            {/* Bottom Actions for Step 1 */}
+            <div className="pt-4 border-t border-[#EBE6DF] flex items-center justify-between">
+              <span className="text-xs text-[#765331]">
+                Step 1 of 4: Personal Information Completed
               </span>
-              {formData.publications.map((pub) => (
-                <div
-                  key={pub.id}
-                  className="bg-white/80 border border-[#D9CC86]/45 rounded-xl p-3 flex flex-col gap-1 text-xs shadow-2xs animate-row-enter"
-                >
-                  <span className="font-bold text-[#292727]">{pub.title}</span>
-                  <span className="text-[#D83232] font-semibold">{pub.venue}</span>
-                  <div className="flex items-center justify-between text-[11px] text-[#765331] pt-1 border-t border-[#D9CC86]/30">
-                    <span>{pub.authors}</span>
-                    <span>{pub.citations}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
 
-            <button
-              type="button"
-              onClick={handleAddPublication}
-              className="btn-secondary-tnu px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-2xs cursor-pointer group self-start"
-            >
-              <Plus className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-90 text-[#D83232]" />
-              <span>Add Publication</span>
-            </button>
-          </section>
-
-          {/* SECTION 5: Languages */}
-          <section className="glass-panel p-5 sm:p-6 shadow-[0_6px_24px_rgba(41,39,39,0.04)] flex flex-col gap-4">
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#D9CC86]/35">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-xl bg-[#D83232] text-white text-xs font-bold flex items-center justify-center shadow-2xs">
-                  5
-                </span>
-                <h3 className="font-serif-tnu text-base sm:text-lg font-bold text-[#292727]">
-                  Languages Proficiency
-                </h3>
-              </div>
-              <span className="text-[11px] text-[#765331]">Instructional Medium</span>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs text-left">
-                <thead>
-                  <tr className="border-b border-[#D9CC86]/40 text-[#765331] uppercase text-[10px] font-bold">
-                    <th className="py-2">Language</th>
-                    <th className="py-2 text-center">Read</th>
-                    <th className="py-2 text-center">Write</th>
-                    <th className="py-2 text-center">Speak</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#D9CC86]/25">
-                  {formData.languages.map((l) => (
-                    <tr key={l.id} className="hover:bg-white/40">
-                      <td className="py-2.5 font-bold text-[#292727]">{l.language}</td>
-                      <td className="py-2.5 text-center">
-                        <input
-                          type="checkbox"
-                          checked={l.read}
-                          onChange={() => handleToggleLanguageCheck(l.id, 'read')}
-                          className="accent-[#D83232] cursor-pointer hover:scale-105 transition-transform w-4 h-4 rounded"
-                        />
-                      </td>
-                      <td className="py-2.5 text-center">
-                        <input
-                          type="checkbox"
-                          checked={l.write}
-                          onChange={() => handleToggleLanguageCheck(l.id, 'write')}
-                          className="accent-[#D83232] cursor-pointer hover:scale-105 transition-transform w-4 h-4 rounded"
-                        />
-                      </td>
-                      <td className="py-2.5 text-center">
-                        <input
-                          type="checkbox"
-                          checked={l.speak}
-                          onChange={() => handleToggleLanguageCheck(l.id, 'speak')}
-                          className="accent-[#D83232] cursor-pointer hover:scale-105 transition-transform w-4 h-4 rounded"
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {showAddLangInput ? (
-              <div className="flex items-center gap-2 max-w-xs animate-in fade-in">
-                <input
-                  type="text"
-                  value={newLangName}
-                  onChange={(e) => setNewLangName(e.target.value)}
-                  placeholder="Language name..."
-                  className="glass-input flex-1 text-xs px-3 py-1.5"
-                />
-                <button
-                  type="button"
-                  onClick={handleAddLanguageSubmit}
-                  className="btn-primary-tnu px-3 py-1.5 text-xs font-bold cursor-pointer"
-                >
-                  Save
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowAddLangInput(false)}
-                  className="text-xs text-[#765331] hover:text-[#292727]"
-                >
-                  Cancel
-                </button>
-              </div>
-            ) : (
               <button
                 type="button"
-                onClick={() => setShowAddLangInput(true)}
-                className="btn-secondary-tnu px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-2xs cursor-pointer group self-start"
+                onClick={handleNextStep}
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#D83232] hover:bg-[#C62828] active:scale-[0.98] text-white text-xs sm:text-sm font-bold rounded-lg shadow-sm transition-all cursor-pointer"
               >
-                <Plus className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-90 text-[#D83232]" />
-                <span>Add Language</span>
+                <span>Continue to Step 2: Academics</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
-            )}
-          </section>
+            </div>
+          </div>
+        )}
 
-          {/* SECTION 6: Extracurricular & Awards */}
-          <section className="glass-panel p-5 sm:p-6 shadow-[0_6px_24px_rgba(41,39,39,0.04)] flex flex-col gap-4">
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#D9CC86]/35">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-xl bg-[#D83232] text-white text-xs font-bold flex items-center justify-center shadow-2xs">
-                  6
+        {/* ======================================================== */}
+        {/* STEP 2: ACADEMIC QUALIFICATIONS & EXPERIENCE             */}
+        {/* ======================================================== */}
+        {currentStep === 2 && (
+          <div
+            className="p-5 sm:p-7 rounded-[14px] border border-[#D9CC86]/70 bg-white/80 shadow-[0_8px_25px_rgba(41,39,39,0.04)] space-y-6"
+            style={{
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+            }}
+          >
+            <div className="border-b border-[#EBE6DF] pb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#D83232] text-white text-xs font-bold flex items-center justify-center">
+                  2
                 </span>
-                <h3 className="font-serif-tnu text-base sm:text-lg font-bold text-[#292727]">
-                  Awards, Professional Bodies & Contributions
+                <h3 className="font-serif-tnu font-bold text-base sm:text-lg text-[#292727]">
+                  Step 2: Academic Qualifications & Teaching Experience
                 </h3>
               </div>
-              <span className="text-[11px] text-[#765331]">Academic Recognition</span>
+              <p className="text-xs text-[#765331] mt-1 ml-8">
+                Record your university degrees, research doctorates, total collegiate teaching years, and current designation.
+              </p>
             </div>
 
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Honours & Academic Awards
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                  Highest Qualification Attained
                 </label>
-                <input
-                  type="text"
-                  name="awards"
-                  value={formData.awards}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Professional Memberships (IEEE, ACM, CSI, IETE)
-                </label>
-                <input
-                  type="text"
-                  name="memberships"
-                  value={formData.memberships}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
-                />
-              </div>
-
-              <div className="flex flex-col gap-1">
-                <label className="text-[11px] font-bold text-[#765331] uppercase tracking-wider">
-                  Extracurricular & Academic Leadership
-                </label>
-                <input
-                  type="text"
-                  name="extracurricular"
-                  value={formData.extracurricular}
-                  onChange={handleInputChange}
-                  className="glass-input w-full text-xs sm:text-sm px-3.5 py-2.5"
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* SECTION 7: Employment History */}
-          <section className="glass-panel p-5 sm:p-6 shadow-[0_6px_24px_rgba(41,39,39,0.04)] flex flex-col gap-4">
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#D9CC86]/35">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-xl bg-[#D83232] text-white text-xs font-bold flex items-center justify-center shadow-2xs">
-                  7
-                </span>
-                <h3 className="font-serif-tnu text-base sm:text-lg font-bold text-[#292727]">
-                  Employment & Academic Positions Held
-                </h3>
-              </div>
-              <span className="text-[11px] text-[#765331]">Tenure History</span>
-            </div>
-
-            <div className="flex flex-col gap-3">
-              {formData.employmentHistory.map((emp) => (
-                <div
-                  key={emp.id}
-                  className="bg-white/80 border border-[#D9CC86]/45 rounded-xl p-3.5 flex flex-col gap-1.5 text-xs shadow-2xs animate-row-enter"
+                <select
+                  value={formData.highestQualification}
+                  onChange={(e) => setFormData({ ...formData, highestQualification: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg bg-white"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-sm text-[#292727]">{emp.designation}</span>
-                    <span className="text-[#D83232] font-semibold">{emp.period}</span>
-                  </div>
-                  <div className="text-[#765331] font-medium">
-                    <span>{emp.organization}</span>
-                  </div>
-                  <p className="text-xs text-[#5B403D] leading-relaxed">{emp.description}</p>
-                  <div className="flex items-center justify-between text-[11px] text-[#765331] pt-1 border-t border-[#D9CC86]/30">
-                    <span>Primary Focus: {emp.focus}</span>
-                    {emp.isCurrent && (
-                      <span className="text-[#D83232] font-bold">Current Employer</span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={handleAddEmployment}
-              className="btn-secondary-tnu px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-2xs cursor-pointer group self-start"
-            >
-              <Plus className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-90 text-[#D83232]" />
-              <span>Add Employment</span>
-            </button>
-          </section>
-
-          {/* SECTION 8: References */}
-          <section className="glass-panel p-5 sm:p-6 shadow-[0_6px_24px_rgba(41,39,39,0.04)] flex flex-col gap-4">
-            <div className="flex items-center justify-between pb-1.5 border-b border-[#D9CC86]/35">
-              <div className="flex items-center gap-2.5">
-                <span className="w-7 h-7 rounded-xl bg-[#D83232] text-white text-xs font-bold flex items-center justify-center shadow-2xs">
-                  8
-                </span>
-                <h3 className="font-serif-tnu text-base sm:text-lg font-bold text-[#292727]">
-                  References
-                </h3>
+                  <option value="Ph.D. / Doctorate">Ph.D. / Doctorate</option>
+                  <option value="Post-Doctoral Fellow">Post-Doctoral Fellow</option>
+                  <option value="Master's (M.Tech / M.Sc / M.Pharm / MBA)">Master's (M.Tech / M.Sc / M.Pharm / MBA)</option>
+                  <option value="Bachelor's (B.Tech / B.Sc / MBBS)">Bachelor's (B.Tech / B.Sc / MBBS)</option>
+                </select>
               </div>
-              <span className="text-[11px] text-[#765331]">Peer Endorsements</span>
+
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                  Primary Specialization / Research Area
+                </label>
+                <input
+                  type="text"
+                  value={formData.primarySpecialization}
+                  onChange={(e) => setFormData({ ...formData, primarySpecialization: e.target.value })}
+                  className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg"
+                />
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {formData.references.map((ref) => (
-                <div
-                  key={ref.id}
-                  className="bg-white/80 border border-[#D9CC86]/45 rounded-xl p-3.5 flex flex-col gap-1 text-xs shadow-2xs animate-row-enter"
+            {/* Qualifications List */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-[#4A351F] uppercase tracking-wider">
+                  University Degrees & Credentials
+                </span>
+                <button
+                  type="button"
+                  onClick={handleAddQualification}
+                  className="inline-flex items-center gap-1 text-xs text-[#D83232] font-bold hover:underline cursor-pointer"
                 >
-                  <span className="font-bold text-sm text-[#292727]">{ref.name}</span>
-                  <span className="text-[#D83232] font-semibold">
-                    {ref.designation} • {ref.organization}
-                  </span>
-                  <span className="text-[#765331] mt-0.5">Relationship: {ref.relationship}</span>
-                  <div className="pt-2 flex flex-col gap-0.5 text-[#292727] border-t border-[#D9CC86]/30">
-                    <span>Email: {ref.email}</span>
-                    <span>Phone: {ref.phone}</span>
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Another Degree</span>
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                {formData.qualifications.map((q) => (
+                  <div
+                    key={q.id}
+                    className="p-3.5 rounded-lg border border-[#D9CC86]/60 bg-[#FAF8F5] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                  >
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#B69A62]/20 text-[#765331] uppercase">
+                          {q.level}
+                        </span>
+                        <h4 className="font-bold text-xs sm:text-sm text-[#292727]">{q.degree}</h4>
+                      </div>
+                      <p className="text-xs text-[#5B403D] mt-0.5">
+                        {q.specialization} • {q.institution} ({q.yearOfPassing})
+                      </p>
+                      <div className="text-[11px] font-semibold text-[#D83232] mt-0.5">
+                        Score / Grade: {q.gradeScore}
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveQualification(q.id)}
+                      className="text-[#765331] hover:text-[#D83232] p-1 self-end sm:self-center cursor-pointer"
+                      title="Remove Degree"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
-            <button
-              type="button"
-              onClick={handleAddReference}
-              className="btn-secondary-tnu px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-2xs cursor-pointer group self-start"
-            >
-              <Plus className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-90 text-[#D83232]" />
-              <span>Add Reference</span>
-            </button>
-          </section>
+            {/* Experience Overview */}
+            <div className="pt-2 border-t border-[#EBE6DF] space-y-4">
+              <span className="text-xs font-bold text-[#4A351F] uppercase tracking-wider block">
+                Collegiate & Industrial Experience
+              </span>
 
-          {/* DECLARATION & SUBMISSION (Glass Panel) */}
-          <section className="glass-panel p-5 sm:p-6 shadow-[0_8px_30px_rgba(41,39,39,0.06)] border-2 border-[#D9CC86]/70 flex flex-col gap-4">
-            <div className="flex items-start gap-3 bg-white/75 border border-[#D9CC86]/50 p-3.5 rounded-xl shadow-2xs">
-              <input
-                type="checkbox"
-                id="declaration-check"
-                required
-                checked={formData.declarationAccepted}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, declarationAccepted: e.target.checked }))
-                }
-                className="mt-1 accent-[#D83232] cursor-pointer hover:scale-105 transition-transform w-5 h-5 rounded shrink-0"
-              />
-              <label
-                htmlFor="declaration-check"
-                className="text-xs sm:text-sm text-[#292727] leading-relaxed cursor-pointer select-none"
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="bg-[#FAF8F5] p-3 rounded-lg border border-[#EBE6DF]">
+                  <label className="block text-[10px] font-bold text-[#765331] uppercase">
+                    Total Experience
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.totalExperience}
+                    onChange={(e) => setFormData({ ...formData, totalExperience: e.target.value })}
+                    className="w-full text-xs font-semibold bg-transparent mt-1 border-b border-[#D9CC86] focus:outline-none"
+                  />
+                </div>
+
+                <div className="bg-[#FAF8F5] p-3 rounded-lg border border-[#EBE6DF]">
+                  <label className="block text-[10px] font-bold text-[#765331] uppercase">
+                    Teaching Exp.
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.teachingExperience}
+                    onChange={(e) => setFormData({ ...formData, teachingExperience: e.target.value })}
+                    className="w-full text-xs font-semibold bg-transparent mt-1 border-b border-[#D9CC86] focus:outline-none"
+                  />
+                </div>
+
+                <div className="bg-[#FAF8F5] p-3 rounded-lg border border-[#EBE6DF]">
+                  <label className="block text-[10px] font-bold text-[#765331] uppercase">
+                    Research Exp.
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.researchExperience}
+                    onChange={(e) => setFormData({ ...formData, researchExperience: e.target.value })}
+                    className="w-full text-xs font-semibold bg-transparent mt-1 border-b border-[#D9CC86] focus:outline-none"
+                  />
+                </div>
+
+                <div className="bg-[#FAF8F5] p-3 rounded-lg border border-[#EBE6DF]">
+                  <label className="block text-[10px] font-bold text-[#765331] uppercase">
+                    Industry Exp.
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.industryExperience}
+                    onChange={(e) => setFormData({ ...formData, industryExperience: e.target.value })}
+                    className="w-full text-xs font-semibold bg-transparent mt-1 border-b border-[#D9CC86] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                    Current Organization / University
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.currentOrganization}
+                    onChange={(e) => setFormData({ ...formData, currentOrganization: e.target.value })}
+                    className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                    Current Designation / Cadre
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.currentDesignation}
+                    onChange={(e) => setFormData({ ...formData, currentDesignation: e.target.value })}
+                    className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Actions for Step 2 with PREVIOUS / BACK TO EDIT */}
+            <div className="pt-4 border-t border-[#EBE6DF] flex items-center justify-between gap-4">
+              <button
+                type="button"
+                onClick={handlePrevStep}
+                className="inline-flex items-center gap-1.5 px-4 py-2 border border-[#D9CC86] bg-white hover:bg-[#FAF8F5] text-[#765331] font-bold text-xs rounded-lg transition-colors cursor-pointer"
               >
-                <strong className="font-semibold text-[#D83232]">Declaration:</strong> I hereby
-                declare that the information provided by me in this application is true and complete
-                to the best of my knowledge and belief. I understand that any false statement or
-                omission may disqualify my candidature or lead to termination of appointment as per
-                the statutory regulations of The Neotia University.
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Previous: Back to Edit Step 1</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNextStep}
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#D83232] hover:bg-[#C62828] active:scale-[0.98] text-white text-xs sm:text-sm font-bold rounded-lg shadow-sm transition-all cursor-pointer"
+              >
+                <span>Continue to Step 3: Research</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ======================================================== */}
+        {/* STEP 3: RESEARCH PROFILE, PUBLICATIONS & PATENTS         */}
+        {/* ======================================================== */}
+        {currentStep === 3 && (
+          <div
+            className="p-5 sm:p-7 rounded-[14px] border border-[#D9CC86]/70 bg-white/80 shadow-[0_8px_25px_rgba(41,39,39,0.04)] space-y-6"
+            style={{
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+            }}
+          >
+            <div className="border-b border-[#EBE6DF] pb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#D83232] text-white text-xs font-bold flex items-center justify-center">
+                  3
+                </span>
+                <h3 className="font-serif-tnu font-bold text-base sm:text-lg text-[#292727]">
+                  Step 3: Research Profile, Publications & Patents
+                </h3>
+              </div>
+              <p className="text-xs text-[#765331] mt-1 ml-8">
+                Record indexed research papers (SCI/Scopus), registered patents, funded grants, and academic honors.
+              </p>
+            </div>
+
+            {/* Research Metrics Quad */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="bg-[#FAF8F5] p-3 rounded-lg border border-[#D9CC86]/50 text-center">
+                <span className="text-[10px] font-bold text-[#765331] uppercase block">
+                  Total Publications
+                </span>
+                <input
+                  type="text"
+                  value={formData.publicationsCount}
+                  onChange={(e) => setFormData({ ...formData, publicationsCount: e.target.value })}
+                  className="font-serif-tnu text-xl sm:text-2xl font-bold text-[#D83232] text-center w-full bg-transparent border-b border-[#D9CC86] focus:outline-none mt-1"
+                />
+              </div>
+
+              <div className="bg-[#FAF8F5] p-3 rounded-lg border border-[#D9CC86]/50 text-center">
+                <span className="text-[10px] font-bold text-[#765331] uppercase block">
+                  SCI / Scopus Papers
+                </span>
+                <input
+                  type="text"
+                  value={formData.sciScopusCount}
+                  onChange={(e) => setFormData({ ...formData, sciScopusCount: e.target.value })}
+                  className="font-serif-tnu text-xl sm:text-2xl font-bold text-[#4A351F] text-center w-full bg-transparent border-b border-[#D9CC86] focus:outline-none mt-1"
+                />
+              </div>
+
+              <div className="bg-[#FAF8F5] p-3 rounded-lg border border-[#D9CC86]/50 text-center">
+                <span className="text-[10px] font-bold text-[#765331] uppercase block">
+                  Patents (Filed/Granted)
+                </span>
+                <input
+                  type="text"
+                  value={formData.patentsCount}
+                  onChange={(e) => setFormData({ ...formData, patentsCount: e.target.value })}
+                  className="font-serif-tnu text-xl sm:text-2xl font-bold text-[#B69A62] text-center w-full bg-transparent border-b border-[#D9CC86] focus:outline-none mt-1"
+                />
+              </div>
+
+              <div className="bg-[#FAF8F5] p-3 rounded-lg border border-[#D9CC86]/50 text-center">
+                <span className="text-[10px] font-bold text-[#765331] uppercase block">
+                  Funded Projects
+                </span>
+                <input
+                  type="text"
+                  value={formData.projectsCount}
+                  onChange={(e) => setFormData({ ...formData, projectsCount: e.target.value })}
+                  className="font-serif-tnu text-xl sm:text-2xl font-bold text-[#765331] text-center w-full bg-transparent border-b border-[#D9CC86] focus:outline-none mt-1"
+                />
+              </div>
+            </div>
+
+            {/* Key Publications List */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-[#4A351F] uppercase tracking-wider">
+                  Representative Research Publications
+                </span>
+                <button
+                  type="button"
+                  onClick={handleAddPublication}
+                  className="inline-flex items-center gap-1 text-xs text-[#D83232] font-bold hover:underline cursor-pointer"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add Another Publication</span>
+                </button>
+              </div>
+
+              <div className="space-y-2.5">
+                {formData.publications.map((pub) => (
+                  <div
+                    key={pub.id}
+                    className="p-3.5 rounded-lg border border-[#D9CC86]/60 bg-[#FAF8F5]"
+                  >
+                    <h4 className="font-bold text-xs sm:text-sm text-[#292727] leading-snug">
+                      {pub.title}
+                    </h4>
+                    <p className="text-xs text-[#5B403D] mt-0.5">
+                      {pub.venue} • {pub.authors}
+                    </p>
+                    <div className="flex items-center gap-3 text-[11px] text-[#765331] mt-1 font-mono">
+                      <span>DOI: {pub.doi}</span>
+                      <span className="text-[#D83232] font-semibold">{pub.citations}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Awards & Memberships */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                  Academic Honors, Fellowships & Awards
+                </label>
+                <textarea
+                  rows={2}
+                  value={formData.awards}
+                  onChange={(e) => setFormData({ ...formData, awards: e.target.value })}
+                  className="w-full text-xs px-3 py-2 border border-[#D9CC86] rounded-lg"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                  Professional Society Memberships (IEEE, ACM, etc.)
+                </label>
+                <textarea
+                  rows={2}
+                  value={formData.memberships}
+                  onChange={(e) => setFormData({ ...formData, memberships: e.target.value })}
+                  className="w-full text-xs px-3 py-2 border border-[#D9CC86] rounded-lg"
+                />
+              </div>
+            </div>
+
+            {/* Bottom Actions for Step 3 with PREVIOUS / BACK TO EDIT */}
+            <div className="pt-4 border-t border-[#EBE6DF] flex items-center justify-between gap-4">
+              <button
+                type="button"
+                onClick={handlePrevStep}
+                className="inline-flex items-center gap-1.5 px-4 py-2 border border-[#D9CC86] bg-white hover:bg-[#FAF8F5] text-[#765331] font-bold text-xs rounded-lg transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Previous: Back to Edit Step 2</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNextStep}
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#D83232] hover:bg-[#C62828] active:scale-[0.98] text-white text-xs sm:text-sm font-bold rounded-lg shadow-sm transition-all cursor-pointer"
+              >
+                <span>Continue to Step 4: CV Upload & Final Submit</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ======================================================== */}
+        {/* STEP 4: CV UPLOAD & FINAL SUBMISSION (AT LAST OPTION CV)  */}
+        {/* ======================================================== */}
+        {currentStep === 4 && (
+          <form
+            onSubmit={handleFinalSubmit}
+            className="p-5 sm:p-7 rounded-[14px] border border-[#D9CC86]/70 bg-white/80 shadow-[0_8px_25px_rgba(41,39,39,0.04)] space-y-6"
+            style={{
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+            }}
+          >
+            <div className="border-b border-[#EBE6DF] pb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-[#D83232] text-white text-xs font-bold flex items-center justify-center">
+                  4
+                </span>
+                <h3 className="font-serif-tnu font-bold text-base sm:text-lg text-[#292727]">
+                  Step 4: CV Upload & Final Academic Dossier Lodgement
+                </h3>
+              </div>
+              <p className="text-xs text-[#765331] mt-1 ml-8">
+                Attach your comprehensive, updated Curriculum Vitae and complete the statutory institutional declaration.
+              </p>
+            </div>
+
+            {/* MANDATORY CV UPLOAD AREA (AT LAST OPTION CV) */}
+            <div className="space-y-3">
+              <label className="block text-xs font-bold text-[#4A351F] uppercase tracking-wider">
+                Upload Updated Curriculum Vitae (PDF / DOC / DOCX) <span className="text-[#D83232]">*</span>
+              </label>
+
+              {formData.cvUploaded ? (
+                <div className="p-4 rounded-xl border-2 border-emerald-500/50 bg-emerald-50/50 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-lg bg-emerald-500/10 text-emerald-700 flex items-center justify-center shrink-0">
+                      <FileText className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-xs sm:text-sm text-[#292727]">
+                          {formData.cvFileName}
+                        </span>
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
+                          <Check className="w-3 h-3" />
+                          Ready for Review
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-[#765331] mt-0.5">
+                        File Size: {formData.cvFileSize} • Attached to Dossier
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="text-xs font-bold text-[#765331] hover:text-[#D83232] px-3 py-1.5 bg-white border border-[#D9CC86] rounded-lg shadow-2xs cursor-pointer"
+                    >
+                      Replace File
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleRemoveCv}
+                      className="text-[#D83232] hover:bg-[#D83232]/10 p-2 rounded-lg cursor-pointer"
+                      title="Remove file"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDragging(true);
+                  }}
+                  onDragLeave={() => setIsDragging(false)}
+                  onDrop={handleFileDrop}
+                  onClick={() => fileInputRef.current?.click()}
+                  className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
+                    isDragging
+                      ? 'border-[#D83232] bg-[#D83232]/5'
+                      : 'border-[#D9CC86] hover:border-[#D83232] bg-[#FAF8F5]'
+                  }`}
+                >
+                  <UploadCloud className="w-10 h-10 text-[#D83232] mx-auto mb-2" />
+                  <h4 className="font-bold text-sm text-[#292727]">
+                    Click to browse or drag and drop your updated CV here
+                  </h4>
+                  <p className="text-xs text-[#765331] mt-1">
+                    Accepts PDF, DOC, or DOCX formats up to 10 MB. Include complete academic records, research publications, and dissertation titles.
+                  </p>
+                </div>
+              )}
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </div>
+
+            {/* Additional Dossier Statement */}
+            <div>
+              <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
+                Statement of Teaching Philosophy / Research Intent (Optional)
+              </label>
+              <textarea
+                rows={3}
+                placeholder="Briefly state your academic objectives, pedagogical style, and research goals at The Neotia University..."
+                value={formData.additionalNotes}
+                onChange={(e) => setFormData({ ...formData, additionalNotes: e.target.value })}
+                className="w-full text-xs sm:text-sm px-3 py-2 border border-[#D9CC86] rounded-lg"
+              />
+            </div>
+
+            {/* Dossier Quick Recap Summary */}
+            <div className="p-4 rounded-xl border border-[#D9CC86]/50 bg-[#FAF8F5] space-y-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#4A351F] block">
+                Candidature Summary Review
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <div>
+                  <span className="text-[#765331] text-[10px] block">Applicant:</span>
+                  <span className="font-bold text-[#292727]">
+                    {formData.firstName} {formData.lastName}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[#765331] text-[10px] block">Highest Degree:</span>
+                  <span className="font-bold text-[#292727]">{formData.highestQualification}</span>
+                </div>
+                <div>
+                  <span className="text-[#765331] text-[10px] block">Experience:</span>
+                  <span className="font-bold text-[#292727]">{formData.totalExperience}</span>
+                </div>
+                <div>
+                  <span className="text-[#765331] text-[10px] block">CV Attached:</span>
+                  <span className="font-bold text-emerald-700">
+                    {formData.cvUploaded ? '✓ Verified' : 'Missing'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Mandatory Academic Declaration */}
+            <div className="pt-2">
+              <label className="flex items-start gap-3 p-3.5 rounded-lg border border-[#D9CC86]/60 bg-white cursor-pointer">
+                <input
+                  type="checkbox"
+                  required
+                  checked={formData.declarationAccepted}
+                  onChange={(e) => setFormData({ ...formData, declarationAccepted: e.target.checked })}
+                  className="w-4 h-4 mt-0.5 rounded border-[#D9CC86] text-[#D83232] focus:ring-[#D83232] cursor-pointer"
+                />
+                <span className="text-xs text-[#5B403D] leading-relaxed">
+                  I hereby certify that all information, degrees, publication claims, and credentials lodged in this faculty application dossier are authentic, correct, and verifiable from original records. I agree to abide by the statutory recruitment procedures of The Neotia University.
+                </span>
               </label>
             </div>
 
-            {/* Validation Message Banner if not valid */}
-            {!isFormValid && (
-              <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl text-xs shadow-2xs">
-                <AlertCircle className="w-4 h-4 shrink-0 text-amber-700" />
-                <span>
-                  Please ensure First Name, Last Name, Email, Mobile, Address are filled, CV/Resume is
-                  uploaded, and the declaration is accepted.
-                </span>
-              </div>
-            )}
+            {/* Bottom Actions with PREVIOUS / BACK TO EDIT & FINAL SUBMIT */}
+            <div className="pt-4 border-t border-[#EBE6DF] flex flex-col sm:flex-row items-center justify-between gap-4">
+              <button
+                type="button"
+                onClick={handlePrevStep}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2.5 border border-[#D9CC86] bg-white hover:bg-[#FAF8F5] text-[#765331] font-bold text-xs rounded-lg transition-colors cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Previous: Back to Edit Step 3</span>
+              </button>
 
-            {/* Actions Bar */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-              <div className="flex items-center gap-1.5 text-xs text-[#765331]">
-                <ShieldCheck className="w-4 h-4 text-[#B69A62]" />
-                <span>256-Bit Encrypted Dossier Transmission</span>
-              </div>
-
-              <div className="flex items-center gap-3 w-full sm:w-auto">
-                <button
-                  type="button"
-                  onClick={handleSaveDraft}
-                  className="btn-secondary-tnu w-1/2 sm:w-auto px-4 py-3 text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
-                >
-                  <Save className="w-3.5 h-3.5" />
-                  <span>Save Draft</span>
-                </button>
-
-                <button
-                  type="submit"
-                  disabled={!isFormValid}
-                  className="btn-primary-tnu w-1/2 sm:w-auto px-7 py-3 text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer shadow-[0_8px_24px_rgba(216,50,50,0.28)] group disabled:bg-[#E0E0E0] disabled:text-[#9E9E9E] disabled:shadow-none disabled:cursor-not-allowed disabled:transform-none"
-                >
-                  <span>SUBMIT APPLICATION</span>
-                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#D83232] hover:bg-[#C62828] active:scale-[0.98] text-white text-xs sm:text-sm font-bold rounded-lg shadow-md transition-all cursor-pointer whitespace-nowrap"
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span>Submit Application Dossier</span>
+              </button>
             </div>
-          </section>
-        </form>
+          </form>
+        )}
       </div>
     </div>
   );

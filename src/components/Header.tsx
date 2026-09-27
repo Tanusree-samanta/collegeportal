@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowLeft, HelpCircle, User, Phone, Mail, X, Mic } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, HelpCircle, User, Phone, Mail, X } from 'lucide-react';
 import { TnuLogo } from './TnuLogo';
 
 interface HeaderProps {
@@ -8,7 +8,6 @@ interface HeaderProps {
   badge?: string;
   onBack?: () => void;
   showBack?: boolean;
-  onOpenVoice?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -17,28 +16,12 @@ export const Header: React.FC<HeaderProps> = ({
   badge = 'HIRING 2026-27',
   onBack,
   showBack = false,
-  onOpenVoice,
 }) => {
   const [showHelpModal, setShowHelpModal] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <>
-      <header
-        className={`sticky top-0 w-full z-40 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-white/85 shadow-[0_8px_30px_rgba(41,39,39,0.08)] border-b border-[#D9CC86]/70'
-            : 'bg-white/70 shadow-[0_4px_20px_rgba(41,39,39,0.04)] border-b border-[#D9CC86]/45'
-        } backdrop-blur-md`}
-      >
+      <header className="sticky top-0 w-full z-40 bg-[#F8F6F0]/95 backdrop-blur-md border-b border-[#EBE6DF] shadow-[0_1px_8px_rgba(74,53,31,0.06)]">
         <div className="max-w-7xl mx-auto h-16 md:h-18 px-4 sm:px-6 flex items-center justify-between gap-3">
           {/* Left Zone: Back + Brand + Title */}
           <div className="flex items-center gap-3 min-w-0">
@@ -47,22 +30,22 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 onClick={onBack}
                 aria-label="Go back"
-                className="w-10 h-10 flex items-center justify-center rounded-xl text-[#765331] hover:text-[#D83232] hover:bg-[#F2ECE4]/70 active:scale-95 transition-all shrink-0 cursor-pointer border border-transparent hover:border-[#D9CC86]/50"
+                className="w-10 h-10 flex items-center justify-center rounded-full text-[#765331] hover:text-[#D83232] hover:bg-[#F2ECE4] active:scale-95 transition-all shrink-0 cursor-pointer"
               >
-                <ArrowLeft className="w-5 h-5 transition-transform group-hover:-translate-x-0.5" />
+                <ArrowLeft className="w-5 h-5" />
               </button>
             )}
 
             <div className="flex items-center gap-3 min-w-0">
-              <TnuLogo className="h-9 sm:h-11 md:h-12" />
-              <div className="hidden sm:block h-8 w-[1px] bg-[#D9CC86]/50 shrink-0" />
+              <TnuLogo className="h-8 sm:h-9 md:h-10" />
+              <div className="hidden sm:block h-7 w-[1px] bg-[#D9CC86]/50 shrink-0" />
               <div className="flex flex-col min-w-0">
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <span className="font-bold text-[#292727] text-xs sm:text-sm tracking-tight truncate">
                     {title}
                   </span>
                   {badge && (
-                    <span className="shrink-0 inline-flex items-center px-2 py-0.5 rounded-full bg-[#D83232]/10 text-[#D83232] border border-[#D83232]/25 text-[9px] sm:text-[10px] leading-tight font-bold uppercase tracking-wider">
+                    <span className="shrink-0 inline-flex items-center px-1.5 py-0.5 rounded-full bg-[#D83232]/10 text-[#D83232] border border-[#D83232]/20 text-[9px] sm:text-[10px] leading-tight font-bold uppercase tracking-wider">
                       {badge}
                     </span>
                   )}
@@ -74,33 +57,20 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Right Zone: Voice Advisor + Help + Profile */}
+          {/* Right Zone: Help & Profile */}
           <div className="flex items-center gap-2 shrink-0">
-            {onOpenVoice && (
-              <button
-                type="button"
-                onClick={onOpenVoice}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 hover:bg-[#D83232] text-[#D83232] hover:text-white border border-[#D83232]/30 text-xs font-bold transition-all cursor-pointer shadow-2xs group backdrop-blur-sm"
-                title="Start real-time voice conversation with Gemini 3.8 Live"
-              >
-                <Mic className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-                <span className="hidden sm:inline">Voice Advisor</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D83232] group-hover:bg-white animate-pulse" />
-              </button>
-            )}
-
             <button
               type="button"
               onClick={() => setShowHelpModal(true)}
               aria-label="Recruitment Help & Contact"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[#765331] hover:text-[#D83232] bg-white/60 hover:bg-white border border-[#D9CC86]/45 active:scale-95 transition-all text-xs font-semibold cursor-pointer shadow-2xs"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[#765331] hover:text-[#D83232] hover:bg-[#F2ECE4] active:scale-95 transition-all text-xs font-semibold"
             >
               <HelpCircle className="w-4 h-4" />
               <span className="hidden md:inline">Helpline</span>
             </button>
 
             <div
-              className="w-8 h-8 rounded-xl bg-[#D83232] text-white flex items-center justify-center shadow-xs cursor-default"
+              className="w-8 h-8 rounded-full bg-[#D83232] text-white flex items-center justify-center shadow-sm cursor-default"
               title="Academic Applicant Portal"
             >
               <User className="w-4 h-4" />
@@ -111,17 +81,17 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Helpline / Contact Modal */}
       {showHelpModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="glass-panel max-w-md w-full p-6 relative animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[#FFFFFF] border border-[#D9CC86] rounded-xl max-w-md w-full p-6 shadow-xl relative animate-in fade-in zoom-in-95 duration-200">
             <button
               onClick={() => setShowHelpModal(false)}
-              className="absolute top-4 right-4 text-[#765331] hover:text-[#292727] p-1.5 rounded-lg hover:bg-white/80 transition-colors"
+              className="absolute top-4 right-4 text-[#765331] hover:text-[#292727] p-1 rounded-md"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-9 h-9 rounded-xl bg-[#D83232]/10 text-[#D83232] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-[#D83232]/10 text-[#D83232] flex items-center justify-center">
                 <HelpCircle className="w-5 h-5" />
               </div>
               <h3 className="font-serif-tnu font-bold text-lg text-[#292727]">
@@ -133,7 +103,7 @@ export const Header: React.FC<HeaderProps> = ({
               For queries regarding faculty candidatures, eligibility criteria, or technical issues with application dossier submissions, reach out to the Secretariat:
             </p>
 
-            <div className="space-y-2.5 text-xs text-[#292727] bg-white/80 p-3.5 rounded-xl border border-[#D9CC86]/60 shadow-2xs">
+            <div className="space-y-2.5 text-xs text-[#292727] bg-[#F8F6F0] p-3.5 rounded-lg border border-[#EBE6DF]">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#D83232] shrink-0" />
                 <span className="font-medium">recruitment@tnu.ac.in</span>
@@ -149,7 +119,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={() => setShowHelpModal(false)}
-              className="mt-4 w-full py-2.5 bg-[#4A351F] hover:bg-[#292727] text-white rounded-xl text-xs font-bold transition-all shadow-xs cursor-pointer"
+              className="mt-4 w-full py-2 bg-[#4A351F] hover:bg-[#292727] text-white rounded-lg text-xs font-bold transition-colors"
             >
               Close
             </button>

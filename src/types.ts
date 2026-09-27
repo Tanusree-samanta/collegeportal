@@ -1,3 +1,11 @@
+export interface CourseDetail {
+  code: string;
+  name: string;
+  level: 'UG' | 'PG' | 'Ph.D.' | 'Diploma';
+  duration: string;
+  seats?: number;
+}
+
 export interface School {
   id: string;
   streamNumber: string;
@@ -8,10 +16,22 @@ export interface School {
   openPositionsCount?: number;
   openPositionsLabel?: string;
   iconName: string;
+  // Rich school information details
+  courseCount?: number;
+  courses?: CourseDetail[];
+  departments?: string[];
+  facilities?: string[];
+  highlights?: string[];
+  studentFacultyRatio?: string;
+  deanName?: string;
+  deanNote?: string;
+  accreditation?: string;
+  labCount?: number;
 }
 
 export interface VacantPosition {
   id: string;
+  schoolId?: string;
   cadre: string;
   area: string;
   department: string;

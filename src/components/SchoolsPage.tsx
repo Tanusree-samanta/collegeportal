@@ -3,13 +3,9 @@ import {
   Home,
   ChevronRight,
   Search,
-  SlidersHorizontal,
-  Megaphone,
   CheckCircle2,
-  Lock,
   ArrowRight,
-  Info,
-  BellRing,
+  BookOpen,
   Code2,
   Brain,
   Stethoscope,
@@ -23,8 +19,8 @@ import {
   Building,
   TrendingUp,
   X,
-  Mail,
-  Check,
+  Lock,
+  Megaphone,
 } from 'lucide-react';
 import { SCHOOLS_DATA } from '../data/schools';
 import { School } from '../types';
@@ -39,14 +35,11 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
   onNavigateHome,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeOnly, setActiveOnly] = useState(false);
-  const [showNotifyModal, setShowNotifyModal] = useState(false);
-  const [notifyEmail, setNotifyEmail] = useState('');
-  const [notifySuccess, setNotifySuccess] = useState(false);
+  const [filterActiveOnly, setFilterActiveOnly] = useState(false);
 
   // Icon mapping helper
-  const renderSchoolIcon = (id: string, isActive: boolean) => {
-    const iconClass = isActive ? 'w-5 h-5 text-[#D83232]' : 'w-5 h-5 text-[#765331]/70';
+  const renderSchoolIcon = (id: string, hasReq: boolean) => {
+    const iconClass = hasReq ? 'w-5 h-5 text-[#D83232]' : 'w-5 h-5 text-[#765331]/60';
     switch (id) {
       case 'school-of-technology':
         return <Code2 className={iconClass} />;
@@ -73,354 +66,281 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
       case 'marketing-admissions':
         return <TrendingUp className={iconClass} />;
       default:
-        return <Building className={iconClass} />;
+        return <BookOpen className={iconClass} />;
     }
   };
 
+  const activeSchoolsCount = useMemo(() => {
+    return SCHOOLS_DATA.filter((s) => Boolean(s.isActive && (s.openPositionsCount || 0) > 0)).length;
+  }, []);
+
   const filteredSchools = useMemo(() => {
     return SCHOOLS_DATA.filter((school) => {
-      const matchesSearch =
-        searchQuery.trim() === '' ||
-        school.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        school.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        school.streamLabel.toLowerCase().includes(searchQuery.toLowerCase());
+      const hasReq = Boolean(school.isActive && (school.openPositionsCount || 0) > 0);
+      if (filterActiveOnly && !hasReq) return false;
 
-      const matchesActive = !activeOnly || school.isActive;
-      return matchesSearch && matchesActive;
+      const query = searchQuery.toLowerCase().trim();
+      if (!query) return true;
+      return (
+        school.name.toLowerCase().includes(query) ||
+        school.streamLabel.toLowerCase().includes(query) ||
+        school.description.toLowerCase().includes(query)
+      );
     });
-  }, [searchQuery, activeOnly]);
-
-  const handleNotifySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!notifyEmail || !notifyEmail.includes('@')) return;
-    setNotifySuccess(true);
-    setTimeout(() => {
-      setShowNotifyModal(false);
-      setNotifySuccess(false);
-      setNotifyEmail('');
-    }, 2200);
-  };
+  }, [searchQuery, filterActiveOnly]);
 
   return (
-    <div className="w-full min-h-[calc(100vh-64px)] pb-16 relative z-10">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-5 sm:pt-7 flex flex-col gap-4 sm:gap-6">
+    <div className="w-full bg-[#F8F6F0] min-h-[calc(100vh-64px)] pb-16 select-none">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 flex flex-col gap-5 sm:gap-6">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Academic Path" className="flex items-center gap-1.5 text-xs text-[#765331]">
-          <button
-            type="button"
-            onClick={onNavigateHome}
-            className="breadcrumb-item gap-1 cursor-pointer font-medium"
-          >
-            <Home className="w-3.5 h-3.5" />
-            <span>Home</span>
-          </button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#B69A62]/60" />
-          <button
-            type="button"
-            onClick={onNavigateHome}
-            className="breadcrumb-item cursor-pointer font-medium"
-          >
-            Career
-          </button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#B69A62]/60" />
-          <span className="text-[#D83232] font-bold">Schools</span>
+        <nav aria-label="Academic Path Breadcrumb" className="overflow-x-auto whitespace-nowrap">
+          <ol className="flex items-center gap-1.5 text-xs text-[#765331]">
+            <li className="inline-flex items-center gap-1">
+              <button
+                type="button"
+                onClick={onNavigateHome}
+                className="hover:text-[#D83232] transition-colors inline-flex items-center gap-1 font-medium cursor-pointer"
+              >
+                <Home className="w-3.5 h-3.5" />
+                <span>Home</span>
+              </button>
+              <ChevronRight className="w-3.5 h-3.5 text-[#B69A62]/60" />
+            </li>
+            <li className="inline-flex items-center gap-1">
+              <span className="font-medium text-[#765331]">Career</span>
+              <ChevronRight className="w-3.5 h-3.5 text-[#B69A62]/60" />
+            </li>
+            <li className="text-[#D83232] font-bold">Schools Directory</li>
+          </ol>
         </nav>
 
         {/* Page Heading & Editorial Subtitle */}
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1.5">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#B69A62]/15 border border-[#D9CC86]/50 shadow-xs w-fit">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D83232] animate-pulse" />
+            <span className="text-[10px] sm:text-xs text-[#B4141D] font-bold tracking-wider uppercase">
+              12 Academic Schools & Faculties
+            </span>
+          </div>
+
           <h1 className="font-serif-tnu text-2xl sm:text-3xl md:text-4xl font-bold text-[#292727] tracking-tight">
-            Explore Faculty Opportunities
+            Explore Schools & Academic Disciplines
           </h1>
-          <p className="text-xs sm:text-sm text-[#5B403D] leading-relaxed">
-            Select a school to view currently available faculty positions, research tenure tracks, and academic criteria.
+
+          <p className="text-xs sm:text-sm text-[#5B403D] leading-relaxed max-w-3xl">
+            Review school credentials and open faculty positions. Positions with active recruitment requirements have enabled exploration actions below.
           </p>
         </div>
 
-        {/* Academic Recruitment Status Callout Banner (Glass Panel) */}
-        <div className="glass-panel p-3.5 sm:p-4 flex items-center justify-between gap-3 shadow-[0_6px_24px_rgba(41,39,39,0.04)]">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-xl bg-[#D83232] text-white flex items-center justify-center shrink-0 shadow-xs">
-              <Megaphone className="w-5 h-5" />
+        {/* Recruitment Status Callout Banner */}
+        <div className="bg-[#FAF8F5] border border-[#D9CC86]/50 rounded-xl p-3 sm:p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-[#D83232] text-white flex items-center justify-center shrink-0 shadow-xs">
+              <Megaphone className="w-4 h-4" />
             </div>
-            <div className="flex flex-col min-w-0">
-              <span className="font-bold text-xs sm:text-sm text-[#292727] truncate">
-                Cycle 2026–27 Active Stream
+            <div>
+              <span className="font-bold text-xs sm:text-sm text-[#292727] block">
+                Cycle 2026–2027 Active Hiring Stream
               </span>
-              <span className="text-[11px] sm:text-xs text-[#765331] truncate">
-                Engineering, AI & Computing currently receiving dossiers
+              <span className="text-[11px] text-[#765331]">
+                {activeSchoolsCount} of 12 schools currently have open requirements and active vacancies.
               </span>
             </div>
           </div>
-          <span className="shrink-0 text-[10px] sm:text-xs px-3 py-1 bg-white/80 border border-[#D9CC86]/50 text-[#765331] rounded-full font-bold shadow-2xs">
-            1 of 12 Open
-          </span>
-        </div>
 
-        {/* Search & Filter Controls */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="relative flex-1">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#765331]" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Filter by school name or discipline..."
-              className="glass-input w-full text-xs sm:text-sm pl-10 pr-9 py-2.5 shadow-2xs placeholder:text-[#765331]/60"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#765331] hover:text-[#292727] p-1 cursor-pointer"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setFilterActiveOnly(false)}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                !filterActiveOnly
+                  ? 'bg-[#4A351F] text-white'
+                  : 'bg-white text-[#765331] border border-[#D9CC86]/50'
+              }`}
+            >
+              All Schools (12)
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilterActiveOnly(true)}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                filterActiveOnly
+                  ? 'bg-[#D83232] text-white shadow-xs'
+                  : 'bg-white text-[#765331] border border-[#D9CC86]/50'
+              }`}
+            >
+              With Openings Only ({activeSchoolsCount})
+            </button>
           </div>
-
-          <button
-            type="button"
-            onClick={() => setActiveOnly(!activeOnly)}
-            className={`h-10 px-4 rounded-xl text-xs font-semibold flex items-center gap-2 shrink-0 transition-all cursor-pointer shadow-2xs ${
-              activeOnly
-                ? 'btn-primary-tnu'
-                : 'btn-secondary-tnu'
-            }`}
-          >
-            <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Active Only</span>
-          </button>
         </div>
 
-        {/* 12 School Cards List with Staggered Entrance */}
-        <div className="flex flex-col gap-3.5 sm:gap-4">
-          {filteredSchools.map((school, index) => {
-            if (school.isActive) {
-              // ACTIVE CARD: School of Technology (Glass Panel + Hover Sheen + Accent)
-              return (
-                <article
-                  key={school.id}
-                  style={{ animationDelay: `${index * 45}ms` }}
-                  className="glass-panel glass-card-hover glass-sheen border-2 border-[#D83232]/75 overflow-hidden relative group p-0 page-enter"
-                >
-                  {/* Red accent strip */}
-                  <div className="h-1.5 w-full bg-[#D83232]" />
+        {/* Search Controls */}
+        <div className="relative">
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#765331]" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search school by discipline, engineering, pharmacy, nursing, management..."
+            className="w-full bg-white text-[#292727] text-xs sm:text-sm pl-10 pr-4 py-2.5 rounded-lg border border-[#D9CC86]/50 shadow-2xs placeholder:text-[#765331]/60 focus:outline-none focus:border-[#D83232] focus:ring-1 focus:ring-[#D83232] transition-colors"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#765331] hover:text-[#292727] p-0.5 cursor-pointer"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
 
-                  <div className="p-4 sm:p-5 flex flex-col gap-3">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-11 h-11 rounded-xl bg-[#D83232]/10 border border-[#D83232]/25 flex items-center justify-center shrink-0 shadow-2xs">
-                          {renderSchoolIcon(school.id, true)}
-                        </div>
-                        <div className="flex flex-col min-w-0">
-                          <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#765331] font-bold">
-                            {school.streamLabel}
-                          </span>
-                          <h2 className="font-bold text-base sm:text-lg text-[#292727] truncate">
-                            {school.name}
-                          </h2>
-                        </div>
-                      </div>
+        {/* Schools Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+          {filteredSchools.map((school) => {
+            const courseCount = school.courseCount || (school.courses ? school.courses.length : 0);
+            const openPos = school.openPositionsCount || 0;
+            const hasRequirement = Boolean(school.isActive && openPos > 0);
 
-                      {/* Recruitment Open Badge with 2s Status Dot */}
-                      <span className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D83232] text-white text-[10px] sm:text-[11px] font-bold tracking-wide shadow-xs uppercase">
-                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-status-dot" />
-                        RECRUITMENT OPEN
-                      </span>
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-[#5B403D] leading-relaxed">
-                      {school.description}
-                    </p>
-
-                    {/* Open Positions Metrics Box */}
-                    <div className="bg-white/80 border border-[#D9CC86]/45 rounded-xl p-2.5 sm:p-3 flex items-center justify-between shadow-2xs">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-[#D83232]" />
-                        <span className="font-bold text-xs sm:text-sm text-[#292727]">
-                          {school.openPositionsCount} Open Positions
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1 text-[11px] text-[#765331] font-medium">
-                        <span>{school.openPositionsLabel}</span>
-                        <Info className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-
-                    {/* Active Primary CTA Button (Hover lift 2px, Arrow moves right 4px) */}
-                    <button
-                      type="button"
-                      onClick={() => onSelectSchool(school)}
-                      className="btn-primary-tnu w-full py-3 px-4 flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer mt-1 group"
-                    >
-                      <span>View Opportunities</span>
-                      <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-                    </button>
-                  </div>
-                </article>
-              );
-            }
-
-            // INACTIVE CARD: Muted, Disabled appearance, NO hover lift
             return (
               <article
                 key={school.id}
-                style={{ animationDelay: `${index * 45}ms` }}
-                className="bg-white/50 backdrop-blur-md rounded-2xl border border-[#EBE6DF]/80 p-3.5 sm:p-4 flex flex-col gap-2.5 shadow-2xs page-enter"
+                onClick={() => {
+                  if (hasRequirement) {
+                    onSelectSchool(school);
+                  }
+                }}
+                className={`rounded-xl shadow-xs overflow-hidden relative flex flex-col justify-between transition-all duration-300 ${
+                  hasRequirement
+                    ? 'bg-white border border-[#D9CC86]/70 hover:border-[#D83232]/60 hover:-translate-y-1 hover:shadow-md cursor-pointer group'
+                    : 'bg-white/60 border border-[#EBE6DF] opacity-85 cursor-default'
+                }`}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#EBE6DF]/70 text-[#765331]/70 flex items-center justify-center shrink-0">
-                      {renderSchoolIcon(school.id, false)}
+                {/* Accent strip on top */}
+                <div
+                  className={`h-1 w-full transition-all ${
+                    hasRequirement
+                      ? 'bg-[#D83232] group-hover:h-1.5'
+                      : 'bg-[#EBE6DF]'
+                  }`}
+                />
+
+                <div className="p-4 sm:p-5 flex flex-col gap-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div
+                        className={`w-11 h-11 rounded-lg flex items-center justify-center shrink-0 transition-transform ${
+                          hasRequirement
+                            ? 'bg-[#D83232]/10 border border-[#D83232]/20 group-hover:scale-105'
+                            : 'bg-[#EBE6DF]/70 text-[#765331]/60'
+                        }`}
+                      >
+                        {renderSchoolIcon(school.id, hasRequirement)}
+                      </div>
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#765331] font-bold">
+                          {school.streamLabel}
+                        </span>
+                        <h2
+                          className={`font-bold text-base sm:text-lg truncate transition-colors ${
+                            hasRequirement
+                              ? 'text-[#292727] group-hover:text-[#D83232]'
+                              : 'text-[#292727]/70'
+                          }`}
+                        >
+                          {school.name}
+                        </h2>
+                      </div>
                     </div>
-                    <div className="flex flex-col min-w-0">
-                      <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#765331]/60 font-semibold">
-                        {school.streamLabel}
+
+                    {/* Status Badge: Active vs Inactive */}
+                    {hasRequirement ? (
+                      <span className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#D83232]/10 text-[#D83232] border border-[#D83232]/20 text-[10px] font-bold tracking-wide uppercase">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#D83232] animate-pulse" />
+                        <span>{openPos} Openings</span>
                       </span>
-                      <h2 className="font-semibold text-sm sm:text-base text-[#292727]/80 truncate">
-                        {school.name}
-                      </h2>
+                    ) : (
+                      <span className="shrink-0 px-2 py-0.5 rounded-full bg-[#EBE6DF] text-[#765331]/70 text-[10px] font-semibold uppercase">
+                        No Current Opening
+                      </span>
+                    )}
+                  </div>
+
+                  <p
+                    className={`text-xs sm:text-sm leading-relaxed line-clamp-2 ${
+                      hasRequirement ? 'text-[#5B403D]' : 'text-[#5B403D]/70'
+                    }`}
+                  >
+                    {school.description}
+                  </p>
+
+                  {/* Metrics Box: Courses & Vacancy */}
+                  <div className="bg-[#FAF8F5] border border-[#D9CC86]/40 rounded-lg p-2.5 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-1.5 text-[#292727] font-semibold">
+                      <BookOpen className={`w-3.5 h-3.5 ${hasRequirement ? 'text-[#D83232]' : 'text-[#765331]/50'}`} />
+                      <span>{courseCount} Academic Programs</span>
+                    </div>
+                    <div className="text-[11px] text-[#765331] font-medium">
+                      Ratio: {school.studentFacultyRatio || '14:1'}
                     </div>
                   </div>
 
-                  <span className="shrink-0 px-2.5 py-0.5 rounded-full bg-[#EBE6DF]/80 text-[#765331]/70 text-[10px] sm:text-[11px] font-medium">
-                    No Current Opening
-                  </span>
+                  {/* Primary CTA Button: ENABLED IF REQUIREMENT IS AVAILABLE, NEITHER NOT */}
+                  <div className="pt-1">
+                    {hasRequirement ? (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onSelectSchool(school);
+                        }}
+                        className="w-full bg-[#FAF8F5] group-hover:bg-[#D83232] group-hover:text-white text-[#765331] font-bold text-xs py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 border border-[#D9CC86]/60 group-hover:border-[#D83232] transition-all duration-200 shadow-2xs cursor-pointer"
+                      >
+                        <span>Explore School Details & Openings</span>
+                        <ArrowRight className="w-4 h-4 text-[#D83232] group-hover:text-white transition-colors" />
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        disabled={true}
+                        aria-disabled="true"
+                        className="w-full bg-[#F2ECE4]/70 text-[#765331]/50 font-bold text-xs py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 border border-[#EBE6DF] cursor-not-allowed shadow-none"
+                        title="No vacancies currently available for this school in cycle 2026-27"
+                      >
+                        <Lock className="w-3.5 h-3.5 text-[#765331]/40" />
+                        <span>Explore Details & Openings (Unavailable)</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
-
-                <p className="text-xs text-[#5B403D]/70 leading-relaxed line-clamp-2">
-                  {school.description}
-                </p>
-
-                <button
-                  type="button"
-                  disabled
-                  aria-disabled="true"
-                  className="w-full bg-[#F2ECE4]/60 text-[#765331]/50 text-xs font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 cursor-not-allowed mt-1 border border-[#EBE6DF]"
-                >
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>Currently Unavailable</span>
-                </button>
               </article>
             );
           })}
         </div>
 
-        {/* Empty Search Result Fallback */}
+        {/* Empty Search Result */}
         {filteredSchools.length === 0 && (
-          <div className="glass-panel flex flex-col items-center justify-center py-10 px-4 text-center">
+          <div className="flex flex-col items-center justify-center py-10 px-4 text-center bg-white rounded-xl border border-[#D9CC86]/40 shadow-xs">
             <Search className="w-10 h-10 text-[#765331]/40 mb-2" />
             <h3 className="font-bold text-sm sm:text-base text-[#292727]">
               No matching schools found
             </h3>
             <p className="text-xs text-[#765331] max-w-xs mt-1">
-              Try adjusting your search keywords or clearing active filters to view all 12 academic streams.
+              Try adjusting your search keywords or reset filter to view all schools.
             </p>
             <button
               type="button"
               onClick={() => {
                 setSearchQuery('');
-                setActiveOnly(false);
+                setFilterActiveOnly(false);
               }}
-              className="btn-secondary-tnu mt-3 px-4 py-2 text-xs font-bold cursor-pointer"
+              className="mt-3 px-3.5 py-1.5 bg-[#FAF8F5] border border-[#D9CC86] text-[#D83232] rounded-lg text-xs font-bold hover:bg-[#F2ECE4] transition-colors cursor-pointer"
             >
-              Clear Filters
+              Reset Filters
             </button>
           </div>
         )}
-
-        {/* Dean's Office Future Cycle Notice Card (Glass Panel) */}
-        <div className="glass-panel p-4 flex flex-col gap-2 mt-2 shadow-[0_6px_20px_rgba(41,39,39,0.03)]">
-          <div className="flex items-center gap-2 text-[#765331]">
-            <BellRing className="w-4 h-4 text-[#B69A62]" />
-            <span className="font-bold text-xs sm:text-sm text-[#292727]">
-              Upcoming Hiring Notification
-            </span>
-          </div>
-          <p className="text-xs text-[#5B403D] leading-relaxed">
-            Streams marked currently unavailable will announce subsequent recruitment schedules in Phase II (Q3 2026). Scholars may submit proactive curriculum vitae directly to the Office of the Registrar.
-          </p>
-          <div className="pt-1">
-            <button
-              type="button"
-              onClick={() => setShowNotifyModal(true)}
-              className="inline-flex items-center gap-1.5 text-xs text-[#D83232] font-bold hover:underline cursor-pointer group"
-            >
-              <span>Register for Stream Notifications</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </button>
-          </div>
-        </div>
       </div>
-
-      {/* Stream Notification Modal */}
-      {showNotifyModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="glass-panel max-w-md w-full p-5 sm:p-6 shadow-2xl relative animate-in fade-in zoom-in-95">
-            <button
-              onClick={() => setShowNotifyModal(false)}
-              className="absolute top-4 right-4 text-[#765331] hover:text-[#292727] p-1.5 rounded-lg hover:bg-white/80 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-xl bg-[#D83232]/10 text-[#D83232] flex items-center justify-center">
-                <BellRing className="w-4 h-4" />
-              </div>
-              <h3 className="font-serif-tnu font-bold text-base sm:text-lg text-[#292727]">
-                Register for Phase II Openings
-              </h3>
-            </div>
-
-            <p className="text-xs text-[#765331] mb-4 leading-relaxed">
-              Enter your academic email to receive alerts when candidatures open for Humanities, Health Sciences, Pharmacy, Agriculture, and Marine Studies.
-            </p>
-
-            {notifySuccess ? (
-              <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-3 rounded-xl text-xs flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Subscription registered! You will receive notification alerts.</span>
-              </div>
-            ) : (
-              <form onSubmit={handleNotifySubmit} className="space-y-3">
-                <div>
-                  <label className="block text-[11px] font-bold text-[#765331] uppercase tracking-wider mb-1">
-                    Academic / Work Email
-                  </label>
-                  <div className="relative">
-                    <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#765331]" />
-                    <input
-                      type="email"
-                      required
-                      placeholder="e.g. scholar@university.edu"
-                      value={notifyEmail}
-                      onChange={(e) => setNotifyEmail(e.target.value)}
-                      className="glass-input w-full text-xs pl-9 pr-3 py-2.5"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setShowNotifyModal(false)}
-                    className="btn-secondary-tnu flex-1 py-2.5 text-xs font-bold cursor-pointer"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="btn-primary-tnu flex-1 py-2.5 text-xs font-bold cursor-pointer"
-                  >
-                    Subscribe Alerts
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
