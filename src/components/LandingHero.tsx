@@ -78,8 +78,9 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onNavigateToSchools })
               <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 w-full overflow-hidden">
                 <img
                   src={campusPhoto}
-                  alt="The Neotia University"
-                  className="w-full h-full object-cover object-[center_40%] group-hover:scale-[1.02] transition-transform duration-500 ease-out"
+                  alt="The Neotia University Campus"
+                  className="w-full h-full object-cover object-[center_35%] group-hover:scale-[1.02] transition-transform duration-500 ease-out"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
 
