@@ -1,8 +1,9 @@
 import React from 'react';
-import { ArrowRight, MapPin, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, MapPin, CheckCircle2, GraduationCap } from 'lucide-react';
 import { TnuLogo } from './TnuLogo';
 import { RecruitmentProcessSection } from './RecruitmentProcessSection';
 import { Footer } from './Footer';
+import campusPhoto from '../assets/images/campus.jpg';
 
 interface LandingHeroProps {
   onNavigateToSchools: () => void;
@@ -70,55 +71,50 @@ export const LandingHero: React.FC<LandingHeroProps> = ({ onNavigateToSchools })
             </div>
           </div>
 
-          {/* RIGHT SIDE: Campus Visual Card & CPC Information */}
+          {/* RIGHT SIDE: Campus Visual Card & Lower Information Card */}
           <div className="lg:col-span-6 flex flex-col gap-3 max-w-lg mx-auto w-full">
             {/* Campus Image Card */}
             <div className="relative rounded-xl overflow-hidden shadow-md bg-white border border-[#D9CC86]/50 group">
-              <div className="relative h-44 sm:h-52 md:h-56 lg:h-60 w-full">
+              <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 w-full overflow-hidden">
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuA543I-TbWvOLfGcyS3DF-V-N_TftUPDTka-ao-t3aldbbBXau60-Tfhtn4L1218qsolfywGJZ-XppjyxRUffJY3j4KLAt7vCfRaQPnEwuVCQJ2P8-zlgC2c7FOOjN6lo6Zz3ZcmW38E0GciFWLr4zGFIl-5cI_dbsxDP4yA41pfPUbPg2HykDl-K6cDjrPwpCBukwEg1f38XaoqrFPs184qWFHnEw5hUl_m_0M0qL-ynCk9aNUWKoW8Q"
-                  alt="The Neotia University Campus"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  src={campusPhoto}
+                  alt="The Neotia University"
+                  className="w-full h-full object-cover object-[center_40%] group-hover:scale-[1.02] transition-transform duration-500 ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
 
                 {/* Location Overlay Pill */}
-                <div className="absolute top-2.5 left-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-md shadow-xs border border-white/60">
-                  <MapPin className="w-3 h-3 text-[#D83232]" />
+                <div className="absolute top-2.5 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md shadow-xs border border-white/60">
+                  <MapPin className="w-3 h-3 text-[#D83232] shrink-0" />
                   <span className="text-[9px] sm:text-[10px] text-[#292727] font-bold tracking-wider uppercase">
-                    SARISHA, DIAMOND HARBOUR ROAD
+                    THE NEOTIA UNIVERSITY, SARISHA, WEST BENGAL
                   </span>
                 </div>
 
                 {/* Image Overlay Title & Supporting Text */}
                 <div className="absolute bottom-2.5 sm:bottom-3.5 left-3.5 right-3.5 text-white">
-                  <h2 className="font-bold text-xs sm:text-sm md:text-base leading-tight tracking-tight drop-shadow-sm">
-                    Main Academic Complex & Research Centers
+                  <h2 className="font-bold text-sm sm:text-base md:text-lg leading-tight tracking-tight drop-shadow-sm font-serif-tnu">
+                    The Neotia University
                   </h2>
-                  <p className="text-[10px] sm:text-xs text-white/90 line-clamp-1 mt-0.5 font-normal">
-                    Equipped with high-performing teaching clusters, research labs, laboratories and modern academic facilities.
+                  <p className="text-[11px] sm:text-xs text-white/95 mt-1 font-normal leading-relaxed drop-shadow-xs">
+                    Modern academic campus with advanced facilities, research centres, laboratories and student-focused learning spaces.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* 7th CPC Scale Card */}
-            <div className="bg-white rounded-xl p-3 shadow-xs border border-[#D9CC86]/40 flex items-center gap-3">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-lg bg-[#D83232]/10 border border-[#D83232]/20 flex flex-col items-center justify-center shrink-0 text-[#D83232]">
-                <span className="font-serif-tnu text-lg sm:text-xl font-bold leading-none">
-                  7<sup className="text-[10px] font-semibold">th</sup>
-                </span>
-                <span className="text-[8px] font-bold uppercase tracking-tight text-[#765331]">
-                  CPC Scale
-                </span>
+            {/* Lower Information Card */}
+            <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3 shadow-xs border border-[#D9CC86]/40 flex items-center gap-3">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-lg bg-[#D83232]/10 border border-[#D83232]/20 flex items-center justify-center shrink-0 text-[#D83232]">
+                <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-[#D83232]" />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5 text-[#292727] font-bold text-xs sm:text-sm">
-                  <span>Ph.D. Central Pay Commission (CPC)</span>
+                  <span>Industry-Integrated Education</span>
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#B69A62] shrink-0 fill-[#B69A62]/20" />
                 </div>
-                <p className="text-[11px] sm:text-xs text-[#765331] truncate mt-0.5 font-medium">
-                  Plus Research Seed Grants up to ₹10 Lakhs & Housing Allowance
+                <p className="text-[11px] sm:text-xs text-[#765331] mt-0.5 font-medium leading-snug">
+                  Industry-focused academic programmes, modern infrastructure and experiential learning.
                 </p>
               </div>
             </div>
