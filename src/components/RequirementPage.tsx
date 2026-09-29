@@ -29,7 +29,7 @@ interface RequirementPageProps {
   onApplyNow: () => void;
   onNavigateHome: () => void;
   onNavigateSchools: () => void;
-  onNavigateVacancies: () => void;
+  onNavigateVacancies?: () => void;
 }
 
 export const RequirementPage: React.FC<RequirementPageProps> = ({
@@ -92,16 +92,18 @@ export const RequirementPage: React.FC<RequirementPageProps> = ({
               </button>
               <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
             </li>
-            <li className="inline-flex items-center gap-1">
-              <button
-                type="button"
-                onClick={onNavigateVacancies}
-                className="breadcrumb-item font-semibold cursor-pointer"
-              >
-                Vacancies
-              </button>
-              <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
-            </li>
+            {onNavigateVacancies && (
+              <li className="inline-flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={onNavigateVacancies}
+                  className="breadcrumb-item font-semibold cursor-pointer"
+                >
+                  School Posts
+                </button>
+                <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
+              </li>
+            )}
             <li className="inline-flex items-center text-[#6B1F2A] font-bold">
               <span>Post Requirements</span>
             </li>

@@ -31,7 +31,7 @@ interface ApplicationFormPageProps {
   onSubmitSuccess: (data: ApplicationFormData, applicationId: string) => void;
   onNavigateHome: () => void;
   onNavigateSchools: () => void;
-  onNavigateVacancies: () => void;
+  onNavigateVacancies?: () => void;
   onNavigateRequirement: () => void;
 }
 
@@ -377,14 +377,18 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
             Schools
           </button>
           <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
-          <button
-            type="button"
-            onClick={onNavigateVacancies}
-            className="breadcrumb-item font-semibold cursor-pointer"
-          >
-            Vacancies
-          </button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
+          {onNavigateVacancies && (
+            <>
+              <button
+                type="button"
+                onClick={onNavigateVacancies}
+                className="breadcrumb-item font-semibold cursor-pointer"
+              >
+                School Posts
+              </button>
+              <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
+            </>
+          )}
           <button
             type="button"
             onClick={onNavigateRequirement}

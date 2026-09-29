@@ -1,169 +1,622 @@
-import React from 'react';
-import { ArrowRight, MapPin, CheckCircle2, GraduationCap } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Home,
+  Search,
+  User,
+  Send,
+  Mic,
+  X,
+  Lock,
+  Mail,
+  Phone,
+  ShieldCheck,
+  CheckCircle2,
+} from 'lucide-react';
 import { TnuLogo } from './TnuLogo';
 import { Footer } from './Footer';
-import campusPhoto from '../assets/images/campus.jpg';
+import { VoiceConversationModal } from './VoiceConversationModal';
+import { SCHOOLS_DATA } from '../data/schools';
+import { School } from '../types';
+import bassRobotImage from '../assets/images/bass_robot.jpg';
+import tnuCampusPhoto from '../assets/images/tnu_campus_building.jpg';
 
 interface LandingHeroProps {
   onNavigateToSchools: () => void;
+  onApplyNow?: () => void;
+  onSelectSchool?: (school: School) => void;
 }
 
-export const LandingHero: React.FC<LandingHeroProps> = ({ onNavigateToSchools }) => {
+export const LandingHero: React.FC<LandingHeroProps> = ({
+  onNavigateToSchools,
+  onSelectSchool,
+}) => {
+  // Modal states
+  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
+  const [showCandidateLogin, setShowCandidateLogin] = useState(false);
+  const [showStaffLogin, setShowStaffLogin] = useState(false);
+  const [showAboutModal, setShowAboutModal] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showSearchModal, setShowSearchModal] = useState(false);
+
+  // Form states for modals
+  const [candidateId, setCandidateId] = useState('');
+  const [candidatePass, setCandidatePass] = useState('');
+  const [candidateLoginMsg, setCandidateLoginMsg] = useState('');
+
+  const [staffId, setStaffId] = useState('');
+  const [staffPass, setStaffPass] = useState('');
+  const [staffLoginMsg, setStaffLoginMsg] = useState('');
+
+  // Search query for quick search modal
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filtered schools for quick search
+  const filteredSchools = SCHOOLS_DATA.filter((school) => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase().trim();
+    return (
+      school.name.toLowerCase().includes(q) ||
+      school.streamLabel.toLowerCase().includes(q) ||
+      school.description.toLowerCase().includes(q)
+    );
+  });
+
+  const handleCandidateLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setCandidateLoginMsg('Verifying applicant credentials...');
+    setTimeout(() => {
+      setCandidateLoginMsg('✓ Welcome back. Application dossier FAC-2026-8942 is loaded.');
+      setTimeout(() => {
+        setShowCandidateLogin(false);
+        setCandidateLoginMsg('');
+      }, 1200);
+    }, 900);
+  };
+
+  const handleStaffLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setStaffLoginMsg('Authenticating institutional access...');
+    setTimeout(() => {
+      setStaffLoginMsg('✓ Authorized Selection Committee access verified.');
+      setTimeout(() => {
+        setShowStaffLogin(false);
+        setStaffLoginMsg('');
+      }, 1200);
+    }, 900);
+  };
+
   return (
-    <div className="min-h-screen w-full bg-[#F8F5EF] flex flex-col select-none">
-      {/* 1. HEADER: Top University Brand Bar */}
-      <header className="sticky top-0 z-40 w-full shrink-0 border-b border-[#C9A96E]/25 bg-[#F8F5EF]/95 backdrop-blur-md px-4 sm:px-6 py-3 flex items-center justify-between shadow-[0_2px_10px_rgba(36,31,32,0.02)]">
-        <div className="flex items-center gap-3">
-          <TnuLogo className="h-8 sm:h-9 md:h-10" />
-          <div className="hidden sm:block h-6 w-[1px] bg-[#C9A96E]/40" />
-          <span className="hidden sm:inline-block text-[14px] font-semibold text-[#625B58] tracking-tight">
-            Office of Academic Appointments & Faculty Affairs
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 text-[11px] sm:text-[12px] font-bold text-[#6B1F2A] bg-white border border-[#C9A96E]/40 px-3 py-1 rounded-full uppercase tracking-wider shadow-2xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#1B7340] animate-status-dot" />
-            2026–2027 Cycle • Active
-          </span>
+    <div className="min-h-screen w-full bg-white flex flex-col font-sans select-none text-[#1E293B]">
+      {/* ========================================================= */}
+      {/* 1. TOP NAVIGATION BAR                                      */}
+      {/* ========================================================= */}
+      <header className="sticky top-0 z-40 w-full bg-white border-b border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] px-4 sm:px-6 lg:px-8 py-2.5 transition-all">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          {/* Brand Logo on Left */}
+          <div className="flex items-center gap-3 shrink-0">
+            <TnuLogo className="h-9 sm:h-11" />
+          </div>
+
+          {/* Center Navigation Links (Desktop) */}
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+            {/* Active Home with Blue Icon and Blue Underline */}
+            <button
+              type="button"
+              className="relative flex items-center gap-1.5 text-[14px] font-semibold text-[#0D52BD] pb-1 cursor-pointer"
+            >
+              <Home className="w-4 h-4 text-[#0D52BD]" />
+              <span>Home</span>
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0D52BD] rounded-full" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowAboutModal(true)}
+              className="text-[14px] font-medium text-[#486581] hover:text-[#0D52BD] transition-colors cursor-pointer"
+            >
+              About TNU
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowHelpModal(true)}
+              className="text-[14px] font-medium text-[#486581] hover:text-[#0D52BD] transition-colors cursor-pointer"
+            >
+              Help & Support
+            </button>
+          </nav>
+
+          {/* Right Controls: Search + Candidate Login + Staff Login */}
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            {/* Search Button */}
+            <button
+              type="button"
+              onClick={() => setShowSearchModal(true)}
+              aria-label="Search Open Positions"
+              className="p-2 text-[#486581] hover:text-[#0D52BD] hover:bg-blue-50/70 rounded-full transition-colors cursor-pointer"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
+            {/* Candidate Login Button */}
+            <button
+              type="button"
+              onClick={() => setShowCandidateLogin(true)}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg border border-[#0D52BD] text-[#0D52BD] hover:bg-blue-50/80 active:scale-95 transition-all text-xs sm:text-[13px] font-semibold cursor-pointer shadow-2xs"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>Candidate Login</span>
+            </button>
+
+            {/* Staff Login Button */}
+            <button
+              type="button"
+              onClick={() => setShowStaffLogin(true)}
+              className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#0D52BD] hover:bg-[#0A4197] active:scale-95 text-white transition-all text-xs sm:text-[13px] font-semibold shadow-xs cursor-pointer"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>Staff Login</span>
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* 2. HERO: Main Hero Container */}
-      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 md:py-14 flex-1 flex flex-col justify-center">
-        {/* Split Grid for Desktop; Single Flow for Mobile */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* LEFT SIDE: Headings, Copy, CTAs */}
-          <div className="lg:col-span-6 flex flex-col justify-center gap-4 sm:gap-5 text-center lg:text-left">
-            {/* Announcement Badge (Manrope 700 11-12px slightly increased letter spacing) */}
-            <div className="flex justify-center lg:justify-start">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 border border-[#C9A96E]/40 shadow-xs backdrop-blur-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#6B1F2A]" />
-                <span className="text-[11px] sm:text-[12px] text-[#6B1F2A] font-bold tracking-wider uppercase">
-                  Inviting Applications for Faculty Positions 2026–2027
-                </span>
-              </div>
+      {/* ========================================================= */}
+      {/* 2. MAIN HERO SECTION (Campus Photo Background + Left copy + Bass) */}
+      {/* ========================================================= */}
+      <section className="relative w-full overflow-hidden min-h-[480px] md:min-h-[540px] lg:min-h-[580px] flex items-center border-b border-gray-100 flex-1">
+        {/* Full-width Panoramic Campus Photo Background */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <img
+            src={tnuCampusPhoto}
+            alt="The Neotia University Campus Building"
+            className="w-full h-full object-cover object-[center_42%]"
+          />
+          {/* Left-to-right soft white gradient so text is ultra-sharp and the architecture stands out */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-35% sm:via-white/90 sm:via-45% md:via-white/75 md:via-55% to-white/20 to-90% pointer-events-none" />
+        </div>
+
+        {/* Hero Content Container */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Left Column: Heading, Subtitle, Primary Action Button */}
+          <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-5 max-w-2xl">
+            {/* Top Logo / Brand Identity inside Hero */}
+            <div className="flex items-center gap-2">
+              <TnuLogo className="h-10 sm:h-12" />
             </div>
 
-            {/* Main Editorial Heading: DM Serif Display, Weight 400, Letter spacing: -0.02em */}
-            <h1 className="font-serif-tnu font-normal text-3xl sm:text-4xl md:text-5xl lg:text-[3.35rem] text-[#241F20] leading-[1.12] tracking-[-0.02em]">
-              Build the Future of <br className="hidden sm:inline" />
-              <span className="text-[#6B1F2A] not-italic font-serif-tnu font-normal">
-                Higher Learning & Research
-              </span>
+            {/* Main Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[2.75rem] font-bold text-[#0D2A54] leading-[1.15] tracking-tight">
+              Central Recruitment & <br className="hidden sm:inline" />
+              CV Management Portal
             </h1>
 
-            {/* Description: Manrope, 400, 15-17px, line height 1.6 */}
-            <p className="text-[15px] sm:text-[16px] text-[#625B58] leading-[1.6] max-w-xl mx-auto lg:mx-0 font-normal">
-              The Neotia University invites applications from distinguished academicians, scholars, and industry specialists with high research credentials for Assistant Professor, Associate Professor, and Chair Professor positions across six specialized academic schools.
+            {/* Subtitle */}
+            <p className="text-sm sm:text-base md:text-lg text-[#334E68] leading-relaxed font-normal">
+              Apply for opportunities. Track your application. <br className="hidden sm:inline" />
+              Build your career with TNU.
             </p>
 
-            {/* CTA Buttons: Manrope 700, 14-15px */}
-            <div className="flex items-center justify-center lg:justify-start gap-3 pt-2">
+            {/* Primary Action Button: Career */}
+            <div className="flex items-center gap-3 pt-2">
               <button
                 type="button"
                 onClick={onNavigateToSchools}
-                className="btn-primary-tnu inline-flex items-center justify-center gap-2.5 py-3 sm:py-3.5 px-6 sm:px-8 text-[14px] sm:text-[15px] font-bold tracking-wide cursor-pointer whitespace-nowrap group"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#0D52BD] hover:bg-[#0A4197] active:scale-95 text-white font-semibold text-sm shadow-sm transition-all cursor-pointer whitespace-nowrap"
               >
-                <span>Submit Faculty Candidature</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                <Send className="w-4 h-4 -rotate-45" />
+                <span>Career</span>
               </button>
             </div>
           </div>
 
-          {/* RIGHT SIDE: Campus Visual Card & Lower Information Card */}
-          <div className="lg:col-span-6 flex flex-col gap-3.5 max-w-lg mx-auto w-full">
-            {/* Campus Image Card with 20px radius & champagne border */}
-            <div className="relative rounded-[20px] overflow-hidden shadow-md bg-white border border-[#C9A96E]/40 group transition-all duration-300">
-              <div className="relative h-52 sm:h-60 md:h-64 lg:h-72 w-full overflow-hidden">
-                <img
-                  src={campusPhoto}
-                  alt="The Neotia University Campus"
-                  className="w-full h-full object-cover object-[center_35%] group-hover:scale-[1.02] transition-transform duration-600 ease-out"
-                  loading="eager"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#241F20]/85 via-[#241F20]/35 to-transparent pointer-events-none" />
+          {/* Right Column: AI Voice Assistant "Bass" Interactive Widget */}
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center pt-4 lg:pt-0">
+            <div className="relative flex flex-col items-center lg:items-end gap-3 max-w-sm sm:max-w-md w-full">
+              {/* Row with Speech Bubble on Left and Robot Mascot on Right */}
+              <div className="flex items-start gap-3 w-full justify-end">
+                {/* Speech Bubble Card */}
+                <div className="relative bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-blue-50/80 text-left max-w-[270px] sm:max-w-[290px] transition-all">
+                  {/* Speech Bubble Arrow pointing to the robot */}
+                  <div className="hidden sm:block absolute -right-2 top-8 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-l-8 border-l-white/95" />
 
-                {/* Location Overlay Pill (Glassmorphic) */}
-                <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md shadow-xs border border-white/70">
-                  <MapPin className="w-3 h-3 text-[#6B1F2A] shrink-0" />
-                  <span className="text-[11px] text-[#241F20] font-bold tracking-wider uppercase">
-                    The Neotia University, Sarisha, West Bengal
-                  </span>
-                </div>
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="font-bold text-[14px] text-[#0D2A54]">
+                      Hi! I'm Bass
+                    </span>
+                    <span className="text-sm">👋</span>
+                  </div>
 
-                {/* Image Overlay Title & Supporting Text */}
-                <div className="absolute bottom-3 sm:bottom-4 left-4 right-4 text-white">
-                  <h2 className="text-base sm:text-lg md:text-xl leading-tight tracking-tight drop-shadow-xs font-serif-tnu font-normal">
-                    The Neotia University
-                  </h2>
-                  <p className="text-[12px] sm:text-[13px] text-white/90 mt-1 font-medium leading-relaxed drop-shadow-2xs">
-                    Modern academic campus with advanced facilities, research centres, laboratories and student-focused learning spaces.
+                  <p className="font-semibold text-xs text-[#0D52BD] mb-1.5">
+                    Your AI voice assistant.
                   </p>
+
+                  <p className="text-[11px] sm:text-xs text-gray-600 leading-relaxed mb-2 font-normal">
+                    I can help you find vacancies, check your application status, answer your queries and more.
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsVoiceModalOpen(true)}
+                    className="text-[12px] font-bold text-[#0D52BD] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>Just say what you need!</span>
+                  </button>
+                </div>
+
+                {/* Robot Mascot: Bass */}
+                <div
+                  onClick={() => setIsVoiceModalOpen(true)}
+                  className="relative shrink-0 cursor-pointer group hover:scale-105 transition-transform"
+                  title="Click to talk with Bass AI"
+                >
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/90 p-1.5 shadow-lg border-2 border-blue-100 flex items-center justify-center overflow-hidden">
+                    <img
+                      src={bassRobotImage}
+                      alt="Bass - TNU AI Voice Assistant"
+                      className="w-full h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  {/* Subtle live indicator badge on avatar */}
+                  <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white ring-1 ring-emerald-300" />
+                </div>
+              </div>
+
+              {/* Glowing Microphone Button + Equalizer Waves Row */}
+              <div className="flex items-center justify-center lg:justify-end gap-3 w-full pr-2 sm:pr-8 py-1">
+                {/* Big Glowing Circular Blue Microphone Button */}
+                <button
+                  type="button"
+                  onClick={() => setIsVoiceModalOpen(true)}
+                  aria-label="Start Voice Conversation with Bass"
+                  className="relative w-14 h-14 rounded-full bg-gradient-to-tr from-[#0D52BD] via-[#1A67DD] to-[#2B79F5] text-white flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer ring-4 ring-blue-100/90 group"
+                >
+                  <span className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-20 pointer-events-none" />
+                  <Mic className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+                </button>
+
+                {/* Animated Sound Equalizer Waves */}
+                <div className="flex items-center gap-1 h-7">
+                  <span className="w-1 bg-[#0D52BD] rounded-full animate-[pulse_1s_ease-in-out_infinite] h-3" />
+                  <span className="w-1 bg-[#1A67DD] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] h-5" />
+                  <span className="w-1 bg-[#0D52BD] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] h-6" />
+                  <span className="w-1 bg-[#2B79F5] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] h-4" />
+                  <span className="w-1 bg-[#0D52BD] rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-2.5" />
+                </div>
+              </div>
+
+              {/* "Try saying..." Prompt Card */}
+              <div
+                onClick={() => {
+                  setIsVoiceModalOpen(true);
+                }}
+                className="bg-white/95 backdrop-blur-md border border-gray-200/90 hover:border-[#0D52BD] rounded-xl px-4 py-2 shadow-sm hover:shadow-md transition-all cursor-pointer flex items-center gap-2 text-xs group"
+              >
+                <span className="text-[11px] text-gray-500 font-medium">Try saying...</span>
+                <div className="flex items-center gap-1.5 text-[#0D52BD] font-semibold group-hover:underline">
+                  <Mic className="w-3.5 h-3.5" />
+                  <span>"Show available positions"</span>
                 </div>
               </div>
             </div>
-
-            {/* Lower Information Card */}
-            <div className="glass-panel p-3.5 sm:p-4 rounded-[18px] flex items-center gap-3.5 bg-white/85">
-              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#6B1F2A]/10 border border-[#6B1F2A]/20 flex items-center justify-center shrink-0 text-[#6B1F2A]">
-                <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-1.5 text-[#241F20] font-semibold text-[14px]">
-                  <span>Industry-Integrated Education</span>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#C9A96E] shrink-0" />
-                </div>
-                <p className="text-[12px] sm:text-[13px] text-[#625B58] mt-0.5 leading-snug font-normal">
-                  Industry-focused academic programmes, modern infrastructure and experiential learning.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      {/* 3. STATISTICS: 4 Academic Metric Cards */}
-      <section className="w-full shrink-0 border-y border-[#C9A96E]/25 bg-white/60 backdrop-blur-xs px-4 sm:px-6 py-5 sm:py-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
-          <div className="bg-white/80 rounded-[16px] p-3 sm:p-4 text-center shadow-xs border border-[#C9A96E]/30 flex flex-col justify-center items-center glass-card-hover">
-            <span className="font-serif-tnu font-normal text-2xl sm:text-3xl md:text-4xl text-[#6B1F2A] leading-none">
-              06
-            </span>
-            <span className="text-[11px] sm:text-[12px] text-[#625B58] font-bold tracking-wider uppercase mt-1.5">
-              Academic Schools
-            </span>
-          </div>
-
-          <div className="bg-white/80 rounded-[16px] p-3 sm:p-4 text-center shadow-xs border border-[#C9A96E]/30 flex flex-col justify-center items-center glass-card-hover">
-            <span className="font-serif-tnu font-normal text-2xl sm:text-3xl md:text-4xl text-[#6B1F2A] leading-none">
-              12+
-            </span>
-            <span className="text-[11px] sm:text-[12px] text-[#625B58] font-bold tracking-wider uppercase mt-1.5">
-              Faculty Openings
-            </span>
-          </div>
-
-          <div className="bg-white/80 rounded-[16px] p-3 sm:p-4 text-center shadow-xs border border-[#C9A96E]/30 flex flex-col justify-center items-center glass-card-hover">
-            <span className="font-serif-tnu font-normal text-2xl sm:text-3xl md:text-4xl text-[#6B1F2A] leading-none">
-              50+
-            </span>
-            <span className="text-[11px] sm:text-[12px] text-[#625B58] font-bold tracking-wider uppercase mt-1.5">
-              Acres Green Campus
-            </span>
-          </div>
-
-          <div className="bg-white/80 rounded-[16px] p-3 sm:p-4 text-center shadow-xs border border-[#C9A96E]/30 flex flex-col justify-center items-center glass-card-hover">
-            <span className="font-serif-tnu font-normal text-2xl sm:text-3xl md:text-4xl text-[#6B1F2A] leading-none">
-              14:1
-            </span>
-            <span className="text-[11px] sm:text-[12px] text-[#625B58] font-bold tracking-wider uppercase mt-1.5">
-              Student-Faculty Ratio
-            </span>
           </div>
         </div>
       </section>
 
-      {/* 4. FOOTER */}
+      {/* ========================================================= */}
+      {/* 3. MODALS (Candidate Login, Staff Login, About, Help, Voice) */}
+      {/* ========================================================= */}
+
+      {/* Candidate Login Modal */}
+      {showCandidateLogin && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
+            <button
+              onClick={() => {
+                setShowCandidateLogin(false);
+                setCandidateLoginMsg('');
+              }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0D52BD] flex items-center justify-center">
+                <User className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-[#0D2A54]">Candidate Portal Login</h3>
+                <p className="text-xs text-gray-500">Access your application dossier and track status</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleCandidateLogin} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Application ID or Registered Email
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. FAC-2026-8942 or name@domain.com"
+                  value={candidateId}
+                  onChange={(e) => setCandidateId(e.target.value)}
+                  className="w-full text-sm px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD] focus:ring-1 focus:ring-blue-100"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Password or Date of Birth (YYYY-MM-DD)
+                </label>
+                <input
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  value={candidatePass}
+                  onChange={(e) => setCandidatePass(e.target.value)}
+                  className="w-full text-sm px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD] focus:ring-1 focus:ring-blue-100"
+                />
+              </div>
+
+              {candidateLoginMsg && (
+                <div className="p-2.5 bg-blue-50 border border-blue-200 text-xs font-semibold text-[#0D52BD] rounded-lg">
+                  {candidateLoginMsg}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="w-full py-2.5 bg-[#0D52BD] hover:bg-[#0A4197] text-white font-semibold rounded-xl text-sm shadow-xs transition-colors cursor-pointer"
+              >
+                Sign In to Candidate Dashboard
+              </button>
+            </form>
+
+            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowCandidateLogin(false);
+                  onNavigateToSchools();
+                }}
+                className="text-[#0D52BD] hover:underline font-semibold"
+              >
+                New Applicant? Apply Now
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowHelpModal(true)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                Forgot Credentials?
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Staff Login Modal */}
+      {showStaffLogin && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
+            <button
+              onClick={() => {
+                setShowStaffLogin(false);
+                setStaffLoginMsg('');
+              }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0D52BD] flex items-center justify-center">
+                <Lock className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-[#0D2A54]">Staff & Screening Committee Login</h3>
+                <p className="text-xs text-gray-500">Authorized administrative and scrutiny desk</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleStaffLogin} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Institutional Staff ID or Email
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. dean.tech@tnu.ac.in"
+                  value={staffId}
+                  onChange={(e) => setStaffId(e.target.value)}
+                  className="w-full text-sm px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD] focus:ring-1 focus:ring-blue-100"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Institutional Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  value={staffPass}
+                  onChange={(e) => setStaffPass(e.target.value)}
+                  className="w-full text-sm px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD] focus:ring-1 focus:ring-blue-100"
+                />
+              </div>
+
+              {staffLoginMsg && (
+                <div className="p-2.5 bg-blue-50 border border-blue-200 text-xs font-semibold text-[#0D52BD] rounded-lg">
+                  {staffLoginMsg}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="w-full py-2.5 bg-[#0D52BD] hover:bg-[#0A4197] text-white font-semibold rounded-xl text-sm shadow-xs transition-colors cursor-pointer"
+              >
+                Access Recruitment Administration
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* About TNU Modal */}
+      {showAboutModal && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-gray-100 max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setShowAboutModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <TnuLogo className="h-10" />
+            </div>
+
+            <h3 className="text-xl font-bold text-[#0D2A54] mb-2">About The Neotia University (TNU)</h3>
+            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
+              The Neotia University is a premier multidisciplinary institution established by the West Bengal State Legislature and promoted by the distinguished Ambuja Neotia Group. Spread across a sprawling 50+ acre lush green campus in Sarisha, South 24 Parganas, TNU is committed to academic rigor, futuristic pedagogy, and high-impact scholarly research.
+            </p>
+
+            <div className="space-y-2.5 text-xs text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4">
+              <div className="flex items-center gap-2 font-semibold text-[#0D2A54]">
+                <CheckCircle2 className="w-4 h-4 text-[#0D52BD]" />
+                <span>Statutory UGC Recognition & AICTE / PCI / BCI / DG Shipping Approvals</span>
+              </div>
+              <div className="flex items-center gap-2 font-semibold text-[#0D2A54]">
+                <CheckCircle2 className="w-4 h-4 text-[#0D52BD]" />
+                <span>Modern R&D Centres, Robotics & Nvidia AI Computing Clusters</span>
+              </div>
+              <div className="flex items-center gap-2 font-semibold text-[#0D2A54]">
+                <CheckCircle2 className="w-4 h-4 text-[#0D52BD]" />
+                <span>7th CPC Scale implementation with faculty research grants</span>
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowAboutModal(false)}
+                className="px-4 py-2 bg-[#0D52BD] text-white rounded-lg text-xs font-semibold"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Help & Support Modal */}
+      {showHelpModal && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-gray-100">
+            <button
+              onClick={() => setShowHelpModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <h3 className="text-lg font-bold text-[#0D2A54] mb-1">Help & Recruitment Support</h3>
+            <p className="text-xs text-gray-500 mb-4">
+              Office of Academic Appointments & Faculty Affairs
+            </p>
+
+            <div className="space-y-3 text-xs text-gray-700 bg-blue-50/50 p-4 rounded-xl border border-blue-100 mb-4">
+              <div className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-[#0D52BD]" />
+                <span>recruitment@tnu.ac.in</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-[#0D52BD]" />
+                <span>+91 33 2456 7890 / Ext. 204</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <ShieldCheck className="w-4 h-4 text-[#0D52BD]" />
+                <span>Monday – Friday: 9:30 AM – 5:30 PM IST</span>
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowHelpModal(false)}
+                className="px-4 py-2 bg-[#0D52BD] text-white rounded-lg text-xs font-semibold"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Quick Search Modal */}
+      {showSearchModal && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-start justify-center pt-20 p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl relative border border-gray-100">
+            <button
+              onClick={() => setShowSearchModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <h4 className="text-base font-bold text-[#0D2A54] mb-3">Search Portal</h4>
+            <div className="relative mb-4">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search computer science, AI, pharmacy, management..."
+                className="w-full text-sm pl-9 pr-3 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD]"
+              />
+            </div>
+
+            <div className="max-h-60 overflow-y-auto space-y-2">
+              {filteredSchools.slice(0, 4).map((s) => (
+                <div
+                  key={s.id}
+                  onClick={() => {
+                    setShowSearchModal(false);
+                    if (onSelectSchool) onSelectSchool(s);
+                    else onNavigateToSchools();
+                  }}
+                  className="p-3 rounded-lg hover:bg-blue-50/70 border border-gray-100 cursor-pointer flex items-center justify-between"
+                >
+                  <div>
+                    <h5 className="text-xs font-bold text-[#0D2A54]">{s.name}</h5>
+                    <p className="text-[11px] text-gray-500">{s.streamLabel}</p>
+                  </div>
+                  <span className="text-[10px] font-bold text-[#0D52BD] bg-blue-50 px-2 py-0.5 rounded-full">
+                    {s.openPositionsCount || 0} Openings
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Live AI Voice Assistant Modal with Bass */}
+      <VoiceConversationModal
+        isOpen={isVoiceModalOpen}
+        onClose={() => setIsVoiceModalOpen(false)}
+      />
+
+      {/* ========================================================= */}
+      {/* 4. FOOTER                                                 */}
+      {/* ========================================================= */}
       <Footer />
     </div>
   );
