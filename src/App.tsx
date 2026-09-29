@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { LandingHero } from './components/LandingHero';
 import { SchoolsPage } from './components/SchoolsPage';
-import { SchoolDetailPage } from './components/SchoolDetailPage';
 import { VacantPositionsPage } from './components/VacantPositionsPage';
 import { RequirementPage } from './components/RequirementPage';
 import { ApplicationFormPage } from './components/ApplicationFormPage';
 import { SuccessPage } from './components/SuccessPage';
+import { AmbientBackground } from './components/AmbientBackground';
 import { ApplicationFormData, School, VacantPosition } from './types';
 import { SCHOOLS_DATA } from './data/schools';
 import { VACANT_POSITIONS_DATA } from './data/positions';
 
-type PageState = 'landing' | 'schools' | 'school-detail' | 'vacancies' | 'requirement' | 'form' | 'success';
+type PageState = 'landing' | 'schools' | 'vacancies' | 'requirement' | 'form' | 'success';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageState>('landing');
@@ -25,19 +25,12 @@ export default function App() {
   // Navigation Handlers
   const navigateToLanding = () => setCurrentPage('landing');
   const navigateToSchools = () => setCurrentPage('schools');
-  const navigateToSchoolDetail = () => setCurrentPage('school-detail');
   const navigateToVacancies = () => setCurrentPage('vacancies');
   const navigateToRequirement = () => setCurrentPage('requirement');
   const navigateToForm = () => setCurrentPage('form');
 
-  // School Click Handler: Shows school information details & courses first!
+  // School Click Handler: Directly opens vacant positions in selected school
   const handleSelectSchool = (school: School) => {
-    setSelectedSchool(school);
-    setCurrentPage('school-detail');
-  };
-
-  // View Vacancies From School Details
-  const handleViewVacanciesFromSchool = (school: School) => {
     setSelectedSchool(school);
     setCurrentPage('vacancies');
   };
@@ -56,7 +49,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F6F0] text-[#292727] font-sans antialiased selection:bg-[#D83232]/20 selection:text-[#D83232]">
+    <div className="min-h-screen bg-[#F8F5EF] text-[#241F20] font-sans antialiased selection:bg-[#6B1F2A]/15 selection:text-[#6B1F2A] relative">
+      <AmbientBackground />
+      <div className="relative z-10">
       {/* PAGE 1: CAREER LANDING PAGE */}
       {currentPage === 'landing' && (
         <LandingHero onNavigateToSchools={navigateToSchools} />
@@ -79,26 +74,7 @@ export default function App() {
         </>
       )}
 
-      {/* PAGE 2.2: SCHOOL INFORMATION & COMPLETE COURSES DETAILS */}
-      {currentPage === 'school-detail' && selectedSchool && (
-        <>
-          <Header
-            title={selectedSchool.name}
-            subtitle={`School Details • ${selectedSchool.courseCount || (selectedSchool.courses ? selectedSchool.courses.length : 0)} Academic Programs`}
-            badge={selectedSchool.streamLabel}
-            showBack={true}
-            onBack={navigateToSchools}
-          />
-          <SchoolDetailPage
-            school={selectedSchool}
-            onViewVacancies={handleViewVacanciesFromSchool}
-            onNavigateHome={navigateToLanding}
-            onNavigateSchools={navigateToSchools}
-          />
-        </>
-      )}
-
-      {/* PAGE 2.5: VACANT / OPENED POSITIONS IN SELECTED SCHOOL */}
+      {/* PAGE 3: VACANT / OPENED POSITIONS IN SELECTED SCHOOL */}
       {currentPage === 'vacancies' && (
         <>
           <Header
@@ -106,19 +82,18 @@ export default function App() {
             subtitle="Faculty Vacancies (7th CPC Scale)"
             badge="HIRING 2026-27"
             showBack={true}
-            onBack={selectedSchool ? navigateToSchoolDetail : navigateToSchools}
+            onBack={navigateToSchools}
           />
           <VacantPositionsPage
             school={selectedSchool}
             onSelectPosition={handleSelectPosition}
             onNavigateHome={navigateToLanding}
             onNavigateSchools={navigateToSchools}
-            onNavigateSchoolDetail={navigateToSchoolDetail}
           />
         </>
       )}
 
-      {/* PAGE 3: REQUIREMENT / POST DETAILS */}
+      {/* PAGE 4: REQUIREMENT / POST DETAILS */}
       {currentPage === 'requirement' && (
         <>
           <Header
@@ -181,6 +156,7 @@ export default function App() {
           />
         </>
       )}
+      </div>
     </div>
   );
 }

@@ -3,7 +3,6 @@ import {
   Home,
   ChevronRight,
   Search,
-  CheckCircle2,
   ArrowRight,
   BookOpen,
   Code2,
@@ -19,7 +18,6 @@ import {
   Building,
   TrendingUp,
   X,
-  Lock,
   Megaphone,
 } from 'lucide-react';
 import { SCHOOLS_DATA } from '../data/schools';
@@ -37,9 +35,9 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [filterActiveOnly, setFilterActiveOnly] = useState(false);
 
-  // Icon mapping helper
+  // Icon mapping helper with burgundy / muted styling
   const renderSchoolIcon = (id: string, hasReq: boolean) => {
-    const iconClass = hasReq ? 'w-5 h-5 text-[#D83232]' : 'w-5 h-5 text-[#765331]/60';
+    const iconClass = hasReq ? 'w-5 h-5 text-[#6B1F2A]' : 'w-5 h-5 text-[#8A817C]';
     switch (id) {
       case 'school-of-technology':
         return <Code2 className={iconClass} />;
@@ -90,72 +88,74 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
   }, [searchQuery, filterActiveOnly]);
 
   return (
-    <div className="w-full bg-[#F8F6F0] min-h-[calc(100vh-64px)] pb-16 select-none">
+    <div className="w-full bg-[#F8F5EF] min-h-[calc(100vh-64px)] pb-16 select-none page-enter">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 flex flex-col gap-5 sm:gap-6">
-        {/* Breadcrumb Navigation */}
+        {/* Breadcrumb Navigation: Manrope 600, 14-15px */}
         <nav aria-label="Academic Path Breadcrumb" className="overflow-x-auto whitespace-nowrap">
-          <ol className="flex items-center gap-1.5 text-xs text-[#765331]">
+          <ol className="flex items-center gap-1.5 text-[14px] text-[#625B58]">
             <li className="inline-flex items-center gap-1">
               <button
                 type="button"
                 onClick={onNavigateHome}
-                className="hover:text-[#D83232] transition-colors inline-flex items-center gap-1 font-medium cursor-pointer"
+                className="breadcrumb-item gap-1 font-semibold cursor-pointer"
               >
-                <Home className="w-3.5 h-3.5" />
+                <Home className="w-4 h-4" />
                 <span>Home</span>
               </button>
-              <ChevronRight className="w-3.5 h-3.5 text-[#B69A62]/60" />
+              <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
             </li>
             <li className="inline-flex items-center gap-1">
-              <span className="font-medium text-[#765331]">Career</span>
-              <ChevronRight className="w-3.5 h-3.5 text-[#B69A62]/60" />
+              <span className="font-semibold text-[#625B58]">Career</span>
+              <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
             </li>
-            <li className="text-[#D83232] font-bold">Schools Directory</li>
+            <li className="text-[#6B1F2A] font-bold">Schools Directory</li>
           </ol>
         </nav>
 
         {/* Page Heading & Editorial Subtitle */}
         <div className="flex flex-col gap-1.5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#B69A62]/15 border border-[#D9CC86]/50 shadow-xs w-fit">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D83232] animate-pulse" />
-            <span className="text-[10px] sm:text-xs text-[#B4141D] font-bold tracking-wider uppercase">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#C9A96E]/40 shadow-xs w-fit">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#6B1F2A]" />
+            <span className="text-[11px] sm:text-[12px] text-[#6B1F2A] font-bold tracking-wider uppercase">
               12 Academic Schools & Faculties
             </span>
           </div>
 
-          <h1 className="font-serif-tnu text-2xl sm:text-3xl md:text-4xl font-bold text-[#292727] tracking-tight">
+          {/* Section Heading: DM Serif Display, Font weight 400 */}
+          <h1 className="font-serif-tnu font-normal text-2xl sm:text-3xl md:text-4xl text-[#241F20] tracking-[-0.01em]">
             Explore Schools & Academic Disciplines
           </h1>
 
-          <p className="text-xs sm:text-sm text-[#5B403D] leading-relaxed max-w-3xl">
+          <p className="text-[15px] sm:text-[16px] text-[#625B58] leading-[1.6] max-w-3xl font-normal">
             Review school credentials and open faculty positions. Positions with active recruitment requirements have enabled exploration actions below.
           </p>
         </div>
 
         {/* Recruitment Status Callout Banner */}
-        <div className="bg-[#FAF8F5] border border-[#D9CC86]/50 rounded-xl p-3 sm:p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="bg-white/80 border border-[#C9A96E]/35 rounded-[16px] p-3.5 sm:p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#D83232] text-white flex items-center justify-center shrink-0 shadow-xs">
-              <Megaphone className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-[#6B1F2A] text-white flex items-center justify-center shrink-0 shadow-xs">
+              <Megaphone className="w-4 h-4 text-[#D8BD7A]" />
             </div>
             <div>
-              <span className="font-bold text-xs sm:text-sm text-[#292727] block">
+              <span className="font-semibold text-[14px] sm:text-[15px] text-[#241F20] block">
                 Cycle 2026–2027 Active Hiring Stream
               </span>
-              <span className="text-[11px] text-[#765331]">
+              <span className="text-[12px] sm:text-[13px] text-[#625B58] font-medium">
                 {activeSchoolsCount} of 12 schools currently have open requirements and active vacancies.
               </span>
             </div>
           </div>
 
+          {/* Filter Toggles: Buttons Manrope 700 14px */}
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => setFilterActiveOnly(false)}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-[13px] sm:text-[14px] font-bold transition-all cursor-pointer ${
                 !filterActiveOnly
-                  ? 'bg-[#4A351F] text-white'
-                  : 'bg-white text-[#765331] border border-[#D9CC86]/50'
+                  ? 'bg-[#6B1F2A] text-white shadow-xs'
+                  : 'bg-white text-[#625B58] border border-[#C9A96E]/40 hover:bg-[#F8F5EF]'
               }`}
             >
               All Schools (12)
@@ -163,10 +163,10 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
             <button
               type="button"
               onClick={() => setFilterActiveOnly(true)}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-[13px] sm:text-[14px] font-bold transition-all cursor-pointer ${
                 filterActiveOnly
-                  ? 'bg-[#D83232] text-white shadow-xs'
-                  : 'bg-white text-[#765331] border border-[#D9CC86]/50'
+                  ? 'bg-[#6B1F2A] text-white shadow-xs'
+                  : 'bg-white text-[#625B58] border border-[#C9A96E]/40 hover:bg-[#F8F5EF]'
               }`}
             >
               With Openings Only ({activeSchoolsCount})
@@ -174,21 +174,21 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
           </div>
         </div>
 
-        {/* Search Controls */}
+        {/* Search Controls: Input Manrope 400 */}
         <div className="relative">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#765331]" />
+          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8A817C]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search school by discipline, engineering, pharmacy, nursing, management..."
-            className="w-full bg-white text-[#292727] text-xs sm:text-sm pl-10 pr-4 py-2.5 rounded-lg border border-[#D9CC86]/50 shadow-2xs placeholder:text-[#765331]/60 focus:outline-none focus:border-[#D83232] focus:ring-1 focus:ring-[#D83232] transition-colors"
+            className="w-full bg-white text-[#241F20] text-[14px] sm:text-[15px] font-normal pl-10 pr-4 py-2.5 rounded-xl border border-[#C9A96E]/40 shadow-2xs placeholder:text-[#8A817C] focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 transition-colors"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#765331] hover:text-[#292727] p-0.5 cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8A817C] hover:text-[#241F20] p-1 cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -210,18 +210,18 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
                     onSelectSchool(school);
                   }
                 }}
-                className={`rounded-xl shadow-xs overflow-hidden relative flex flex-col justify-between transition-all duration-300 ${
+                className={`rounded-[18px] shadow-xs overflow-hidden relative flex flex-col justify-between transition-all duration-300 ${
                   hasRequirement
-                    ? 'bg-white border border-[#D9CC86]/70 hover:border-[#D83232]/60 hover:-translate-y-1 hover:shadow-md cursor-pointer group'
-                    : 'bg-white/60 border border-[#EBE6DF] opacity-85 cursor-default'
+                    ? 'bg-white border border-[#C9A96E]/40 hover:border-[#6B1F2A]/60 hover:-translate-y-1 hover:shadow-md cursor-pointer group'
+                    : 'bg-white/60 border border-[#EEE9DF] opacity-80 cursor-default'
                 }`}
               >
-                {/* Accent strip on top */}
+                {/* Accent strip on top: Burgundy when active, muted when inactive */}
                 <div
                   className={`h-1 w-full transition-all ${
                     hasRequirement
-                      ? 'bg-[#D83232] group-hover:h-1.5'
-                      : 'bg-[#EBE6DF]'
+                      ? 'bg-[#6B1F2A] group-hover:h-1.5'
+                      : 'bg-[#EEE9DF]'
                   }`}
                 />
 
@@ -229,23 +229,24 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3 min-w-0">
                       <div
-                        className={`w-11 h-11 rounded-lg flex items-center justify-center shrink-0 transition-transform ${
+                        className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform ${
                           hasRequirement
-                            ? 'bg-[#D83232]/10 border border-[#D83232]/20 group-hover:scale-105'
-                            : 'bg-[#EBE6DF]/70 text-[#765331]/60'
+                            ? 'bg-[#6B1F2A]/10 border border-[#6B1F2A]/20 group-hover:scale-105'
+                            : 'bg-[#EEE9DF]/70 text-[#8A817C]'
                         }`}
                       >
                         {renderSchoolIcon(school.id, hasRequirement)}
                       </div>
                       <div className="flex flex-col min-w-0">
-                        <span className="text-[10px] sm:text-xs uppercase tracking-wider text-[#765331] font-bold">
+                        <span className="text-[11px] uppercase tracking-wider text-[#625B58] font-bold">
                           {school.streamLabel}
                         </span>
+                        {/* School Heading: DM Serif Display, 400 */}
                         <h2
-                          className={`font-bold text-base sm:text-lg truncate transition-colors ${
+                          className={`font-serif-tnu font-normal text-lg sm:text-xl truncate transition-colors ${
                             hasRequirement
-                              ? 'text-[#292727] group-hover:text-[#D83232]'
-                              : 'text-[#292727]/70'
+                              ? 'text-[#241F20] group-hover:text-[#6B1F2A]'
+                              : 'text-[#241F20]/60'
                           }`}
                         >
                           {school.name}
@@ -253,39 +254,39 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
                       </div>
                     </div>
 
-                    {/* Status Badge: Active vs Inactive */}
+                    {/* Status Badge: Manrope 700 11-12px slightly increased letter spacing */}
                     {hasRequirement ? (
-                      <span className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#D83232]/10 text-[#D83232] border border-[#D83232]/20 text-[10px] font-bold tracking-wide uppercase">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#D83232] animate-pulse" />
-                        <span>{openPos} Openings</span>
+                      <span className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#1B7340]/10 text-[#1B7340] border border-[#1B7340]/25 text-[11px] font-bold tracking-wider uppercase">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#1B7340] animate-status-dot" />
+                        <span>OPEN • {openPos} Vacancies</span>
                       </span>
                     ) : (
-                      <span className="shrink-0 px-2 py-0.5 rounded-full bg-[#EBE6DF] text-[#765331]/70 text-[10px] font-semibold uppercase">
-                        No Current Opening
+                      <span className="shrink-0 px-2.5 py-0.5 rounded-full bg-[#EEE9DF] text-[#8A817C] text-[11px] font-bold uppercase tracking-wider">
+                        CLOSED / No Openings
                       </span>
                     )}
                   </div>
 
                   <p
-                    className={`text-xs sm:text-sm leading-relaxed line-clamp-2 ${
-                      hasRequirement ? 'text-[#5B403D]' : 'text-[#5B403D]/70'
+                    className={`text-[14px] leading-[1.6] line-clamp-2 font-normal ${
+                      hasRequirement ? 'text-[#625B58]' : 'text-[#625B58]/70'
                     }`}
                   >
                     {school.description}
                   </p>
 
-                  {/* Metrics Box: Courses & Vacancy */}
-                  <div className="bg-[#FAF8F5] border border-[#D9CC86]/40 rounded-lg p-2.5 flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-1.5 text-[#292727] font-semibold">
-                      <BookOpen className={`w-3.5 h-3.5 ${hasRequirement ? 'text-[#D83232]' : 'text-[#765331]/50'}`} />
+                  {/* Metrics Box: Programs & Ratio - Manrope 500 12-13px */}
+                  <div className="bg-[#F8F5EF] border border-[#EEE9DF] rounded-xl p-2.5 flex items-center justify-between text-[12px] sm:text-[13px]">
+                    <div className="flex items-center gap-1.5 text-[#241F20] font-semibold">
+                      <BookOpen className={`w-3.5 h-3.5 ${hasRequirement ? 'text-[#6B1F2A]' : 'text-[#8A817C]'}`} />
                       <span>{courseCount} Academic Programs</span>
                     </div>
-                    <div className="text-[11px] text-[#765331] font-medium">
+                    <div className="text-[12px] text-[#625B58] font-medium">
                       Ratio: {school.studentFacultyRatio || '14:1'}
                     </div>
                   </div>
 
-                  {/* Primary CTA Button: ENABLED IF REQUIREMENT IS AVAILABLE, NEITHER NOT */}
+                  {/* Primary Action Button: Manrope 700 14px */}
                   <div className="pt-1">
                     {hasRequirement ? (
                       <button
@@ -294,22 +295,15 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
                           e.stopPropagation();
                           onSelectSchool(school);
                         }}
-                        className="w-full bg-[#FAF8F5] group-hover:bg-[#D83232] group-hover:text-white text-[#765331] font-bold text-xs py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 border border-[#D9CC86]/60 group-hover:border-[#D83232] transition-all duration-200 shadow-2xs cursor-pointer"
+                        className="w-full bg-[#F8F5EF] group-hover:bg-[#6B1F2A] group-hover:text-white text-[#6B1F2A] font-bold text-[14px] py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 border border-[#C9A96E]/40 group-hover:border-[#6B1F2A] transition-all duration-200 shadow-2xs cursor-pointer"
                       >
                         <span>Explore School Details & Openings</span>
-                        <ArrowRight className="w-4 h-4 text-[#D83232] group-hover:text-white transition-colors" />
+                        <ArrowRight className="w-4 h-4 text-[#6B1F2A] group-hover:text-white transition-colors" />
                       </button>
                     ) : (
-                      <button
-                        type="button"
-                        disabled={true}
-                        aria-disabled="true"
-                        className="w-full bg-[#F2ECE4]/70 text-[#765331]/50 font-bold text-xs py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 border border-[#EBE6DF] cursor-not-allowed shadow-none"
-                        title="No vacancies currently available for this school in cycle 2026-27"
-                      >
-                        <Lock className="w-3.5 h-3.5 text-[#765331]/40" />
-                        <span>Explore Details & Openings (Unavailable)</span>
-                      </button>
+                      <div className="w-full bg-white/40 text-[#8A817C] text-[13px] py-2.5 px-4 rounded-xl text-center border border-[#EEE9DF] font-semibold">
+                        Positions Currently Filled
+                      </div>
                     )}
                   </div>
                 </div>
@@ -317,29 +311,6 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
             );
           })}
         </div>
-
-        {/* Empty Search Result */}
-        {filteredSchools.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-10 px-4 text-center bg-white rounded-xl border border-[#D9CC86]/40 shadow-xs">
-            <Search className="w-10 h-10 text-[#765331]/40 mb-2" />
-            <h3 className="font-bold text-sm sm:text-base text-[#292727]">
-              No matching schools found
-            </h3>
-            <p className="text-xs text-[#765331] max-w-xs mt-1">
-              Try adjusting your search keywords or reset filter to view all schools.
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setSearchQuery('');
-                setFilterActiveOnly(false);
-              }}
-              className="mt-3 px-3.5 py-1.5 bg-[#FAF8F5] border border-[#D9CC86] text-[#D83232] rounded-lg text-xs font-bold hover:bg-[#F2ECE4] transition-colors cursor-pointer"
-            >
-              Reset Filters
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
