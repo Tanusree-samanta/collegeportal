@@ -56,7 +56,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F5EF] text-[#241F20] font-sans antialiased selection:bg-[#6B1F2A]/15 selection:text-[#6B1F2A] relative">
+    <div className="min-h-screen bg-[#F7F9FC] text-[#123B5D] font-sans antialiased selection:bg-[#0057B8]/15 selection:text-[#0057B8] relative">
       <AmbientBackground />
       <div className="relative z-10">
         {/* PAGE 1: CAREER LANDING PAGE */}

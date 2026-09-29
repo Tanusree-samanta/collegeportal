@@ -124,12 +124,18 @@ export interface ApplicationFormData {
   researchExperience: string;
   industryExperience: string;
   primarySpecialization: string;
+  currentGrossSalary?: string;
+  expectedSalary?: string;
+  noticePeriod?: string;
 
   // Section 4: Research
   publicationsCount: string;
   sciScopusCount: string;
   patentsCount: string;
   projectsCount: string;
+  hIndex?: string;
+  i10Index?: string;
+  citationsTotal?: string;
   publications: PublicationItem[];
 
   // Section 5: Languages

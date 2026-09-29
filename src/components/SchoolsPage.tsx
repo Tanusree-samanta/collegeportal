@@ -18,7 +18,7 @@ import {
   Building,
   TrendingUp,
   X,
-  Megaphone,
+  GraduationCap,
 } from 'lucide-react';
 import { SCHOOLS_DATA } from '../data/schools';
 import { School } from '../types';
@@ -35,9 +35,9 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [filterActiveOnly, setFilterActiveOnly] = useState(false);
 
-  // Icon mapping helper with burgundy / muted styling
+  // Icon mapping helper with Primary Blue / Muted Blue styling
   const renderSchoolIcon = (id: string, hasReq: boolean) => {
-    const iconClass = hasReq ? 'w-5 h-5 text-[#6B1F2A]' : 'w-5 h-5 text-[#8A817C]';
+    const iconClass = hasReq ? 'w-5 h-5 text-[#0057B8]' : 'w-5 h-5 text-[#71869A]';
     switch (id) {
       case 'school-of-technology':
         return <Code2 className={iconClass} />;
@@ -88,115 +88,94 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
   }, [searchQuery, filterActiveOnly]);
 
   return (
-    <div className="w-full bg-[#F8F5EF] min-h-[calc(100vh-64px)] pb-16 select-none page-enter">
+    <div className="w-full bg-[#F7F9FC] min-h-[calc(100vh-64px)] pb-16 select-none page-enter">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 flex flex-col gap-5 sm:gap-6">
-        {/* Breadcrumb Navigation: Manrope 600, 14-15px */}
+        {/* Breadcrumb Navigation */}
         <nav aria-label="Academic Path Breadcrumb" className="overflow-x-auto whitespace-nowrap">
-          <ol className="flex items-center gap-1.5 text-[14px] text-[#625B58]">
+          <ol className="flex items-center gap-1.5 text-[14px] text-[#52708A]">
             <li className="inline-flex items-center gap-1">
               <button
                 type="button"
                 onClick={onNavigateHome}
-                className="breadcrumb-item gap-1 font-semibold cursor-pointer"
+                className="breadcrumb-link gap-1 cursor-pointer"
               >
-                <Home className="w-4 h-4" />
+                <Home className="w-4 h-4 text-[#0057B8]" />
                 <span>Home</span>
               </button>
-              <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
+              <ChevronRight className="w-3.5 h-3.5 text-[#D9E2EC]" />
             </li>
-            <li className="inline-flex items-center gap-1">
-              <span className="font-semibold text-[#625B58]">Career</span>
-              <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
+            <li className="inline-flex items-center text-[#0057B8] font-semibold">
+              <span>Academic Schools Directory</span>
             </li>
-            <li className="text-[#6B1F2A] font-bold">Schools Directory</li>
           </ol>
         </nav>
 
-        {/* Page Heading & Editorial Subtitle */}
+        {/* Section Header with Blue Dash Line */}
         <div className="flex flex-col gap-1.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#C9A96E]/40 shadow-xs w-fit">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#6B1F2A]" />
-            <span className="text-[11px] sm:text-[12px] text-[#6B1F2A] font-bold tracking-wider uppercase">
-              12 Academic Schools & Faculties
+          <div className="flex items-center gap-2">
+            <span className="w-5 h-1 bg-[#0057B8] rounded-full inline-block" />
+            <span className="text-[12px] font-bold uppercase tracking-wider text-[#0057B8]">
+              Academic Disciplines • 2026–2027 Cycle
             </span>
           </div>
-
-          {/* Section Heading: DM Serif Display, Font weight 400 */}
-          <h1 className="font-serif-tnu font-normal text-2xl sm:text-3xl md:text-4xl text-[#241F20] tracking-[-0.01em]">
-            Explore Schools & Academic Disciplines
+          <h1 className="text-2xl sm:text-3xl md:text-4xl text-[#003B68] font-bold tracking-tight">
+            Explore Opportunities Across Our Schools
           </h1>
-
-          <p className="text-[15px] sm:text-[16px] text-[#625B58] leading-[1.6] max-w-3xl font-normal">
-            Review school credentials and open faculty positions. Positions with active recruitment requirements have enabled exploration actions below.
+          <p className="text-sm sm:text-base text-[#52708A] max-w-2xl font-normal leading-relaxed">
+            Discover exciting career opportunities in our 12 diverse academic schools and be a part of TNU's growing faculty community.
           </p>
         </div>
 
-        {/* Recruitment Status Callout Banner */}
-        <div className="bg-white/80 border border-[#C9A96E]/35 rounded-[16px] p-3.5 sm:p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#6B1F2A] text-white flex items-center justify-center shrink-0 shadow-xs">
-              <Megaphone className="w-4 h-4 text-[#D8BD7A]" />
-            </div>
-            <div>
-              <span className="font-semibold text-[14px] sm:text-[15px] text-[#241F20] block">
-                Cycle 2026–2027 Active Hiring Stream
-              </span>
-              <span className="text-[12px] sm:text-[13px] text-[#625B58] font-medium">
-                {activeSchoolsCount} of 12 schools currently have open requirements and active vacancies.
-              </span>
-            </div>
-          </div>
-
-          {/* Filter Toggles: Buttons Manrope 700 14px */}
+        {/* Filter Bar & Quick Search */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-[#D9E2EC] shadow-xs">
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => setFilterActiveOnly(false)}
-              className={`px-3.5 py-1.5 rounded-lg text-[13px] sm:text-[14px] font-bold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 !filterActiveOnly
-                  ? 'bg-[#6B1F2A] text-white shadow-xs'
-                  : 'bg-white text-[#625B58] border border-[#C9A96E]/40 hover:bg-[#F8F5EF]'
+                  ? 'bg-[#0057B8] text-white shadow-xs'
+                  : 'bg-white text-[#52708A] border border-[#D9E2EC] hover:bg-[#F5F9FD]'
               }`}
             >
-              All Schools (12)
+              All 12 Schools
             </button>
             <button
               type="button"
               onClick={() => setFilterActiveOnly(true)}
-              className={`px-3.5 py-1.5 rounded-lg text-[13px] sm:text-[14px] font-bold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 filterActiveOnly
-                  ? 'bg-[#6B1F2A] text-white shadow-xs'
-                  : 'bg-white text-[#625B58] border border-[#C9A96E]/40 hover:bg-[#F8F5EF]'
+                  ? 'bg-[#0057B8] text-white shadow-xs'
+                  : 'bg-white text-[#52708A] border border-[#D9E2EC] hover:bg-[#F5F9FD]'
               }`}
             >
-              With Openings Only ({activeSchoolsCount})
+              With Active Vacancies ({activeSchoolsCount})
             </button>
+          </div>
+
+          <div className="relative min-w-[260px]">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#71869A]" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search school or discipline..."
+              className="portal-input w-full text-xs pl-9 pr-8 py-2"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#71869A] hover:text-[#123B5D] p-0.5 cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Search Controls: Input Manrope 400 */}
-        <div className="relative">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8A817C]" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search school by discipline, engineering, pharmacy, nursing, management..."
-            className="w-full bg-white text-[#241F20] text-[14px] sm:text-[15px] font-normal pl-10 pr-4 py-2.5 rounded-xl border border-[#C9A96E]/40 shadow-2xs placeholder:text-[#8A817C] focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 transition-colors"
-          />
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8A817C] hover:text-[#241F20] p-1 cursor-pointer"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          )}
-        </div>
-
-        {/* Schools Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        {/* Schools Cards Grid (Design Rule 12) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredSchools.map((school) => {
             const courseCount = school.courseCount || (school.courses ? school.courses.length : 0);
             const openPos = school.openPositionsCount || 0;
@@ -210,106 +189,90 @@ export const SchoolsPage: React.FC<SchoolsPageProps> = ({
                     onSelectSchool(school);
                   }
                 }}
-                className={`rounded-[18px] shadow-xs overflow-hidden relative flex flex-col justify-between transition-all duration-300 ${
+                className={`rounded-[14px] p-5 border transition-all duration-200 flex flex-col justify-between ${
                   hasRequirement
-                    ? 'bg-white border border-[#C9A96E]/40 hover:border-[#6B1F2A]/60 hover:-translate-y-1 hover:shadow-md cursor-pointer group'
-                    : 'bg-white/60 border border-[#EEE9DF] opacity-80 cursor-default'
+                    ? 'bg-white border-[#D9E2EC] hover:border-[#BFDDF5] hover:shadow-md hover:-translate-y-0.5 cursor-pointer group'
+                    : 'bg-[#F1F3F5] border-[#D9E2EC] opacity-75 cursor-default'
                 }`}
               >
-                {/* Accent strip on top: Burgundy when active, muted when inactive */}
-                <div
-                  className={`h-1 w-full transition-all ${
-                    hasRequirement
-                      ? 'bg-[#6B1F2A] group-hover:h-1.5'
-                      : 'bg-[#EEE9DF]'
-                  }`}
-                />
-
-                <div className="p-4 sm:p-5 flex flex-col gap-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div
-                        className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform ${
-                          hasRequirement
-                            ? 'bg-[#6B1F2A]/10 border border-[#6B1F2A]/20 group-hover:scale-105'
-                            : 'bg-[#EEE9DF]/70 text-[#8A817C]'
-                        }`}
-                      >
-                        {renderSchoolIcon(school.id, hasRequirement)}
-                      </div>
-                      <div className="flex flex-col min-w-0">
-                        <span className="text-[11px] uppercase tracking-wider text-[#625B58] font-bold">
-                          {school.streamLabel}
-                        </span>
-                        {/* School Heading: DM Serif Display, 400 */}
-                        <h2
-                          className={`font-serif-tnu font-normal text-lg sm:text-xl truncate transition-colors ${
-                            hasRequirement
-                              ? 'text-[#241F20] group-hover:text-[#6B1F2A]'
-                              : 'text-[#241F20]/60'
-                          }`}
-                        >
-                          {school.name}
-                        </h2>
-                      </div>
+                <div className="flex flex-col gap-3">
+                  {/* Top Icon + Badge Row */}
+                  <div className="flex items-start justify-between gap-2">
+                    <div
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform ${
+                        hasRequirement
+                          ? 'bg-[#EAF4FF] text-[#0057B8] group-hover:scale-105'
+                          : 'bg-[#E2E8F0] text-[#71808D]'
+                      }`}
+                    >
+                      {renderSchoolIcon(school.id, hasRequirement)}
                     </div>
 
-                    {/* Status Badge: Manrope 700 11-12px slightly increased letter spacing */}
+                    {/* Status Badge (Rule 10: OPEN vs CLOSED) */}
                     {hasRequirement ? (
-                      <span className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#1B7340]/10 text-[#1B7340] border border-[#1B7340]/25 text-[11px] font-bold tracking-wider uppercase">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#1B7340] animate-status-dot" />
-                        <span>OPEN • {openPos} Vacancies</span>
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E8F8F2] text-[#16865F] text-[11px] font-semibold tracking-wide">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#19B87A] animate-pulse" />
+                        <span>{openPos} Openings</span>
                       </span>
                     ) : (
-                      <span className="shrink-0 px-2.5 py-0.5 rounded-full bg-[#EEE9DF] text-[#8A817C] text-[11px] font-bold uppercase tracking-wider">
-                        CLOSED / No Openings
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#F1F3F5] text-[#71808D] text-[10px] font-medium uppercase">
+                        No Openings
                       </span>
                     )}
                   </div>
 
-                  <p
-                    className={`text-[14px] leading-[1.6] line-clamp-2 font-normal ${
-                      hasRequirement ? 'text-[#625B58]' : 'text-[#625B58]/70'
-                    }`}
-                  >
+                  {/* School Title & Stream */}
+                  <div>
+                    <span className="text-[11px] uppercase font-semibold text-[#71869A] tracking-wider block">
+                      {school.streamLabel}
+                    </span>
+                    <h3
+                      className={`text-base font-bold transition-colors line-clamp-1 mt-0.5 ${
+                        hasRequirement ? 'text-[#003B68] group-hover:text-[#0057B8]' : 'text-[#71808D]'
+                      }`}
+                    >
+                      {school.name}
+                    </h3>
+                  </div>
+
+                  {/* Description (Rule 12: #52708A) */}
+                  <p className="text-xs text-[#52708A] line-clamp-2 leading-relaxed">
                     {school.description}
                   </p>
+                </div>
 
-                  {/* Metrics Box: Programs & Ratio - Manrope 500 12-13px */}
-                  <div className="bg-[#F8F5EF] border border-[#EEE9DF] rounded-xl p-2.5 flex items-center justify-between text-[12px] sm:text-[13px]">
-                    <div className="flex items-center gap-1.5 text-[#241F20] font-semibold">
-                      <BookOpen className={`w-3.5 h-3.5 ${hasRequirement ? 'text-[#6B1F2A]' : 'text-[#8A817C]'}`} />
-                      <span>{courseCount} Academic Programs</span>
-                    </div>
-                    <div className="text-[12px] text-[#625B58] font-medium">
-                      Ratio: {school.studentFacultyRatio || '14:1'}
-                    </div>
-                  </div>
+                {/* Bottom Academic Metrics & Action Button */}
+                <div className="pt-4 mt-3 border-t border-[#D9E2EC]/70 flex items-center justify-between">
+                  <span className="text-xs text-[#52708A] font-medium flex items-center gap-1">
+                    <BookOpen className="w-3.5 h-3.5 text-[#71869A]" />
+                    <span>{courseCount} Programs</span>
+                  </span>
 
-                  {/* Primary Action Button: Manrope 700 14px */}
-                  <div className="pt-1">
-                    {hasRequirement ? (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onSelectSchool(school);
-                        }}
-                        className="w-full bg-[#F8F5EF] group-hover:bg-[#6B1F2A] group-hover:text-white text-[#6B1F2A] font-bold text-[14px] py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 border border-[#C9A96E]/40 group-hover:border-[#6B1F2A] transition-all duration-200 shadow-2xs cursor-pointer"
-                      >
-                        <span>Explore School Details & Openings</span>
-                        <ArrowRight className="w-4 h-4 text-[#6B1F2A] group-hover:text-white transition-colors" />
-                      </button>
-                    ) : (
-                      <div className="w-full bg-white/40 text-[#8A817C] text-[13px] py-2.5 px-4 rounded-xl text-center border border-[#EEE9DF] font-semibold">
-                        Positions Currently Filled
-                      </div>
-                    )}
-                  </div>
+                  {hasRequirement ? (
+                    <span className="text-xs font-semibold text-[#0057B8] inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                      <span>View Posts</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  ) : (
+                    <span className="text-[11px] text-[#71808D]">Position Filled</span>
+                  )}
                 </div>
               </article>
             );
           })}
+        </div>
+
+        {/* Institutional Accreditation Note */}
+        <div className="mt-4 p-4 rounded-xl bg-white border border-[#D9E2EC] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#52708A]">
+          <div className="flex items-center gap-2">
+            <GraduationCap className="w-4 h-4 text-[#0057B8] shrink-0" />
+            <span>
+              All faculty appointments are conducted strictly in accordance with UGC Regulations 2018 & respective statutory councils (AICTE, PCI, BCI, DGS).
+            </span>
+          </div>
+          <span className="text-[#0057B8] font-semibold shrink-0">
+            Pay Band: 7th CPC Scales
+          </span>
         </div>
       </div>
     </div>

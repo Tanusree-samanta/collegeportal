@@ -1,36 +1,47 @@
 @import "tailwindcss";
 
+:root {
+  --primary: #0057B8;
+  --primary-dark: #003B68;
+  --secondary-blue: #0066CC;
+  --light-blue: #EAF4FF;
+  --very-light-blue: #F5F9FD;
+  --background: #F7F9FC;
+  --surface: #FFFFFF;
+  --border: #D9E2EC;
+  --border-hover: #BFDDF5;
+  --text-primary: #123B5D;
+  --text-secondary: #52708A;
+  --text-muted: #71869A;
+  --success: #19B87A;
+  --warning: #F5A623;
+  --error: #D64545;
+}
+
 @theme {
-  --font-serif: "DM Serif Display", Georgia, serif;
-  --font-sans: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   
-  /* Primary Academic Burgundy */
-  --color-burgundy-primary: #6B1F2A;
-  --color-burgundy-dark: #45131B;
-  
-  /* Secondary Warm Accents */
-  --color-champagne-warm: #C9A96E;
-  --color-gold-soft: #D8BD7A;
-  
-  /* Background Neutrals */
-  --color-ivory-warm: #F8F5EF;
-  --color-beige-soft: #EEE9DF;
-  
-  /* Typography Hierarchy */
-  --color-text-primary: #241F20;
-  --color-text-secondary: #625B58;
-  --color-text-muted: #8A817C;
-  
-  /* Status Colors */
-  --color-status-green: #1B7340;
-  --color-status-amber: #C88719;
-  --color-status-red: #B91C1C;
+  --color-primary: #0057B8;
+  --color-primary-dark: #003B68;
+  --color-secondary-blue: #0066CC;
+  --color-light-blue: #EAF4FF;
+  --color-very-light-blue: #F5F9FD;
+  --color-page-bg: #F7F9FC;
+  --color-surface: #FFFFFF;
+  --color-border-main: #D9E2EC;
+  --color-border-hover: #BFDDF5;
+  --color-text-main: #123B5D;
+  --color-text-secondary: #52708A;
+  --color-text-muted: #71869A;
+  --color-success: #19B87A;
+  --color-warning: #F5A623;
+  --color-error: #D64545;
 }
 
 body {
-  font-family: "Manrope", system-ui, -apple-system, sans-serif;
-  background-color: #F8F5EF;
-  color: #241F20;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
@@ -39,138 +50,163 @@ body {
   line-height: 1.6;
 }
 
-.font-serif-tnu {
-  font-family: "DM Serif Display", Georgia, serif;
-  font-weight: 400;
+/* Headings Hierarchy */
+h1, h2 {
+  color: var(--primary-dark);
+  font-weight: 700;
 }
 
-.font-sans-tnu {
-  font-family: "Manrope", system-ui, sans-serif;
+h3 {
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 /* =======================================================
-   SUBTLE GLASSMORPHISM SYSTEM
+   CARDS & PANELS
    ======================================================= */
+.portal-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(0, 59, 104, 0.04), 0 1px 2px rgba(0, 59, 104, 0.02);
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
 
+.portal-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 24px rgba(0, 87, 184, 0.08);
+}
+
+/* Subtle Glassmorphism */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(201, 169, 110, 0.35);
-  box-shadow: 0 8px 30px rgba(36, 31, 32, 0.04);
-  border-radius: 16px;
-  transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  border: 1px solid rgba(217, 226, 236, 0.7);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(0, 59, 104, 0.04);
 }
 
-.glass-card-hover {
-  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 300ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.glass-card-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 35px rgba(107, 31, 42, 0.07);
-  border-color: rgba(201, 169, 110, 0.6);
-}
-
-/* Global Form Glass Inputs */
-.glass-input {
-  font-family: "Manrope", sans-serif;
+/* =======================================================
+   FORM INPUTS
+   ======================================================= */
+.portal-input {
+  font-family: "Inter", sans-serif;
   font-weight: 400;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(201, 169, 110, 0.45);
-  border-radius: 9px;
-  color: #241F20;
-  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.glass-input:focus {
-  border-color: #6B1F2A;
-  box-shadow: 0 0 0 3px rgba(107, 31, 42, 0.1);
-  background: #FFFFFF;
+.portal-input::placeholder {
+  color: var(--text-muted);
+}
+
+.portal-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 87, 184, 0.15);
   outline: none;
 }
 
-/* Global Button System - Manrope 700 14-15px */
-.btn-primary-tnu {
-  font-family: "Manrope", sans-serif;
-  font-weight: 700;
+/* =======================================================
+   BUTTONS
+   ======================================================= */
+.btn-primary-portal {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
   font-size: 14px;
-  background-color: #6B1F2A;
+  background-color: var(--primary);
   color: #FFFFFF;
-  border-radius: 9px;
-  transition: transform 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
-  box-shadow: 0 4px 14px rgba(107, 31, 42, 0.22);
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 87, 184, 0.12);
+  transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
-.btn-primary-tnu:hover:not(:disabled) {
-  transform: translateY(-2px);
-  background-color: #45131B;
-  box-shadow: 0 8px 22px rgba(107, 31, 42, 0.3);
+.btn-primary-portal:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(0, 59, 104, 0.2);
 }
 
-.btn-primary-tnu:active:not(:disabled) {
+.btn-primary-portal:active:not(:disabled) {
   transform: scale(0.98);
 }
 
-.btn-primary-tnu:disabled {
-  background-color: #E6E1D8;
-  color: #8A817C;
-  box-shadow: none;
+.btn-primary-portal:disabled {
+  background-color: #E2E8F0;
+  color: #94A3B8;
   cursor: not-allowed;
-  transform: none;
+  box-shadow: none;
 }
 
-.btn-secondary-tnu {
-  font-family: "Manrope", sans-serif;
-  font-weight: 700;
+.btn-secondary-portal {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
   font-size: 14px;
-  background-color: rgba(255, 255, 255, 0.85);
-  color: #6B1F2A;
-  border: 1px solid rgba(107, 31, 42, 0.35);
-  border-radius: 9px;
-  transition: transform 200ms ease, border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+  background-color: var(--light-blue);
+  color: var(--primary);
+  border: 1px solid var(--border-hover);
+  border-radius: 8px;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 
-.btn-secondary-tnu:hover:not(:disabled) {
-  transform: translateY(-1.5px);
-  border-color: #6B1F2A;
-  background-color: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(107, 31, 42, 0.08);
+.btn-secondary-portal:hover:not(:disabled) {
+  background-color: #DCEEFF;
+  border-color: var(--primary);
 }
 
-.btn-secondary-tnu:active:not(:disabled) {
+.btn-secondary-portal:active:not(:disabled) {
   transform: scale(0.98);
 }
 
-/* Badge Utility - Manrope 700 11-12px slightly increased letter spacing */
-.badge-tnu {
-  font-family: "Manrope", sans-serif;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.06em;
+/* =======================================================
+   STATUS BADGES
+   ======================================================= */
+.badge-active, .badge-open {
+  background-color: #E8F8F2;
+  color: #16865F;
+}
+
+.badge-pending {
+  background-color: #FFF4DE;
+  color: #A66A00;
+}
+
+.badge-closed {
+  background-color: #F1F3F5;
+  color: #71808D;
+}
+
+.badge-rejected {
+  background-color: #FCEAEA;
+  color: #B83B3B;
 }
 
 /* Breadcrumb Links */
-.breadcrumb-item {
-  font-family: "Manrope", sans-serif;
-  font-weight: 600;
+.breadcrumb-link {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
   font-size: 13px;
-  color: #625B58;
-  transition: color 200ms ease, transform 200ms ease;
+  color: var(--text-secondary);
+  transition: color 150ms ease;
   display: inline-flex;
   align-items: center;
 }
 
-.breadcrumb-item:hover {
-  color: #6B1F2A;
-  transform: translateY(-1px);
+.breadcrumb-link:hover {
+  color: var(--primary);
 }
 
-/* Smooth Page Entrance */
-@keyframes page-enter {
+/* =======================================================
+   ANIMATIONS & TRANSITIONS (150ms - 300ms)
+   ======================================================= */
+@keyframes page-fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -179,10 +215,10 @@ body {
 }
 
 .page-enter {
-  animation: page-enter 350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: page-fade-in 220ms ease-out forwards;
 }
 
-/* Status Indicator Pulse (2s infinite) */
+/* Status Indicator Pulse */
 @keyframes status-pulse {
   0%, 100% {
     opacity: 0.6;
@@ -198,29 +234,13 @@ body {
   animation: status-pulse 2s infinite ease-in-out;
 }
 
-/* Success Icon Pop */
-@keyframes success-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.85);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-success-pop {
-  animation: success-pop 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-/* Ambient Background Blobs */
+/* Ambient Blue Blobs */
 @keyframes ambient-float-1 {
   0%, 100% {
     transform: translate(0px, 0px) scale(1);
   }
   50% {
-    transform: translate(25px, -20px) scale(1.05);
+    transform: translate(20px, -15px) scale(1.04);
   }
 }
 
@@ -229,53 +249,40 @@ body {
     transform: translate(0px, 0px) scale(1);
   }
   50% {
-    transform: translate(-25px, 15px) scale(1.04);
+    transform: translate(-20px, 15px) scale(1.03);
   }
 }
 
 .ambient-blob-1 {
-  animation: ambient-float-1 20s ease-in-out infinite;
+  animation: ambient-float-1 22s ease-in-out infinite;
 }
 
 .ambient-blob-2 {
-  animation: ambient-float-2 18s ease-in-out infinite;
+  animation: ambient-float-2 20s ease-in-out infinite;
 }
 
-/* Custom subtle academic scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F8F5EF;
+  background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #D8BD7A;
+  background: var(--border);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #6B1F2A;
+  background: var(--primary);
 }
 
-/* =======================================================
-   REDUCED MOTION SUPPORT
-   ======================================================= */
 @media (prefers-reduced-motion: reduce) {
   .page-enter,
   .animate-status-dot,
-  .animate-success-pop,
   .ambient-blob-1,
   .ambient-blob-2 {
     animation: none !important;
     transition: none !important;
-  }
-
-  .glass-card-hover:hover {
-    transform: none !important;
-  }
-
-  .btn-primary-tnu:hover:not(:disabled),
-  .btn-secondary-tnu:hover:not(:disabled) {
-    transform: none !important;
   }
 }

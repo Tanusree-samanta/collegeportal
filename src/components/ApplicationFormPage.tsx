@@ -2,25 +2,25 @@ import React, { useState, useRef } from 'react';
 import {
   Home,
   ChevronRight,
-  UploadCloud,
-  CheckCircle2,
-  Trash2,
-  Plus,
-  ShieldCheck,
+  Briefcase,
+  Check,
   ArrowRight,
   ArrowLeft,
-  Save,
-  Check,
-  Sparkles,
+  UploadCloud,
   FileText,
+  AlertCircle,
+  Plus,
+  Trash2,
+  Save,
+  ShieldCheck,
   User,
   GraduationCap,
   FlaskConical,
-  Briefcase,
-  AlertCircle,
+  Sparkles,
 } from 'lucide-react';
 import {
   ApplicationFormData,
+  LanguageRow,
   Qualification,
   PublicationItem,
   VacantPosition,
@@ -53,100 +53,123 @@ const initialFormData: ApplicationFormData = {
   country: 'India',
   pinCode: '700032',
 
-  // Step 2: Education & Experience
-  highestQualification: 'Ph.D. / Doctorate',
+  // Step 2: Qualifications & Experience
+  highestQualification: 'Ph.D. in Computer Science & Engineering',
   qualifications: [
     {
-      id: '1',
-      level: 'Doctorate',
-      degree: 'Doctor of Philosophy (Ph.D.)',
-      specialization: 'Deep Learning & Computer Vision',
-      institution: 'IIT Kharagpur',
-      yearOfPassing: '2018',
-      gradeScore: '9.45 CGPA (Distinction)',
-      isVerified: true,
-    },
-    {
-      id: '2',
-      level: "Master's",
-      degree: 'Master of Technology (M.Tech)',
-      specialization: 'Artificial Intelligence',
+      id: 'q1',
+      level: 'Doctorate (Ph.D.)',
+      degree: 'Ph.D. in Computer Science & Engineering',
+      specialization: 'Artificial Intelligence & Deep Learning',
       institution: 'Jadavpur University',
-      yearOfPassing: '2013',
-      gradeScore: '88.6% (First Class Hons.)',
+      yearOfPassing: '2016',
+      gradeScore: 'Awarded with Distinction',
       isVerified: true,
     },
     {
-      id: '3',
-      level: 'Bachelor',
-      degree: 'Bachelor of Technology (B.Tech)',
-      specialization: 'Computer Science & Engineering',
-      institution: 'MAKAUT (WBUT)',
+      id: 'q2',
+      level: 'Postgraduate (M.Tech)',
+      degree: 'M.Tech in Information Technology',
+      specialization: 'Distributed Intelligent Systems',
+      institution: 'IIEST Shibpur',
       yearOfPassing: '2011',
-      gradeScore: '8.72 DGPA',
+      gradeScore: '9.24 CGPA (1st Class)',
+      isVerified: true,
+    },
+    {
+      id: 'q3',
+      level: 'Undergraduate (B.Tech)',
+      degree: 'B.Tech in Computer Science & Engineering',
+      specialization: 'Computer Systems',
+      institution: 'Kalyani Government Engineering College',
+      yearOfPassing: '2008',
+      gradeScore: '8.76 DGPA (1st Class)',
       isVerified: true,
     },
   ],
-  currentOrganization: 'Bengal Institute of Technology & Science',
-  currentDesignation: 'Associate Professor (CSE)',
-  totalExperience: '11.5 Years',
-  teachingExperience: '8.5 Years',
-  researchExperience: '5.0 Years',
-  industryExperience: '3.0 Years',
-  primarySpecialization: 'Neural Network Architectures, Reinforcement Learning, Autonomous Robotics',
-
-  // Step 3: Research & Publications
-  publicationsCount: '24',
-  sciScopusCount: '14',
-  patentsCount: '03',
-  projectsCount: '02',
-  publications: [
-    {
-      id: '1',
-      title: '"Explainable Deep Reinforcement Frameworks for Real-time Robotic Actuation in Maritime Logistics"',
-      venue: 'IEEE Transactions on Artificial Intelligence (2024)',
-      doi: '10.1109/TAI.2024.3389012',
-      authors: 'Co-authored with Dr. S. Bannerjee, IIT Kgp',
-      citations: '42 Citations',
-    },
-    {
-      id: '2',
-      title: '"Autonomous Multi-Agent Routing in High-Density Computing Infrastructures"',
-      venue: 'ACM Transactions on Autonomous Systems (2025)',
-      doi: '10.1145/3618920.362140',
-      authors: 'Primary Investigator • Indexed in Scopus',
-      citations: '18 Citations',
-    },
-  ],
-  languages: [
-    { id: '1', language: 'English', read: true, write: true, speak: true },
-    { id: '2', language: 'Bengali', read: true, write: true, speak: true },
-    { id: '3', language: 'Hindi', read: true, write: true, speak: true },
-  ],
-  awards: 'Gold Medalist in M.Tech (2013); Best Faculty Researcher Award 2023.',
-  memberships: 'Senior Member IEEE (#948123); Fellow, Institution of Engineers India (FIE).',
-  extracurricular: 'Faculty Advisor for Robotics Club, Convener of Hackathon 2024',
-  additionalNotes: 'Available for joining within 30 days of appointment if offered tenure.',
+  totalExperience: '11 Years 4 Months',
+  teachingExperience: '8 Years',
+  researchExperience: '6 Years',
+  industryExperience: '3 Years 4 Months',
+  currentOrganization: 'Kolkata Institute of Advanced Computing',
+  currentDesignation: 'Associate Professor',
+  currentGrossSalary: '₹1,68,000 / month (7th CPC Level 13A)',
+  expectedSalary: 'As per TNU 7th CPC Professorial Matrix',
+  noticePeriod: '30 Days',
+  primarySpecialization: 'Artificial Intelligence & Machine Learning',
+  extracurricular: 'Faculty Advisor for University IEEE Student Branch',
+  additionalNotes: '',
   employmentHistory: [
     {
-      id: '1',
+      id: 'e1',
       designation: 'Associate Professor',
-      organization: 'Bengal Institute of Technology & Science',
-      period: '2020 – Present',
-      description: 'Teaching M.Tech/B.Tech, leading AI Lab research grants.',
-      focus: 'Autonomous Robotics & Deep Learning',
+      organization: 'Kolkata Institute of Advanced Computing',
+      period: '2019 – Present',
+      description: 'Department of Computer Science & Engineering',
+      focus: 'Teaching UG/PG classes and mentoring Ph.D. scholars in deep learning',
       isCurrent: true,
     },
   ],
+  languages: [
+    { id: 'l1', language: 'English', read: true, write: true, speak: true },
+    { id: 'l2', language: 'Bengali', read: true, write: true, speak: true },
+    { id: 'l3', language: 'Hindi', read: true, write: true, speak: true },
+  ],
+
+  // Step 3: Research & Publications
+  publicationsCount: '24',
+  sciScopusCount: '16',
+  patentsCount: '3',
+  projectsCount: '2',
+  hIndex: '11',
+  i10Index: '14',
+  citationsTotal: '580',
+  publications: [
+    {
+      id: 'p1',
+      title: 'Adaptive Neural Routing in Edge-Assisted Cyber-Physical Systems',
+      venue: 'IEEE Transactions on Industrial Informatics (Q1, IF: 12.3)',
+      doi: '10.1109/TII.2023.3289114',
+      authors: 'D. Chatterjee, A. Roy, S. K. Das',
+      citations: '48 Citations',
+    },
+    {
+      id: 'p2',
+      title: 'Zero-Shot Multi-Modal Representation Learning for Biomedical Diagnostics',
+      venue: 'Expert Systems with Applications (Elsevier, Q1)',
+      doi: '10.1016/j.eswa.2022.118942',
+      authors: 'D. Chatterjee, P. Sen',
+      citations: '34 Citations',
+    },
+    {
+      id: 'p3',
+      title: 'Federated Optimization Protocols for Autonomous Robotics Fleet Navigation',
+      venue: 'ACM Transactions on Cyber-Physical Systems',
+      doi: '10.1145/3549821',
+      authors: 'D. Chatterjee, V. Sengupta',
+      citations: '21 Citations',
+    },
+  ],
+  awards: 'DST Early Career Research Award (2019); Best Faculty Researcher Medal (2022)',
+  memberships: 'Senior Member, IEEE (Computer Society); Life Fellow, CSI India',
   references: [
     {
-      id: '1',
-      name: 'Prof. (Dr.) A. K. Sen',
-      designation: 'Professor & Dean (R&D)',
-      organization: 'IIT Kharagpur',
-      email: 'a.k.sen@ee.iitkgp.ac.in',
-      phone: '+91 3222 283120',
-      relationship: 'Ph.D. Doctoral Supervisor',
+      id: 'r1',
+      name: 'Prof. (Dr.) Asim Kumar Mukherjee',
+      designation: 'Professor & Former Dean',
+      organization: 'Jadavpur University',
+      relationship: 'Doctoral Thesis Advisor',
+      email: 'a.mukherjee@cse.jdvu.ac.in',
+      phone: '+91 94330 18290',
+    },
+    {
+      id: 'r2',
+      name: 'Dr. Sunetra Sen',
+      designation: 'Principal Scientist',
+      organization: 'CSIR-CGCRI, Kolkata',
+      relationship: 'Collaborative DST Project Co-PI',
+      email: 'sunetra.sen@cgcri.res.in',
+      phone: '+91 33 2473 3496',
     },
   ],
 
@@ -170,7 +193,7 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
       const saved = localStorage.getItem('tnu_faculty_application_draft');
       if (saved) return JSON.parse(saved);
     } catch {
-      // fallback to initial
+      // fallback
     }
     return initialFormData;
   });
@@ -179,142 +202,120 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const currentCadre = position?.cadre || 'Assistant Professor / Associate Professor';
-  const currentArea = position?.area || 'Computer Science & AI';
+  const currentArea = position?.area || 'Artificial Intelligence & Machine Learning';
 
   const showNotification = (msg: string) => {
     setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3200);
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // CV File Upload Handler
+  const handleSaveDraft = () => {
+    try {
+      localStorage.setItem('tnu_faculty_application_draft', JSON.stringify(formData));
+      showNotification('✓ Draft application dossier saved successfully.');
+    } catch {
+      showNotification('Failed to save draft to browser storage.');
+    }
+  };
+
+  const handleAddQualification = () => {
+    const newQ: Qualification = {
+      id: 'q_' + Date.now(),
+      level: 'Master’s / Postgraduate',
+      degree: '',
+      specialization: '',
+      institution: '',
+      yearOfPassing: '',
+      gradeScore: '',
+      isVerified: false,
+    };
+    setFormData({ ...formData, qualifications: [...formData.qualifications, newQ] });
+  };
+
+  const handleRemoveQualification = (id: string) => {
+    if (formData.qualifications.length <= 1) {
+      showNotification('At least one academic qualification is mandatory.');
+      return;
+    }
+    setFormData({
+      ...formData,
+      qualifications: formData.qualifications.filter((q) => q.id !== id),
+    });
+  };
+
+  const handleAddPublication = () => {
+    const newPub: PublicationItem = {
+      id: 'p_' + Date.now(),
+      title: 'Title of research publication',
+      venue: 'Journal / Conference proceedings',
+      doi: '10.xxxx/xxxx',
+      authors: 'Candidate, et al.',
+      citations: '0 Citations',
+    };
+    setFormData({ ...formData, publications: [...formData.publications, newPub] });
+  };
+
   const handleFileDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      processCvFile(e.dataTransfer.files[0]);
+    const files = e.dataTransfer.files;
+    if (files && files[0]) {
+      processFile(files[0]);
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      processCvFile(e.target.files[0]);
+      processFile(e.target.files[0]);
     }
   };
 
-  const processCvFile = (file: File) => {
+  const processFile = (file: File) => {
     setUploadError(null);
-    const validTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    ];
-
-    if (!validTypes.includes(file.type) && !file.name.match(/\.(pdf|doc|docx)$/i)) {
-      setUploadError('Invalid format. Please upload a PDF, DOC, or DOCX file.');
-      showNotification('Please upload a valid PDF or DOC/DOCX document.');
+    const allowed = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    if (!allowed.includes(file.type) && !file.name.match(/\.(pdf|doc|docx)$/i)) {
+      setUploadError('Invalid format. Please upload a PDF, DOC, or DOCX document.');
       return;
     }
-
-    // 5 MB limit
     if (file.size > 5 * 1024 * 1024) {
-      setUploadError('File size exceeds the 5 MB limit. Please compress your CV.');
-      showNotification('File size exceeds the 5 MB limit.');
+      setUploadError('File size exceeds 5 MB limit. Please compress your document.');
       return;
     }
 
-    const sizeInMb = (file.size / (1024 * 1024)).toFixed(1);
-    setFormData((prev) => ({
-      ...prev,
-      cvFileName: file.name,
-      cvFileSize: `${sizeInMb} MB`,
+    const sizeStr = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+    setFormData({
+      ...formData,
       cvUploaded: true,
-    }));
-    showNotification('✓ Updated CV attached and verified successfully');
+      cvFileName: file.name,
+      cvFileSize: sizeStr,
+    });
+    showNotification(`✓ File attached: ${file.name}`);
   };
 
   const handleRemoveCv = () => {
-    setFormData((prev) => ({
-      ...prev,
+    setFormData({
+      ...formData,
+      cvUploaded: false,
       cvFileName: '',
       cvFileSize: '',
-      cvUploaded: false,
-    }));
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-    showNotification('CV removed.');
+    });
+    if (fileInputRef.current) fileInputRef.current.value = '';
+    showNotification('CV document detached.');
   };
 
-  // Add Qualification
-  const handleAddQualification = () => {
-    const newQual: Qualification = {
-      id: Date.now().toString(),
-      level: 'Other Certification',
-      degree: 'Post-Doctoral Research Fellow',
-      specialization: 'Computational Intelligence',
-      institution: 'Eminent Academic Institution',
-      yearOfPassing: '2020',
-      gradeScore: 'Distinction',
-      isVerified: true,
-    };
-    setFormData((prev) => ({
-      ...prev,
-      qualifications: [...prev.qualifications, newQual],
-    }));
-    showNotification('Qualification record added.');
-  };
-
-  const handleRemoveQualification = (id: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      qualifications: prev.qualifications.filter((q) => q.id !== id),
-    }));
-  };
-
-  // Add Publication
-  const handleAddPublication = () => {
-    const newPub: PublicationItem = {
-      id: Date.now().toString(),
-      title: '"Advances in Neural Optimization for Computational Architectures"',
-      venue: 'Springer Lecture Notes in Computer Science (2025)',
-      doi: '10.1007/978-3-030-99999-9',
-      authors: 'Primary Investigator • Scopus Indexed',
-      citations: '12 Citations',
-    };
-    setFormData((prev) => ({
-      ...prev,
-      publications: [...prev.publications, newPub],
-    }));
-    showNotification('Publication record appended.');
-  };
-
-  // Save Draft
-  const handleSaveDraft = () => {
-    try {
-      localStorage.setItem('tnu_faculty_application_draft', JSON.stringify(formData));
-      showNotification('✓ Application draft saved securely in browser.');
-    } catch {
-      showNotification('Draft saved.');
-    }
-  };
-
-  // Step Navigations
   const handleNextStep = () => {
     if (currentStep === 1) {
-      if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.mobile.trim()) {
-        showNotification('Please provide mandatory name, email, and mobile contact fields.');
+      if (!formData.firstName || !formData.lastName || !formData.email || !formData.mobile) {
+        showNotification('Please fill in mandatory personal fields (First, Last, Email, Mobile).');
         return;
       }
       setCurrentStep(2);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (currentStep === 2) {
-      if (formData.qualifications.length === 0) {
-        showNotification('Please list at least one educational qualification.');
-        return;
-      }
       setCurrentStep(3);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (currentStep === 3) {
@@ -325,16 +326,15 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
 
   const handlePrevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep((prev) => (prev - 1) as 1 | 2 | 3 | 4);
+      setCurrentStep((currentStep - 1) as 1 | 2 | 3 | 4);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  // Final Submit
   const handleFinalSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.cvUploaded) {
-      showNotification('Please attach your updated CV before submitting.');
+      showNotification('Please upload your comprehensive Curriculum Vitae before submitting.');
       return;
     }
     if (!formData.declarationAccepted) {
@@ -348,75 +348,74 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#F8F5EF] min-h-[calc(100vh-64px)] pb-20 select-none page-enter">
+    <div className="w-full bg-[#F7F9FC] min-h-[calc(100vh-64px)] pb-20 select-none page-enter">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-20 right-4 z-50 bg-[#241F20] text-white px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 text-[13px] font-medium animate-in fade-in slide-in-from-top-4 duration-300">
-          <Sparkles className="w-4 h-4 text-[#D8BD7A]" />
+        <div className="fixed top-20 right-4 z-50 bg-[#003B68] text-white px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-2 text-[13px] font-medium animate-in fade-in slide-in-from-top-4 duration-300">
+          <Sparkles className="w-4 h-4 text-[#19B87A]" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Breadcrumb Context Bar: Manrope 600 13-14px */}
-      <div className="w-full bg-white/70 border-b border-[#C9A96E]/25 px-4 sm:px-6 py-2.5">
-        <div className="max-w-4xl mx-auto flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[14px] text-[#625B58]">
+      {/* Breadcrumb Context Bar */}
+      <div className="w-full bg-white border-b border-[#D9E2EC] px-4 sm:px-6 py-2.5">
+        <div className="max-w-4xl mx-auto flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[14px] text-[#52708A]">
           <button
             type="button"
             onClick={onNavigateHome}
-            className="breadcrumb-item gap-1 font-semibold cursor-pointer"
+            className="breadcrumb-link gap-1 cursor-pointer"
           >
-            <Home className="w-4 h-4" />
+            <Home className="w-4 h-4 text-[#0057B8]" />
             <span>Home</span>
           </button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
+          <ChevronRight className="w-3.5 h-3.5 text-[#D9E2EC]" />
           <button
             type="button"
             onClick={onNavigateSchools}
-            className="breadcrumb-item font-semibold cursor-pointer"
+            className="breadcrumb-link cursor-pointer"
           >
             Schools
           </button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
+          <ChevronRight className="w-3.5 h-3.5 text-[#D9E2EC]" />
           {onNavigateVacancies && (
             <>
               <button
                 type="button"
                 onClick={onNavigateVacancies}
-                className="breadcrumb-item font-semibold cursor-pointer"
+                className="breadcrumb-link cursor-pointer"
               >
                 School Posts
               </button>
-              <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
+              <ChevronRight className="w-3.5 h-3.5 text-[#D9E2EC]" />
             </>
           )}
           <button
             type="button"
             onClick={onNavigateRequirement}
-            className="breadcrumb-item font-semibold cursor-pointer"
+            className="breadcrumb-link cursor-pointer"
           >
             Post Details
           </button>
-          <ChevronRight className="w-3.5 h-3.5 text-[#C9A96E]/60" />
-          <span className="text-[#6B1F2A] font-bold">Application Dossier</span>
+          <ChevronRight className="w-3.5 h-3.5 text-[#D9E2EC]" />
+          <span className="text-[#0057B8] font-bold">Application Dossier</span>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-5 sm:pt-7 flex flex-col gap-6">
         {/* Post Applied Summary Banner */}
-        <div className="bg-white rounded-[18px] p-4 sm:p-5 border border-[#C9A96E]/40 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="bg-white rounded-[14px] p-4 sm:p-5 border border-[#D9E2EC] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-[#6B1F2A]/10 border border-[#6B1F2A]/20 flex items-center justify-center text-[#6B1F2A] shrink-0">
+            <div className="w-11 h-11 rounded-xl bg-[#EAF4FF] border border-[#BFDDF5] flex items-center justify-center text-[#0057B8] shrink-0">
               <Briefcase className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#C9A96E]">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#0057B8]">
                 Candidature Lodgement For
               </span>
-              {/* Section Cadre: DM Serif Display, Font weight 400 */}
-              <h2 className="font-serif-tnu font-normal text-lg sm:text-xl text-[#241F20] leading-tight">
+              <h2 className="text-lg sm:text-xl text-[#003B68] font-bold leading-tight">
                 {currentCadre}
               </h2>
-              <span className="text-[13px] text-[#6B1F2A] font-semibold">{currentArea}</span>
+              <span className="text-[13px] text-[#52708A] font-medium">{currentArea}</span>
             </div>
           </div>
 
@@ -424,18 +423,19 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
             <button
               type="button"
               onClick={handleSaveDraft}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-[#C9A96E]/40 bg-[#F8F5EF] text-[#625B58] hover:text-[#6B1F2A] text-[13px] font-bold shadow-2xs transition-colors cursor-pointer"
+              className="btn-secondary-portal inline-flex items-center gap-1.5 px-3.5 py-1.5 text-[13px] cursor-pointer"
             >
-              <Save className="w-3.5 h-3.5 text-[#C9A96E]" />
+              <Save className="w-3.5 h-3.5 text-[#0057B8]" />
               <span>Save Draft</span>
             </button>
           </div>
         </div>
 
         {/* ======================================================== */}
-        {/* 4-STEP PROGRESS TRACKER                                   */}
+        {/* 4-STEP PROGRESS TRACKER (DESIGN RULE 11)                  */}
+        {/* Completed: #0057B8, Current: #0066CC, Upcoming: #D9E2EC  */}
         {/* ======================================================== */}
-        <div className="bg-white rounded-[18px] p-4 border border-[#C9A96E]/40 shadow-xs">
+        <div className="bg-white rounded-[14px] p-4 border border-[#D9E2EC] shadow-xs">
           <div className="grid grid-cols-4 gap-2">
             {[
               { num: 1, title: 'Personal Info', icon: User },
@@ -459,31 +459,31 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
                   disabled={step.num > currentStep}
                   className={`flex flex-col items-center text-center p-2 rounded-xl transition-all ${
                     isCurrent
-                      ? 'bg-[#6B1F2A]/10 border border-[#6B1F2A]/30'
+                      ? 'bg-[#EAF4FF] border border-[#0066CC]'
                       : isDone
-                      ? 'bg-[#F8F5EF] border border-[#C9A96E]/30 hover:bg-white cursor-pointer'
-                      : 'opacity-50 cursor-not-allowed'
+                      ? 'bg-white border border-[#0057B8] hover:bg-[#F5F9FD] cursor-pointer'
+                      : 'bg-[#F7F9FC] border border-[#D9E2EC] opacity-60 cursor-not-allowed'
                   }`}
                 >
                   <div
                     className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm mb-1 ${
                       isCurrent
-                        ? 'bg-[#6B1F2A] text-white shadow-xs'
+                        ? 'bg-[#0066CC] text-white shadow-xs'
                         : isDone
-                        ? 'bg-[#1B7340] text-white'
-                        : 'bg-[#EEE9DF] text-[#8A817C]'
+                        ? 'bg-[#0057B8] text-white'
+                        : 'bg-[#D9E2EC] text-[#71869A]'
                     }`}
                   >
                     {isDone ? <Check className="w-4 h-4" /> : step.num}
                   </div>
                   <span
                     className={`text-[11px] sm:text-[12px] font-bold leading-tight ${
-                      isCurrent ? 'text-[#6B1F2A]' : isDone ? 'text-[#241F20]' : 'text-[#8A817C]'
+                      isCurrent ? 'text-[#003B68]' : isDone ? 'text-[#0057B8]' : 'text-[#71869A]'
                     }`}
                   >
                     {step.title}
                   </span>
-                  <span className="text-[10px] text-[#8A817C] font-medium hidden sm:inline">
+                  <span className="text-[10px] text-[#71869A] font-medium hidden sm:inline">
                     {isDone ? 'Edit' : isCurrent ? 'Active' : 'Step ' + step.num}
                   </span>
                 </button>
@@ -496,86 +496,83 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
         {/* STEP 1: PERSONAL & CONTACT INFORMATION                   */}
         {/* ======================================================== */}
         {currentStep === 1 && (
-          <div className="glass-panel p-5 sm:p-7 rounded-[18px] bg-white border border-[#C9A96E]/40 shadow-xs space-y-6">
-            <div className="border-b border-[#EEE9DF] pb-3">
+          <div className="bg-white p-5 sm:p-7 rounded-[14px] border border-[#D9E2EC] shadow-xs space-y-6">
+            <div className="border-b border-[#D9E2EC] pb-3">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#6B1F2A] text-white text-xs font-bold flex items-center justify-center">
+                <span className="w-6 h-6 rounded-full bg-[#0057B8] text-white text-xs font-bold flex items-center justify-center">
                   1
                 </span>
-                {/* Step Title: DM Serif Display, Font weight 400 */}
-                <h3 className="font-serif-tnu font-normal text-base sm:text-xl text-[#241F20]">
+                <h3 className="text-base sm:text-xl text-[#003B68] font-bold">
                   Step 1: Personal & Contact Information
                 </h3>
               </div>
-              <p className="text-[14px] text-[#625B58] mt-1 ml-8 font-normal leading-[1.6]">
+              <p className="text-[14px] text-[#52708A] mt-1 ml-8 font-normal leading-relaxed">
                 Provide applicant identity, primary academic email, telephone, and residential communication address.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                {/* Form Label: Manrope, Font weight 600 */}
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  First Name <span className="text-[#6B1F2A]">*</span>
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
+                  First Name <span className="text-[#D64545]">*</span>
                 </label>
-                {/* Form Input: Manrope, Font weight 400 */}
                 <input
                   type="text"
                   required
                   value={formData.firstName}
                   onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
                   Middle Name
                 </label>
                 <input
                   type="text"
                   value={formData.middleName}
                   onChange={(e) => setFormData({ ...formData, middleName: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  Last Name <span className="text-[#6B1F2A]">*</span>
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
+                  Last Name <span className="text-[#D64545]">*</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={formData.lastName}
                   onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  Date of Birth <span className="text-[#6B1F2A]">*</span>
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
+                  Date of Birth <span className="text-[#D64545]">*</span>
                 </label>
                 <input
                   type="date"
                   required
                   value={formData.dateOfBirth}
                   onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  Gender <span className="text-[#6B1F2A]">*</span>
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
+                  Gender <span className="text-[#D64545]">*</span>
                 </label>
                 <select
                   value={formData.gender}
                   onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5 bg-white"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -584,119 +581,115 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
               </div>
 
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  Nationality <span className="text-[#6B1F2A]">*</span>
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
+                  Nationality <span className="text-[#D64545]">*</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={formData.nationality}
                   onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  Academic / Work Email <span className="text-[#6B1F2A]">*</span>
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
+                  Academic / Work Email <span className="text-[#D64545]">*</span>
                 </label>
                 <input
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  Mobile Number (with Country Code) <span className="text-[#6B1F2A]">*</span>
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
+                  Mobile Number (with Country Code) <span className="text-[#D64545]">*</span>
                 </label>
                 <input
                   type="tel"
                   required
                   value={formData.mobile}
                   onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  Current Residential Address <span className="text-[#6B1F2A]">*</span>
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
+                  Current Residential Address <span className="text-[#D64545]">*</span>
                 </label>
                 <textarea
                   rows={2}
                   required
                   value={formData.currentAddress}
                   onChange={(e) => setFormData({ ...formData, currentAddress: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl focus:outline-none focus:border-[#6B1F2A] focus:ring-1 focus:ring-[#6B1F2A]/20 bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div>
-                  <label className="block text-[12px] font-semibold text-[#625B58] uppercase tracking-wider mb-1.5">
+                  <label className="block text-[12px] font-semibold text-[#52708A] uppercase tracking-wider mb-1.5">
                     City
                   </label>
                   <input
                     type="text"
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full text-[14px] font-normal px-3.5 py-2 border border-[#C9A96E]/40 rounded-xl bg-white"
+                    className="portal-input w-full text-sm px-3 py-2"
                   />
                 </div>
                 <div>
-                  <label className="block text-[12px] font-semibold text-[#625B58] uppercase tracking-wider mb-1.5">
+                  <label className="block text-[12px] font-semibold text-[#52708A] uppercase tracking-wider mb-1.5">
                     State
                   </label>
                   <input
                     type="text"
                     value={formData.state}
                     onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                    className="w-full text-[14px] font-normal px-3.5 py-2 border border-[#C9A96E]/40 rounded-xl bg-white"
+                    className="portal-input w-full text-sm px-3 py-2"
                   />
                 </div>
                 <div>
-                  <label className="block text-[12px] font-semibold text-[#625B58] uppercase tracking-wider mb-1.5">
+                  <label className="block text-[12px] font-semibold text-[#52708A] uppercase tracking-wider mb-1.5">
                     Country
                   </label>
                   <input
                     type="text"
                     value={formData.country}
                     onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                    className="w-full text-[14px] font-normal px-3.5 py-2 border border-[#C9A96E]/40 rounded-xl bg-white"
+                    className="portal-input w-full text-sm px-3 py-2"
                   />
                 </div>
                 <div>
-                  <label className="block text-[12px] font-semibold text-[#625B58] uppercase tracking-wider mb-1.5">
-                    Pin Code
+                  <label className="block text-[12px] font-semibold text-[#52708A] uppercase tracking-wider mb-1.5">
+                    PIN Code
                   </label>
                   <input
                     type="text"
                     value={formData.pinCode}
                     onChange={(e) => setFormData({ ...formData, pinCode: e.target.value })}
-                    className="w-full text-[14px] font-normal px-3.5 py-2 border border-[#C9A96E]/40 rounded-xl bg-white"
+                    className="portal-input w-full text-sm px-3 py-2"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Bottom Actions for Step 1: Buttons Manrope 700 14-15px */}
-            <div className="pt-4 border-t border-[#EEE9DF] flex items-center justify-between">
-              <span className="text-[13px] text-[#625B58] font-medium">
-                Step 1 of 4: Personal Information Completed
-              </span>
-
+            {/* Bottom Actions */}
+            <div className="pt-4 border-t border-[#D9E2EC] flex items-center justify-end gap-4">
               <button
                 type="button"
                 onClick={handleNextStep}
-                className="btn-primary-tnu inline-flex items-center gap-2 px-6 py-2.5 text-[14px] sm:text-[15px] font-bold cursor-pointer"
+                className="btn-primary-portal inline-flex items-center gap-2 px-6 py-2.5 text-sm cursor-pointer"
               >
                 <span>Continue to Step 2: Academics</span>
                 <ArrowRight className="w-4 h-4" />
@@ -709,94 +702,146 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
         {/* STEP 2: ACADEMIC QUALIFICATIONS & EXPERIENCE             */}
         {/* ======================================================== */}
         {currentStep === 2 && (
-          <div className="glass-panel p-5 sm:p-7 rounded-[18px] bg-white border border-[#C9A96E]/40 shadow-xs space-y-6">
-            <div className="border-b border-[#EEE9DF] pb-3">
+          <div className="bg-white p-5 sm:p-7 rounded-[14px] border border-[#D9E2EC] shadow-xs space-y-6">
+            <div className="border-b border-[#D9E2EC] pb-3">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#6B1F2A] text-white text-xs font-bold flex items-center justify-center">
+                <span className="w-6 h-6 rounded-full bg-[#0057B8] text-white text-xs font-bold flex items-center justify-center">
                   2
                 </span>
-                {/* Step Title: DM Serif Display, Font weight 400 */}
-                <h3 className="font-serif-tnu font-normal text-base sm:text-xl text-[#241F20]">
-                  Step 2: Academic Qualifications & Teaching Experience
+                <h3 className="text-base sm:text-xl text-[#003B68] font-bold">
+                  Step 2: Educational Qualifications & Experience
                 </h3>
               </div>
-              <p className="text-[14px] text-[#625B58] mt-1 ml-8 font-normal leading-[1.6]">
-                Record your university degrees, research doctorates, total collegiate teaching years, and current designation.
+              <p className="text-[14px] text-[#52708A] mt-1 ml-8 font-normal leading-relaxed">
+                Provide academic credentials, collegiate teaching/research experience, and current organizational affiliation.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  Highest Qualification Attained
-                </label>
-                <select
-                  value={formData.highestQualification}
-                  onChange={(e) => setFormData({ ...formData, highestQualification: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl bg-white"
-                >
-                  <option value="Ph.D. / Doctorate">Ph.D. / Doctorate</option>
-                  <option value="Post-Doctoral Fellow">Post-Doctoral Fellow</option>
-                  <option value="Master's (M.Tech / M.Sc / M.Pharm / MBA)">Master's (M.Tech / M.Sc / M.Pharm / MBA)</option>
-                  <option value="Bachelor's (B.Tech / B.Sc / MBBS)">Bachelor's (B.Tech / B.Sc / MBBS)</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
-                  Primary Specialization / Research Area
-                </label>
-                <input
-                  type="text"
-                  value={formData.primarySpecialization}
-                  onChange={(e) => setFormData({ ...formData, primarySpecialization: e.target.value })}
-                  className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl bg-white"
-                />
-              </div>
-            </div>
-
-            {/* Qualifications List */}
+            {/* Table of Qualifications (Rule 13: Tables) */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-[13px] font-semibold text-[#241F20] uppercase tracking-wider">
-                  University Degrees & Credentials
+                <span className="text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider">
+                  Academic Credentials (Ph.D., Master's, Bachelor's)
                 </span>
                 <button
                   type="button"
                   onClick={handleAddQualification}
-                  className="inline-flex items-center gap-1 text-[13px] text-[#6B1F2A] font-bold hover:underline cursor-pointer"
+                  className="inline-flex items-center gap-1 text-[13px] text-[#0057B8] font-semibold hover:underline cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>Add Another Degree</span>
+                  <span>Add Degree / Diploma</span>
                 </button>
               </div>
 
               <div className="space-y-3">
-                {formData.qualifications.map((q) => (
+                {formData.qualifications.map((q, idx) => (
                   <div
                     key={q.id}
-                    className="p-4 rounded-xl border border-[#C9A96E]/40 bg-[#F8F5EF] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    className="p-4 rounded-xl border border-[#D9E2EC] bg-[#F7F9FC] relative flex flex-col sm:flex-row gap-3 items-start justify-between"
                   >
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-[#C9A96E]/20 text-[#6B1F2A] uppercase tracking-wider">
-                          {q.level}
-                        </span>
-                        <h4 className="font-semibold text-[14px] sm:text-[15px] text-[#241F20]">{q.degree}</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1 w-full">
+                      <div>
+                        <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider mb-1">
+                          Degree Level
+                        </label>
+                        <input
+                          type="text"
+                          value={q.level}
+                          onChange={(e) => {
+                            const updated = [...formData.qualifications];
+                            updated[idx].level = e.target.value;
+                            setFormData({ ...formData, qualifications: updated });
+                          }}
+                          className="portal-input w-full text-xs px-3 py-1.5"
+                        />
                       </div>
-                      <p className="text-[13px] text-[#625B58] mt-1 font-normal">
-                        {q.specialization} • {q.institution} ({q.yearOfPassing})
-                      </p>
-                      <div className="text-[12px] font-semibold text-[#6B1F2A] mt-0.5">
-                        Score / Grade: {q.gradeScore}
+
+                      <div>
+                        <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider mb-1">
+                          Degree / Discipline
+                        </label>
+                        <input
+                          type="text"
+                          value={q.degree}
+                          onChange={(e) => {
+                            const updated = [...formData.qualifications];
+                            updated[idx].degree = e.target.value;
+                            setFormData({ ...formData, qualifications: updated });
+                          }}
+                          className="portal-input w-full text-xs px-3 py-1.5"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider mb-1">
+                          University / Institution
+                        </label>
+                        <input
+                          type="text"
+                          value={q.institution}
+                          onChange={(e) => {
+                            const updated = [...formData.qualifications];
+                            updated[idx].institution = e.target.value;
+                            setFormData({ ...formData, qualifications: updated });
+                          }}
+                          className="portal-input w-full text-xs px-3 py-1.5"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider mb-1">
+                          Specialization Area
+                        </label>
+                        <input
+                          type="text"
+                          value={q.specialization}
+                          onChange={(e) => {
+                            const updated = [...formData.qualifications];
+                            updated[idx].specialization = e.target.value;
+                            setFormData({ ...formData, qualifications: updated });
+                          }}
+                          className="portal-input w-full text-xs px-3 py-1.5"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider mb-1">
+                          Passing Year
+                        </label>
+                        <input
+                          type="text"
+                          value={q.yearOfPassing}
+                          onChange={(e) => {
+                            const updated = [...formData.qualifications];
+                            updated[idx].yearOfPassing = e.target.value;
+                            setFormData({ ...formData, qualifications: updated });
+                          }}
+                          className="portal-input w-full text-xs px-3 py-1.5"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider mb-1">
+                          CGPA / Marks %
+                        </label>
+                        <input
+                          type="text"
+                          value={q.gradeScore}
+                          onChange={(e) => {
+                            const updated = [...formData.qualifications];
+                            updated[idx].gradeScore = e.target.value;
+                            setFormData({ ...formData, qualifications: updated });
+                          }}
+                          className="portal-input w-full text-xs px-3 py-1.5"
+                        />
                       </div>
                     </div>
 
                     <button
                       type="button"
                       onClick={() => handleRemoveQualification(q.id)}
-                      className="text-[#8A817C] hover:text-[#B91C1C] p-1.5 self-end sm:self-center cursor-pointer rounded-lg hover:bg-white transition-colors"
-                      title="Remove Degree"
+                      className="p-1.5 rounded-lg text-[#71869A] hover:text-[#D64545] hover:bg-white transition-colors cursor-pointer shrink-0 mt-1"
+                      title="Remove qualification"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -806,94 +851,94 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
             </div>
 
             {/* Experience Overview */}
-            <div className="pt-2 border-t border-[#EEE9DF] space-y-4">
-              <span className="text-[13px] font-semibold text-[#241F20] uppercase tracking-wider block">
+            <div className="pt-2 border-t border-[#D9E2EC] space-y-4">
+              <span className="text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider block">
                 Collegiate & Industrial Experience
               </span>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="bg-[#F8F5EF] p-3 rounded-xl border border-[#EEE9DF]">
-                  <label className="block text-[11px] font-bold text-[#8A817C] uppercase tracking-wider">
+                <div className="bg-[#F5F9FD] p-3 rounded-xl border border-[#D9E2EC]">
+                  <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider">
                     Total Experience
                   </label>
                   <input
                     type="text"
                     value={formData.totalExperience}
                     onChange={(e) => setFormData({ ...formData, totalExperience: e.target.value })}
-                    className="w-full text-[14px] font-semibold bg-transparent mt-1 border-b border-[#C9A96E]/50 focus:outline-none text-[#241F20]"
+                    className="w-full text-sm font-semibold bg-transparent mt-1 border-b border-[#D9E2EC] focus:outline-none focus:border-[#0057B8] text-[#123B5D]"
                   />
                 </div>
 
-                <div className="bg-[#F8F5EF] p-3 rounded-xl border border-[#EEE9DF]">
-                  <label className="block text-[11px] font-bold text-[#8A817C] uppercase tracking-wider">
+                <div className="bg-[#F5F9FD] p-3 rounded-xl border border-[#D9E2EC]">
+                  <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider">
                     Teaching Exp.
                   </label>
                   <input
                     type="text"
                     value={formData.teachingExperience}
                     onChange={(e) => setFormData({ ...formData, teachingExperience: e.target.value })}
-                    className="w-full text-[14px] font-semibold bg-transparent mt-1 border-b border-[#C9A96E]/50 focus:outline-none text-[#241F20]"
+                    className="w-full text-sm font-semibold bg-transparent mt-1 border-b border-[#D9E2EC] focus:outline-none focus:border-[#0057B8] text-[#123B5D]"
                   />
                 </div>
 
-                <div className="bg-[#F8F5EF] p-3 rounded-xl border border-[#EEE9DF]">
-                  <label className="block text-[11px] font-bold text-[#8A817C] uppercase tracking-wider">
+                <div className="bg-[#F5F9FD] p-3 rounded-xl border border-[#D9E2EC]">
+                  <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider">
                     Research Exp.
                   </label>
                   <input
                     type="text"
                     value={formData.researchExperience}
                     onChange={(e) => setFormData({ ...formData, researchExperience: e.target.value })}
-                    className="w-full text-[14px] font-semibold bg-transparent mt-1 border-b border-[#C9A96E]/50 focus:outline-none text-[#241F20]"
+                    className="w-full text-sm font-semibold bg-transparent mt-1 border-b border-[#D9E2EC] focus:outline-none focus:border-[#0057B8] text-[#123B5D]"
                   />
                 </div>
 
-                <div className="bg-[#F8F5EF] p-3 rounded-xl border border-[#EEE9DF]">
-                  <label className="block text-[11px] font-bold text-[#8A817C] uppercase tracking-wider">
+                <div className="bg-[#F5F9FD] p-3 rounded-xl border border-[#D9E2EC]">
+                  <label className="block text-[11px] font-bold text-[#71869A] uppercase tracking-wider">
                     Industry Exp.
                   </label>
                   <input
                     type="text"
                     value={formData.industryExperience}
                     onChange={(e) => setFormData({ ...formData, industryExperience: e.target.value })}
-                    className="w-full text-[14px] font-semibold bg-transparent mt-1 border-b border-[#C9A96E]/50 focus:outline-none text-[#241F20]"
+                    className="w-full text-sm font-semibold bg-transparent mt-1 border-b border-[#D9E2EC] focus:outline-none focus:border-[#0057B8] text-[#123B5D]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
+                  <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
                     Current Organization / University
                   </label>
                   <input
                     type="text"
                     value={formData.currentOrganization}
                     onChange={(e) => setFormData({ ...formData, currentOrganization: e.target.value })}
-                    className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl bg-white"
+                    className="portal-input w-full text-sm px-3.5 py-2.5"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
+                  <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
                     Current Designation / Cadre
                   </label>
                   <input
                     type="text"
                     value={formData.currentDesignation}
                     onChange={(e) => setFormData({ ...formData, currentDesignation: e.target.value })}
-                    className="w-full text-[14px] sm:text-[15px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl bg-white"
+                    className="portal-input w-full text-sm px-3.5 py-2.5"
                   />
                 </div>
               </div>
             </div>
 
             {/* Bottom Actions for Step 2 */}
-            <div className="pt-4 border-t border-[#EEE9DF] flex items-center justify-between gap-4">
+            <div className="pt-4 border-t border-[#D9E2EC] flex items-center justify-between gap-4">
               <button
                 type="button"
                 onClick={handlePrevStep}
-                className="btn-secondary-tnu inline-flex items-center gap-1.5 px-4 py-2.5 text-[14px] font-bold cursor-pointer"
+                className="btn-secondary-portal inline-flex items-center gap-1.5 px-4 py-2 text-sm cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Previous: Step 1</span>
@@ -902,7 +947,7 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
               <button
                 type="button"
                 onClick={handleNextStep}
-                className="btn-primary-tnu inline-flex items-center gap-2 px-6 py-2.5 text-[14px] sm:text-[15px] font-bold cursor-pointer"
+                className="btn-primary-portal inline-flex items-center gap-2 px-6 py-2.5 text-sm cursor-pointer"
               >
                 <span>Continue to Step 3: Research</span>
                 <ArrowRight className="w-4 h-4" />
@@ -915,69 +960,68 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
         {/* STEP 3: RESEARCH PROFILE, PUBLICATIONS & PATENTS         */}
         {/* ======================================================== */}
         {currentStep === 3 && (
-          <div className="glass-panel p-5 sm:p-7 rounded-[18px] bg-white border border-[#C9A96E]/40 shadow-xs space-y-6">
-            <div className="border-b border-[#EEE9DF] pb-3">
+          <div className="bg-white p-5 sm:p-7 rounded-[14px] border border-[#D9E2EC] shadow-xs space-y-6">
+            <div className="border-b border-[#D9E2EC] pb-3">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#6B1F2A] text-white text-xs font-bold flex items-center justify-center">
+                <span className="w-6 h-6 rounded-full bg-[#0057B8] text-white text-xs font-bold flex items-center justify-center">
                   3
                 </span>
-                {/* Step Title: DM Serif Display, Font weight 400 */}
-                <h3 className="font-serif-tnu font-normal text-base sm:text-xl text-[#241F20]">
+                <h3 className="text-base sm:text-xl text-[#003B68] font-bold">
                   Step 3: Research Profile, Publications & Patents
                 </h3>
               </div>
-              <p className="text-[14px] text-[#625B58] mt-1 ml-8 font-normal leading-[1.6]">
+              <p className="text-[14px] text-[#52708A] mt-1 ml-8 font-normal leading-relaxed">
                 Record indexed research papers (SCI/Scopus), registered patents, funded grants, and academic honors.
               </p>
             </div>
 
             {/* Research Metrics Quad */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="bg-[#F8F5EF] p-3.5 rounded-xl border border-[#EEE9DF] text-center">
-                <span className="text-[11px] font-bold text-[#8A817C] uppercase tracking-wider block">
+              <div className="bg-[#F5F9FD] p-3.5 rounded-xl border border-[#D9E2EC] text-center">
+                <span className="text-[11px] font-bold text-[#71869A] uppercase tracking-wider block">
                   Total Publications
                 </span>
                 <input
                   type="text"
                   value={formData.publicationsCount}
                   onChange={(e) => setFormData({ ...formData, publicationsCount: e.target.value })}
-                  className="font-serif-tnu text-xl sm:text-2xl font-normal text-[#6B1F2A] text-center w-full bg-transparent border-b border-[#C9A96E]/50 focus:outline-none mt-1"
+                  className="text-xl sm:text-2xl font-bold text-[#003B68] text-center w-full bg-transparent border-b border-[#D9E2EC] focus:outline-none focus:border-[#0057B8] mt-1"
                 />
               </div>
 
-              <div className="bg-[#F8F5EF] p-3.5 rounded-xl border border-[#EEE9DF] text-center">
-                <span className="text-[11px] font-bold text-[#8A817C] uppercase tracking-wider block">
+              <div className="bg-[#F5F9FD] p-3.5 rounded-xl border border-[#D9E2EC] text-center">
+                <span className="text-[11px] font-bold text-[#71869A] uppercase tracking-wider block">
                   SCI / Scopus Papers
                 </span>
                 <input
                   type="text"
                   value={formData.sciScopusCount}
                   onChange={(e) => setFormData({ ...formData, sciScopusCount: e.target.value })}
-                  className="font-serif-tnu text-xl sm:text-2xl font-normal text-[#241F20] text-center w-full bg-transparent border-b border-[#C9A96E]/50 focus:outline-none mt-1"
+                  className="text-xl sm:text-2xl font-bold text-[#0057B8] text-center w-full bg-transparent border-b border-[#D9E2EC] focus:outline-none focus:border-[#0057B8] mt-1"
                 />
               </div>
 
-              <div className="bg-[#F8F5EF] p-3.5 rounded-xl border border-[#EEE9DF] text-center">
-                <span className="text-[11px] font-bold text-[#8A817C] uppercase tracking-wider block">
+              <div className="bg-[#F5F9FD] p-3.5 rounded-xl border border-[#D9E2EC] text-center">
+                <span className="text-[11px] font-bold text-[#71869A] uppercase tracking-wider block">
                   Patents (Filed/Granted)
                 </span>
                 <input
                   type="text"
                   value={formData.patentsCount}
                   onChange={(e) => setFormData({ ...formData, patentsCount: e.target.value })}
-                  className="font-serif-tnu text-xl sm:text-2xl font-normal text-[#C9A96E] text-center w-full bg-transparent border-b border-[#C9A96E]/50 focus:outline-none mt-1"
+                  className="text-xl sm:text-2xl font-bold text-[#0066CC] text-center w-full bg-transparent border-b border-[#D9E2EC] focus:outline-none focus:border-[#0057B8] mt-1"
                 />
               </div>
 
-              <div className="bg-[#F8F5EF] p-3.5 rounded-xl border border-[#EEE9DF] text-center">
-                <span className="text-[11px] font-bold text-[#8A817C] uppercase tracking-wider block">
+              <div className="bg-[#F5F9FD] p-3.5 rounded-xl border border-[#D9E2EC] text-center">
+                <span className="text-[11px] font-bold text-[#71869A] uppercase tracking-wider block">
                   Funded Projects
                 </span>
                 <input
                   type="text"
                   value={formData.projectsCount}
                   onChange={(e) => setFormData({ ...formData, projectsCount: e.target.value })}
-                  className="font-serif-tnu text-xl sm:text-2xl font-normal text-[#625B58] text-center w-full bg-transparent border-b border-[#C9A96E]/50 focus:outline-none mt-1"
+                  className="text-xl sm:text-2xl font-bold text-[#16865F] text-center w-full bg-transparent border-b border-[#D9E2EC] focus:outline-none focus:border-[#0057B8] mt-1"
                 />
               </div>
             </div>
@@ -985,13 +1029,13 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
             {/* Key Publications List */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-[13px] font-semibold text-[#241F20] uppercase tracking-wider">
+                <span className="text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider">
                   Representative Research Publications
                 </span>
                 <button
                   type="button"
                   onClick={handleAddPublication}
-                  className="inline-flex items-center gap-1 text-[13px] text-[#6B1F2A] font-bold hover:underline cursor-pointer"
+                  className="inline-flex items-center gap-1 text-[13px] text-[#0057B8] font-semibold hover:underline cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Add Another Publication</span>
@@ -1002,17 +1046,17 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
                 {formData.publications.map((pub) => (
                   <div
                     key={pub.id}
-                    className="p-3.5 rounded-xl border border-[#C9A96E]/40 bg-[#F8F5EF]"
+                    className="p-3.5 rounded-xl border border-[#D9E2EC] bg-[#F7F9FC]"
                   >
-                    <h4 className="font-semibold text-[14px] sm:text-[15px] text-[#241F20] leading-snug">
+                    <h4 className="font-semibold text-sm text-[#003B68] leading-snug">
                       {pub.title}
                     </h4>
-                    <p className="text-[13px] text-[#625B58] mt-0.5 font-normal">
+                    <p className="text-xs text-[#52708A] mt-0.5 font-normal">
                       {pub.venue} • {pub.authors}
                     </p>
-                    <div className="flex items-center gap-3 text-[12px] text-[#8A817C] mt-1 font-mono">
+                    <div className="flex items-center gap-3 text-xs text-[#71869A] mt-1 font-mono">
                       <span>DOI: {pub.doi}</span>
-                      <span className="text-[#6B1F2A] font-semibold">{pub.citations}</span>
+                      <span className="text-[#0057B8] font-semibold">{pub.citations}</span>
                     </div>
                   </div>
                 ))}
@@ -1022,36 +1066,36 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
             {/* Awards & Memberships */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
                   Academic Honors, Fellowships & Awards
                 </label>
                 <textarea
                   rows={2}
                   value={formData.awards}
                   onChange={(e) => setFormData({ ...formData, awards: e.target.value })}
-                  className="w-full text-[14px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               <div>
-                <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
+                <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
                   Professional Society Memberships (IEEE, ACM, etc.)
                 </label>
                 <textarea
                   rows={2}
                   value={formData.memberships}
                   onChange={(e) => setFormData({ ...formData, memberships: e.target.value })}
-                  className="w-full text-[14px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl bg-white"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
             </div>
 
             {/* Bottom Actions for Step 3 */}
-            <div className="pt-4 border-t border-[#EEE9DF] flex items-center justify-between gap-4">
+            <div className="pt-4 border-t border-[#D9E2EC] flex items-center justify-between gap-4">
               <button
                 type="button"
                 onClick={handlePrevStep}
-                className="btn-secondary-tnu inline-flex items-center gap-1.5 px-4 py-2.5 text-[14px] font-bold cursor-pointer"
+                className="btn-secondary-portal inline-flex items-center gap-1.5 px-4 py-2 text-sm cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Previous: Step 2</span>
@@ -1060,7 +1104,7 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
               <button
                 type="button"
                 onClick={handleNextStep}
-                className="btn-primary-tnu inline-flex items-center gap-2 px-6 py-2.5 text-[14px] sm:text-[15px] font-bold cursor-pointer"
+                className="btn-primary-portal inline-flex items-center gap-2 px-6 py-2.5 text-sm cursor-pointer"
               >
                 <span>Continue to Step 4: CV Upload</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1075,53 +1119,52 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
         {currentStep === 4 && (
           <form
             onSubmit={handleFinalSubmit}
-            className="glass-panel p-5 sm:p-7 rounded-[18px] bg-white border border-[#C9A96E]/40 shadow-xs space-y-6"
+            className="bg-white p-5 sm:p-7 rounded-[14px] border border-[#D9E2EC] shadow-xs space-y-6"
           >
-            <div className="border-b border-[#EEE9DF] pb-3">
+            <div className="border-b border-[#D9E2EC] pb-3">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#6B1F2A] text-white text-xs font-bold flex items-center justify-center">
+                <span className="w-6 h-6 rounded-full bg-[#0057B8] text-white text-xs font-bold flex items-center justify-center">
                   4
                 </span>
-                {/* Step Title: DM Serif Display, Font weight 400 */}
-                <h3 className="font-serif-tnu font-normal text-base sm:text-xl text-[#241F20]">
+                <h3 className="text-base sm:text-xl text-[#003B68] font-bold">
                   Step 4: CV Upload & Final Academic Dossier Lodgement
                 </h3>
               </div>
-              <p className="text-[14px] text-[#625B58] mt-1 ml-8 font-normal leading-[1.6]">
+              <p className="text-[14px] text-[#52708A] mt-1 ml-8 font-normal leading-relaxed">
                 Attach your comprehensive, updated Curriculum Vitae and complete statutory institutional declaration.
               </p>
             </div>
 
-            {/* CV UPLOAD AREA (Section 10 Redesign) */}
+            {/* CV UPLOAD AREA (Rule 8 & Rule 12) */}
             <div className="space-y-3">
-              <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider">
-                Upload your CV <span className="text-[#6B1F2A]">*</span>
+              <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider">
+                Upload your CV <span className="text-[#D64545]">*</span>
               </label>
 
               {uploadError && (
-                <div className="flex items-center gap-2 text-[13px] text-[#B91C1C] bg-[#B91C1C]/10 border border-[#B91C1C]/25 p-3 rounded-xl font-medium">
+                <div className="flex items-center gap-2 text-xs text-[#D64545] bg-[#FCEAEA] border border-[#D64545]/25 p-3 rounded-lg font-medium">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{uploadError}</span>
                 </div>
               )}
 
               {formData.cvUploaded ? (
-                <div className="p-4 rounded-xl border border-[#1B7340]/40 bg-[#1B7340]/5 flex items-center justify-between gap-4">
+                <div className="p-4 rounded-xl border border-[#19B87A]/40 bg-[#E8F8F2] flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-12 h-12 rounded-xl bg-[#1B7340]/15 text-[#1B7340] flex items-center justify-center shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-white text-[#16865F] flex items-center justify-center shrink-0 border border-emerald-200">
                       <FileText className="w-6 h-6" />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-semibold text-[14px] sm:text-[15px] text-[#241F20] truncate">
+                        <span className="font-semibold text-sm text-[#003B68] truncate">
                           {formData.cvFileName}
                         </span>
-                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#1B7340] bg-white px-2.5 py-0.5 rounded-full border border-[#1B7340]/30 tracking-wide uppercase">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#16865F] bg-white px-2.5 py-0.5 rounded-full border border-emerald-200 tracking-wide uppercase">
                           <Check className="w-3.5 h-3.5" />
                           Ready for Review
                         </span>
                       </div>
-                      <p className="text-[12px] text-[#625B58] mt-0.5 font-medium">
+                      <p className="text-xs text-[#52708A] mt-0.5 font-medium">
                         File Size: {formData.cvFileSize} • Attached to Dossier
                       </p>
                     </div>
@@ -1131,14 +1174,14 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="text-[13px] font-bold text-[#625B58] hover:text-[#6B1F2A] px-3.5 py-1.5 bg-white border border-[#C9A96E]/40 rounded-lg shadow-2xs cursor-pointer hover:bg-[#F8F5EF] transition-colors"
+                      className="text-xs font-semibold text-[#52708A] hover:text-[#0057B8] px-3.5 py-1.5 bg-white border border-[#D9E2EC] rounded-lg shadow-2xs cursor-pointer hover:bg-[#F5F9FD] transition-colors"
                     >
                       Replace File
                     </button>
                     <button
                       type="button"
                       onClick={handleRemoveCv}
-                      className="text-[#8A817C] hover:text-[#B91C1C] p-2 rounded-lg cursor-pointer hover:bg-white transition-colors"
+                      className="text-[#71869A] hover:text-[#D64545] p-2 rounded-lg cursor-pointer hover:bg-white transition-colors"
                       title="Remove file"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -1154,24 +1197,22 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
                   onDragLeave={() => setIsDragging(false)}
                   onDrop={handleFileDrop}
                   onClick={() => fileInputRef.current?.click()}
-                  className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-200 ${
+                  className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-200 ${
                     isDragging
-                      ? 'border-[#6B1F2A] bg-[#6B1F2A]/5 scale-[1.01]'
-                      : 'border-[#C9A96E]/60 hover:border-[#6B1F2A] bg-[#F8F5EF]'
+                      ? 'border-[#0057B8] bg-[#EAF4FF] scale-[1.01]'
+                      : 'border-[#D9E2EC] hover:border-[#0057B8] bg-[#F7F9FC]'
                   }`}
                 >
-                  <div className="w-12 h-12 rounded-full bg-white text-[#6B1F2A] mx-auto mb-3 flex items-center justify-center shadow-xs border border-[#C9A96E]/30">
+                  <div className="w-12 h-12 rounded-full bg-white text-[#0057B8] mx-auto mb-3 flex items-center justify-center shadow-xs border border-[#D9E2EC]">
                     <UploadCloud className="w-6 h-6" />
                   </div>
-                  {/* Upload Headline: DM Serif Display, Font weight 400 */}
-                  <h4 className="font-serif-tnu font-normal text-base sm:text-lg text-[#241F20]">
+                  <h4 className="font-bold text-base text-[#003B68]">
                     Upload your CV
                   </h4>
-                  {/* Subtext: Manrope 500, 12-13px */}
-                  <p className="text-[13px] text-[#8A817C] mt-1 font-medium">
+                  <p className="text-xs text-[#71869A] mt-1 font-medium">
                     PDF, DOC or DOCX • Maximum 5 MB
                   </p>
-                  <p className="text-[12px] text-[#625B58] mt-2 max-w-sm mx-auto font-normal">
+                  <p className="text-xs text-[#52708A] mt-2 max-w-sm mx-auto font-normal">
                     Drag and drop your file here, or click to browse from your device.
                   </p>
                 </div>
@@ -1188,7 +1229,7 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
 
             {/* Additional Dossier Statement */}
             <div>
-              <label className="block text-[13px] font-semibold text-[#241F20] uppercase tracking-wider mb-1.5">
+              <label className="block text-[13px] font-semibold text-[#123B5D] uppercase tracking-wider mb-1.5">
                 Statement of Teaching Philosophy / Research Intent (Optional)
               </label>
               <textarea
@@ -1196,33 +1237,33 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
                 placeholder="Briefly state your academic objectives, pedagogical style, and research goals at The Neotia University..."
                 value={formData.additionalNotes}
                 onChange={(e) => setFormData({ ...formData, additionalNotes: e.target.value })}
-                className="w-full text-[14px] font-normal px-3.5 py-2.5 border border-[#C9A96E]/40 rounded-xl bg-white"
+                className="portal-input w-full text-sm px-3.5 py-2.5"
               />
             </div>
 
             {/* Dossier Quick Recap Summary */}
-            <div className="p-4 rounded-xl border border-[#C9A96E]/30 bg-[#F8F5EF] space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#C9A96E] block">
+            <div className="p-4 rounded-xl border border-[#D9E2EC] bg-[#F7F9FC] space-y-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#0057B8] block">
                 Candidature Summary Review
               </span>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[13px]">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                 <div>
-                  <span className="text-[#8A817C] text-[11px] font-medium block">Applicant:</span>
-                  <span className="font-semibold text-[#241F20]">
+                  <span className="text-[#71869A] text-[11px] font-medium block">Applicant:</span>
+                  <span className="font-semibold text-[#123B5D]">
                     {formData.firstName} {formData.lastName}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[#8A817C] text-[11px] font-medium block">Highest Degree:</span>
-                  <span className="font-semibold text-[#241F20]">{formData.highestQualification}</span>
+                  <span className="text-[#71869A] text-[11px] font-medium block">Highest Degree:</span>
+                  <span className="font-semibold text-[#123B5D]">{formData.highestQualification}</span>
                 </div>
                 <div>
-                  <span className="text-[#8A817C] text-[11px] font-medium block">Experience:</span>
-                  <span className="font-semibold text-[#241F20]">{formData.totalExperience}</span>
+                  <span className="text-[#71869A] text-[11px] font-medium block">Experience:</span>
+                  <span className="font-semibold text-[#123B5D]">{formData.totalExperience}</span>
                 </div>
                 <div>
-                  <span className="text-[#8A817C] text-[11px] font-medium block">CV Attached:</span>
-                  <span className="font-bold text-[#1B7340]">
+                  <span className="text-[#71869A] text-[11px] font-medium block">CV Attached:</span>
+                  <span className="font-bold text-[#16865F]">
                     {formData.cvUploaded ? '✓ Verified' : 'Missing'}
                   </span>
                 </div>
@@ -1231,26 +1272,26 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
 
             {/* Mandatory Academic Declaration */}
             <div className="pt-2">
-              <label className="flex items-start gap-3 p-4 rounded-xl border border-[#C9A96E]/40 bg-[#F8F5EF] cursor-pointer hover:bg-white transition-colors">
+              <label className="flex items-start gap-3 p-4 rounded-xl border border-[#D9E2EC] bg-[#F7F9FC] cursor-pointer hover:bg-white transition-colors">
                 <input
                   type="checkbox"
                   required
                   checked={formData.declarationAccepted}
                   onChange={(e) => setFormData({ ...formData, declarationAccepted: e.target.checked })}
-                  className="w-4 h-4 mt-0.5 rounded border-[#C9A96E] text-[#6B1F2A] focus:ring-[#6B1F2A] cursor-pointer"
+                  className="w-4 h-4 mt-0.5 rounded border-[#D9E2EC] text-[#0057B8] focus:ring-[#0057B8] cursor-pointer"
                 />
-                <span className="text-[13px] sm:text-[14px] text-[#625B58] leading-[1.6] font-normal">
+                <span className="text-xs sm:text-[13px] text-[#52708A] leading-relaxed font-normal">
                   I hereby certify that all information, degrees, publication claims, and credentials lodged in this faculty application dossier are authentic, correct, and verifiable from original records. I agree to abide by the statutory recruitment procedures of The Neotia University.
                 </span>
               </label>
             </div>
 
-            {/* Bottom Actions with PREVIOUS & FINAL SUBMIT: Buttons Manrope 700 14-15px */}
-            <div className="pt-4 border-t border-[#EEE9DF] flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Bottom Actions with PREVIOUS & FINAL SUBMIT */}
+            <div className="pt-4 border-t border-[#D9E2EC] flex flex-col sm:flex-row items-center justify-between gap-4">
               <button
                 type="button"
                 onClick={handlePrevStep}
-                className="w-full sm:w-auto btn-secondary-tnu inline-flex items-center justify-center gap-1.5 px-5 py-2.5 text-[14px] font-bold cursor-pointer"
+                className="w-full sm:w-auto btn-secondary-portal inline-flex items-center justify-center gap-1.5 px-5 py-2.5 text-sm cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Previous: Step 3</span>
@@ -1258,7 +1299,7 @@ export const ApplicationFormPage: React.FC<ApplicationFormPageProps> = ({
 
               <button
                 type="submit"
-                className="w-full sm:w-auto btn-primary-tnu inline-flex items-center justify-center gap-2 px-8 py-3 text-[14px] sm:text-[15px] font-bold tracking-wide cursor-pointer whitespace-nowrap"
+                className="w-full sm:w-auto btn-primary-portal inline-flex items-center justify-center gap-2 px-8 py-3 text-sm cursor-pointer whitespace-nowrap"
               >
                 <ShieldCheck className="w-4 h-4" />
                 <span>Submit Application Dossier</span>

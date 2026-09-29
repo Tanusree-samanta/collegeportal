@@ -371,23 +371,23 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
         className="glass-panel max-w-xl w-full shadow-2xl flex flex-col overflow-hidden max-h-[90vh] animate-in fade-in zoom-in-95 duration-200"
         style={{ background: 'rgba(255, 255, 255, 0.90)', backdropFilter: 'blur(20px)' }}
       >
-        {/* Header */}
-        <div className="bg-white/80 border-b border-[#D9CC86]/45 px-4 sm:px-5 py-3.5 flex items-center justify-between">
+        {/* Header (Rule 14: #003B68 header) */}
+        <div className="bg-white border-b border-[#D9E2EC] px-4 sm:px-5 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#D83232] text-white flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-xl bg-[#0057B8] text-white flex items-center justify-center shadow-xs">
               <Bot className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="font-serif-tnu font-bold text-sm sm:text-base text-[#292727]">
-                  Dr. Neotia AI • Live Voice Advisor
+                <span className="font-bold text-sm sm:text-base text-[#003B68]">
+                  Bass • TNU AI Voice Assistant
                 </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#E8F8F2] border border-emerald-200 text-[#16865F] text-[10px] font-bold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#19B87A] animate-pulse" />
                   Live API
                 </span>
               </div>
-              <span className="text-[11px] text-[#765331] font-medium flex items-center gap-1.5">
+              <span className="text-[11px] text-[#52708A] font-medium flex items-center gap-1.5">
                 <span>Model: gemini-3.8-live</span>
                 <span>•</span>
                 <span>The Neotia University</span>
@@ -398,32 +398,32 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full text-[#765331] hover:text-[#292727] hover:bg-[#F2ECE4] flex items-center justify-center transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full text-[#71869A] hover:text-[#123B5D] hover:bg-[#F5F9FD] flex items-center justify-center transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Dynamic Voice Visualizer Orb */}
-        <div className="bg-gradient-to-b from-white to-[#FAF8F5] border-b border-[#EBE6DF] p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <div className="bg-gradient-to-b from-white to-[#F7F9FC] border-b border-[#D9E2EC] p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
           {/* Animated Glow Wave */}
           <div
             className={`w-28 h-28 rounded-full flex items-center justify-center transition-all duration-300 relative ${
               isModelSpeaking
-                ? 'bg-[#D83232]/15 scale-110 shadow-[0_0_40px_rgba(216,50,50,0.35)]'
+                ? 'bg-[#0057B8]/15 scale-110 shadow-[0_0_40px_rgba(0,87,184,0.35)]'
                 : isUserSpeaking
-                ? 'bg-[#B69A62]/20 scale-105 shadow-[0_0_30px_rgba(182,154,98,0.3)]'
-                : 'bg-[#F2ECE4] scale-100'
+                ? 'bg-[#0066CC]/20 scale-105 shadow-[0_0_30px_rgba(0,102,204,0.3)]'
+                : 'bg-[#F5F9FD] scale-100'
             }`}
           >
             {/* Inner Ring */}
             <div
               className={`w-20 h-20 rounded-full flex items-center justify-center border-2 transition-all ${
                 isModelSpeaking
-                  ? 'border-[#D83232] bg-[#D83232] text-white animate-pulse'
+                  ? 'border-[#0057B8] bg-[#0057B8] text-white animate-pulse'
                   : isUserSpeaking
-                  ? 'border-[#B69A62] bg-[#B69A62] text-white'
-                  : 'border-[#D9CC86] bg-white text-[#765331]'
+                  ? 'border-[#0066CC] bg-[#0066CC] text-white'
+                  : 'border-[#D9E2EC] bg-white text-[#0057B8]'
               }`}
             >
               {isModelSpeaking ? (
@@ -438,27 +438,27 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
 
           {/* Live Status Description */}
           <div className="mt-3 flex flex-col items-center">
-            <span className="text-xs sm:text-sm font-bold text-[#292727]">
+            <span className="text-xs sm:text-sm font-bold text-[#003B68]">
               {statusText}
             </span>
-            <span className="text-[11px] text-[#765331] mt-0.5">
+            <span className="text-[11px] text-[#52708A] mt-0.5">
               {hasMic
                 ? 'Speak naturally into your microphone to discuss faculty posts, eligibility & pay scale'
-                : 'Dr. Neotia AI speaks answers aloud. Type or click topics below.'}
+                : 'Bass speaks answers aloud. Type or click topics below.'}
             </span>
           </div>
 
           {/* Microphone Notice when not found */}
           {hasMic === false && (
-            <div className="mt-3 p-2 bg-amber-50 border border-amber-200 text-amber-900 rounded-lg text-[11px] flex items-center gap-2 max-w-md text-left">
-              <Info className="w-4 h-4 shrink-0 text-amber-700" />
+            <div className="mt-3 p-2 bg-[#FFF4DE] border border-[#F5A623]/40 text-[#A66A00] rounded-lg text-[11px] flex items-center gap-2 max-w-md text-left">
+              <Info className="w-4 h-4 shrink-0 text-[#F5A623]" />
               <span className="flex-1">
-                Microphone not detected. Voice output is enabled; you can type or select inquiries below to hear Dr. Neotia AI reply.
+                Microphone not detected. Voice output is enabled; you can type or select inquiries below to hear Bass reply.
               </span>
               <button
                 type="button"
                 onClick={startVoiceSession}
-                className="px-2 py-1 bg-amber-200 hover:bg-amber-300 text-amber-900 rounded text-[10px] font-bold cursor-pointer shrink-0"
+                className="px-2 py-1 bg-[#F5A623]/20 hover:bg-[#F5A623]/30 text-[#A66A00] rounded text-[10px] font-bold cursor-pointer shrink-0"
               >
                 Check Mic
               </button>
@@ -467,13 +467,13 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
 
           {/* Error Banner */}
           {errorMsg && (
-            <div className="mt-3 p-2.5 bg-red-50 border border-red-200 text-red-700 rounded-lg text-xs flex items-center gap-2 max-w-md text-left">
+            <div className="mt-3 p-2.5 bg-[#FCEAEA] border border-[#D64545]/30 text-[#D64545] rounded-lg text-xs flex items-center gap-2 max-w-md text-left">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span className="flex-1">{errorMsg}</span>
               <button
                 type="button"
                 onClick={startVoiceSession}
-                className="px-2 py-1 bg-red-600 text-white rounded text-[10px] font-bold"
+                className="px-2 py-1 bg-[#D64545] text-white rounded text-[10px] font-bold"
               >
                 Retry
               </button>
@@ -484,13 +484,13 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
         {/* Conversation Transcript Stream */}
         <div className="flex-1 p-4 overflow-y-auto space-y-3 min-h-[160px] max-h-[220px]">
           {messages.length === 0 ? (
-            <div className="text-center py-6 text-xs text-[#765331]">
-              <HelpCircle className="w-8 h-8 mx-auto text-[#B69A62]/60 mb-1.5" />
-              <p className="font-semibold text-[#292727]">Start the Voice Conversation</p>
+            <div className="text-center py-6 text-xs text-[#52708A]">
+              <HelpCircle className="w-8 h-8 mx-auto text-[#0057B8]/50 mb-1.5" />
+              <p className="font-semibold text-[#003B68]">Start the Voice Conversation</p>
               <p className="text-[11px] mt-0.5">
                 {hasMic
-                  ? 'Say "Hello Dr. Neotia" or click one of the suggested academic topics below.'
-                  : 'Click any suggested topic below or type an inquiry to hear Dr. Neotia AI reply.'}
+                  ? 'Say "Hello Bass" or click one of the suggested academic topics below.'
+                  : 'Click any suggested topic below or type an inquiry to hear Bass reply.'}
               </p>
             </div>
           ) : (
@@ -502,28 +502,28 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
                 }`}
               >
                 {m.role === 'model' && (
-                  <div className="w-7 h-7 rounded-full bg-[#D83232] text-white flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">
+                  <div className="w-7 h-7 rounded-full bg-[#0057B8] text-white flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">
                     TNU
                   </div>
                 )}
                 <div
                   className={`max-w-[80%] rounded-xl p-2.5 shadow-2xs leading-relaxed ${
                     m.role === 'user'
-                      ? 'bg-[#292727] text-white rounded-tr-xs'
-                      : 'bg-white border border-[#D9CC86]/50 text-[#292727] rounded-tl-xs'
+                      ? 'bg-[#003B68] text-white rounded-tr-xs'
+                      : 'bg-white border border-[#D9E2EC] text-[#123B5D] rounded-tl-xs'
                   }`}
                 >
                   <p>{m.text}</p>
                   <span
                     className={`block text-[9px] mt-1 ${
-                      m.role === 'user' ? 'text-white/60' : 'text-[#765331]'
+                      m.role === 'user' ? 'text-white/70' : 'text-[#71869A]'
                     }`}
                   >
                     {m.timestamp}
                   </span>
                 </div>
                 {m.role === 'user' && (
-                  <div className="w-7 h-7 rounded-full bg-[#765331] text-white flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-full bg-[#52708A] text-white flex items-center justify-center shrink-0 mt-0.5">
                     <User className="w-3.5 h-3.5" />
                   </div>
                 )}
@@ -534,7 +534,7 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
         </div>
 
         {/* Suggested Quick Inquiries */}
-        <div className="px-4 py-2 bg-white border-t border-[#EBE6DF] overflow-x-auto whitespace-nowrap flex items-center gap-1.5">
+        <div className="px-4 py-2 bg-white border-t border-[#D9E2EC] overflow-x-auto whitespace-nowrap flex items-center gap-1.5">
           {[
             'What are the vacancies in AI & ML?',
             'Explain the 7th CPC scale & seed grants.',
@@ -545,7 +545,7 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
               key={idx}
               type="button"
               onClick={() => sendTextMessage(prompt)}
-              className="px-2.5 py-1 rounded-full bg-[#FAF8F5] hover:bg-[#F2ECE4] border border-[#D9CC86]/50 text-[#765331] hover:text-[#D83232] text-[11px] font-medium transition-colors cursor-pointer shrink-0"
+              className="px-2.5 py-1 rounded-full bg-[#F5F9FD] hover:bg-[#EAF4FF] border border-[#D9E2EC] text-[#0057B8] text-[11px] font-medium transition-colors cursor-pointer shrink-0"
             >
               {prompt}
             </button>
@@ -553,7 +553,7 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
         </div>
 
         {/* Controls Bar */}
-        <div className="bg-[#F2ECE4]/70 border-t border-[#EBE6DF] p-3 sm:p-4 flex items-center justify-between gap-3">
+        <div className="bg-[#F7F9FC] border-t border-[#D9E2EC] p-3 sm:p-4 flex items-center justify-between gap-3">
           {/* Text input fallback */}
           <div className="flex-1 relative">
             <input
@@ -561,14 +561,14 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
               value={textInput}
               onChange={(e) => setTextInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && sendTextMessage(textInput)}
-              placeholder="Type an inquiry (Dr. Neotia will speak answers)..."
-              className="w-full bg-white text-xs pl-3 pr-8 py-2 rounded-lg border border-[#D9CC86]/60 focus:outline-none focus:border-[#D83232]"
+              placeholder="Type an inquiry (Bass will speak answers)..."
+              className="portal-input w-full text-xs pl-3 pr-8 py-2"
             />
             {textInput && (
               <button
                 type="button"
                 onClick={() => sendTextMessage(textInput)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-[#D83232] hover:text-[#C62828] cursor-pointer"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-[#0057B8] hover:text-[#003B68] cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5" />
               </button>
@@ -585,11 +585,11 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
                 aria-label={isMicMuted ? 'Unmute microphone' : 'Mute microphone'}
                 className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors cursor-pointer border ${
                   isMicMuted
-                    ? 'bg-amber-100 text-amber-900 border-amber-300'
-                    : 'bg-white hover:bg-[#FAF8F5] text-[#292727] border-[#D9CC86]'
+                    ? 'bg-[#FFF4DE] text-[#A66A00] border-[#F5A623]/40'
+                    : 'bg-white hover:bg-[#F5F9FD] text-[#123B5D] border-[#D9E2EC]'
                 }`}
               >
-                {isMicMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                {isMicMuted ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4 text-[#0057B8]" />}
               </button>
             )}
 
@@ -605,18 +605,18 @@ export const VoiceConversationModal: React.FC<VoiceConversationModalProps> = ({
               aria-label={isSpeakerMuted ? 'Unmute audio' : 'Mute audio'}
               className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors cursor-pointer border ${
                 isSpeakerMuted
-                  ? 'bg-amber-100 text-amber-900 border-amber-300'
-                  : 'bg-white hover:bg-[#FAF8F5] text-[#292727] border-[#D9CC86]'
+                  ? 'bg-[#FFF4DE] text-[#A66A00] border-[#F5A623]/40'
+                  : 'bg-white hover:bg-[#F5F9FD] text-[#123B5D] border-[#D9E2EC]'
               }`}
             >
-              {isSpeakerMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+              {isSpeakerMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#0057B8]" />}
             </button>
 
-            {/* End Call / Close */}
+            {/* End Call / Close (Rule: Error/End button in #D64545) */}
             <button
               type="button"
               onClick={onClose}
-              className="px-3.5 py-2 rounded-lg bg-[#D83232] hover:bg-[#C62828] text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+              className="px-3.5 py-2 rounded-lg bg-[#D64545] hover:bg-[#b83b3b] text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
             >
               <PhoneOff className="w-3.5 h-3.5" />
               <span>End Call</span>

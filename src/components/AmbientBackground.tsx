@@ -6,20 +6,20 @@ export const AmbientBackground: React.FC = () => {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 overflow-hidden z-0 select-none"
     >
-      {/* Top-Right Soft Champagne Glow */}
+      {/* Top-Right Soft Blue Glow */}
       <div
-        className="ambient-blob-1 absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full"
+        className="ambient-blob-1 absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(201, 169, 110, 0.06) 0%, rgba(216, 189, 122, 0.02) 65%, transparent 80%)',
+          background: 'radial-gradient(circle, rgba(0, 87, 184, 0.04) 0%, rgba(234, 244, 255, 0.6) 60%, transparent 80%)',
           filter: 'blur(90px)',
         }}
       />
 
-      {/* Bottom-Left Soft Burgundy Glow */}
+      {/* Bottom-Left Soft Sky Glow */}
       <div
         className="ambient-blob-2 absolute -bottom-28 -left-28 w-[520px] h-[520px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(107, 31, 42, 0.04) 0%, rgba(69, 19, 27, 0.015) 60%, transparent 80%)',
+          background: 'radial-gradient(circle, rgba(0, 102, 204, 0.03) 0%, rgba(245, 249, 253, 0.6) 60%, transparent 80%)',
           filter: 'blur(100px)',
         }}
       />

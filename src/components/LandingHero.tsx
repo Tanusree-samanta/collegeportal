@@ -86,11 +86,11 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
   };
 
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col font-sans select-none text-[#1E293B]">
+    <div className="min-h-screen w-full bg-[#F7F9FC] flex flex-col font-sans select-none text-[#123B5D]">
       {/* ========================================================= */}
-      {/* 1. TOP NAVIGATION BAR                                      */}
+      {/* 1. TOP NAVIGATION BAR (DESIGN RULE 1)                    */}
       {/* ========================================================= */}
-      <header className="sticky top-0 z-40 w-full bg-white border-b border-gray-100 shadow-[0_1px_4px_rgba(0,0,0,0.04)] px-4 sm:px-6 lg:px-8 py-2.5 transition-all">
+      <header className="sticky top-0 z-40 w-full bg-white border-b border-[#D9E2EC] shadow-[0_1px_3px_rgba(0,59,104,0.04)] px-4 sm:px-6 lg:px-8 py-3 transition-all">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           {/* Brand Logo on Left */}
           <div className="flex items-center gap-3 shrink-0">
@@ -98,21 +98,21 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
           </div>
 
           {/* Center Navigation Links (Desktop) */}
-          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+          <nav className="hidden md:flex items-center gap-7 lg:gap-8">
             {/* Active Home with Blue Icon and Blue Underline */}
             <button
               type="button"
-              className="relative flex items-center gap-1.5 text-[14px] font-semibold text-[#0D52BD] pb-1 cursor-pointer"
+              className="relative flex items-center gap-1.5 text-[14px] font-semibold text-[#0057B8] pb-1 cursor-pointer"
             >
-              <Home className="w-4 h-4 text-[#0D52BD]" />
+              <Home className="w-4 h-4 text-[#0057B8]" />
               <span>Home</span>
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0D52BD] rounded-full" />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0057B8] rounded-full" />
             </button>
 
             <button
               type="button"
               onClick={() => setShowAboutModal(true)}
-              className="text-[14px] font-medium text-[#486581] hover:text-[#0D52BD] transition-colors cursor-pointer"
+              className="text-[14px] font-medium text-[#52708A] hover:text-[#0057B8] transition-colors cursor-pointer"
             >
               About TNU
             </button>
@@ -120,7 +120,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             <button
               type="button"
               onClick={() => setShowHelpModal(true)}
-              className="text-[14px] font-medium text-[#486581] hover:text-[#0D52BD] transition-colors cursor-pointer"
+              className="text-[14px] font-medium text-[#52708A] hover:text-[#0057B8] transition-colors cursor-pointer"
             >
               Help & Support
             </button>
@@ -133,26 +133,26 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               type="button"
               onClick={() => setShowSearchModal(true)}
               aria-label="Search Open Positions"
-              className="p-2 text-[#486581] hover:text-[#0D52BD] hover:bg-blue-50/70 rounded-full transition-colors cursor-pointer"
+              className="p-2 text-[#52708A] hover:text-[#0057B8] hover:bg-[#EAF4FF] rounded-full transition-colors cursor-pointer"
             >
               <Search className="w-4 h-4" />
             </button>
 
-            {/* Candidate Login Button */}
+            {/* Candidate Login Button (Rule 1: border #0057B8, text #0057B8, background: white) */}
             <button
               type="button"
               onClick={() => setShowCandidateLogin(true)}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg border border-[#0D52BD] text-[#0D52BD] hover:bg-blue-50/80 active:scale-95 transition-all text-xs sm:text-[13px] font-semibold cursor-pointer shadow-2xs"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg border border-[#0057B8] text-[#0057B8] bg-white hover:bg-[#EAF4FF] active:scale-95 transition-all text-xs sm:text-[13px] font-semibold cursor-pointer shadow-xs"
             >
               <User className="w-3.5 h-3.5" />
               <span>Candidate Login</span>
             </button>
 
-            {/* Staff Login Button */}
+            {/* Primary Staff Login Button (Rule 1: background: #0057B8, text: white, hover #003B68) */}
             <button
               type="button"
               onClick={() => setShowStaffLogin(true)}
-              className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg bg-[#0D52BD] hover:bg-[#0A4197] active:scale-95 text-white transition-all text-xs sm:text-[13px] font-semibold shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-lg bg-[#0057B8] hover:bg-[#003B68] active:scale-95 text-white transition-all text-xs sm:text-[13px] font-semibold shadow-xs cursor-pointer"
             >
               <User className="w-3.5 h-3.5" />
               <span>Staff Login</span>
@@ -162,9 +162,9 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
       </header>
 
       {/* ========================================================= */}
-      {/* 2. MAIN HERO SECTION (Campus Photo Background + Left copy + Bass) */}
+      {/* 2. MAIN HERO SECTION (Campus Photo + Left copy + Bass)    */}
       {/* ========================================================= */}
-      <section className="relative w-full overflow-hidden min-h-[480px] md:min-h-[540px] lg:min-h-[580px] flex items-center border-b border-gray-100 flex-1">
+      <section className="relative w-full overflow-hidden min-h-[480px] md:min-h-[540px] lg:min-h-[580px] flex items-center border-b border-[#D9E2EC] flex-1">
         {/* Full-width Panoramic Campus Photo Background */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <img
@@ -172,8 +172,8 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             alt="The Neotia University Campus Building"
             className="w-full h-full object-cover object-[center_42%]"
           />
-          {/* Left-to-right soft white gradient so text is ultra-sharp and the architecture stands out */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-35% sm:via-white/90 sm:via-45% md:via-white/75 md:via-55% to-white/20 to-90% pointer-events-none" />
+          {/* Subtle white/blue overlay according to Design Rule 2 */}
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 via-35% sm:via-white/90 sm:via-45% md:via-white/80 md:via-55% to-[#F5F9FD]/40 to-90% pointer-events-none" />
         </div>
 
         {/* Hero Content Container */}
@@ -185,24 +185,24 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               <TnuLogo className="h-10 sm:h-12" />
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[2.75rem] font-bold text-[#0D2A54] leading-[1.15] tracking-tight">
+            {/* Main Headline (Rule 3: Dark navy #003B68) */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[2.75rem] font-bold text-[#003B68] leading-[1.18] tracking-tight">
               Central Recruitment & <br className="hidden sm:inline" />
               CV Management Portal
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-sm sm:text-base md:text-lg text-[#334E68] leading-relaxed font-normal">
+            {/* Subtitle (Rule 3: Secondary text #52708A) */}
+            <p className="text-sm sm:text-base md:text-lg text-[#52708A] leading-relaxed font-normal">
               Apply for opportunities. Track your application. <br className="hidden sm:inline" />
               Build your career with TNU.
             </p>
 
-            {/* Primary Action Button: Career */}
+            {/* Primary Action Button: Career (Rule 4: background #0057B8, hover #003B68, radius 8px) */}
             <div className="flex items-center gap-3 pt-2">
               <button
                 type="button"
                 onClick={onNavigateToSchools}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-[#0D52BD] hover:bg-[#0A4197] active:scale-95 text-white font-semibold text-sm shadow-sm transition-all cursor-pointer whitespace-nowrap"
+                className="btn-primary-portal inline-flex items-center justify-center gap-2 px-6 py-3 text-sm cursor-pointer whitespace-nowrap"
               >
                 <Send className="w-4 h-4 -rotate-45" />
                 <span>Career</span>
@@ -210,35 +210,35 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             </div>
           </div>
 
-          {/* Right Column: AI Voice Assistant "Bass" Interactive Widget */}
+          {/* Right Column: AI Voice Assistant "Bass" Interactive Widget (Rule 15) */}
           <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center pt-4 lg:pt-0">
             <div className="relative flex flex-col items-center lg:items-end gap-3 max-w-sm sm:max-w-md w-full">
               {/* Row with Speech Bubble on Left and Robot Mascot on Right */}
               <div className="flex items-start gap-3 w-full justify-end">
-                {/* Speech Bubble Card */}
-                <div className="relative bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-blue-50/80 text-left max-w-[270px] sm:max-w-[290px] transition-all">
+                {/* Speech Bubble Card (White, subtle shadow, #D9E2EC border) */}
+                <div className="relative bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-[#D9E2EC] text-left max-w-[270px] sm:max-w-[290px] transition-all">
                   {/* Speech Bubble Arrow pointing to the robot */}
                   <div className="hidden sm:block absolute -right-2 top-8 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-l-8 border-l-white/95" />
 
                   <div className="flex items-center gap-1.5 mb-0.5">
-                    <span className="font-bold text-[14px] text-[#0D2A54]">
+                    <span className="font-bold text-[14px] text-[#003B68]">
                       Hi! I'm Bass
                     </span>
                     <span className="text-sm">👋</span>
                   </div>
 
-                  <p className="font-semibold text-xs text-[#0D52BD] mb-1.5">
+                  <p className="font-semibold text-xs text-[#0057B8] mb-1.5">
                     Your AI voice assistant.
                   </p>
 
-                  <p className="text-[11px] sm:text-xs text-gray-600 leading-relaxed mb-2 font-normal">
+                  <p className="text-[11px] sm:text-xs text-[#52708A] leading-relaxed mb-2 font-normal">
                     I can help you find vacancies, check your application status, answer your queries and more.
                   </p>
 
                   <button
                     type="button"
                     onClick={() => setIsVoiceModalOpen(true)}
-                    className="text-[12px] font-bold text-[#0D52BD] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                    className="text-[12px] font-semibold text-[#0057B8] hover:underline inline-flex items-center gap-1 cursor-pointer"
                   >
                     <span>Just say what you need!</span>
                   </button>
@@ -250,38 +250,38 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                   className="relative shrink-0 cursor-pointer group hover:scale-105 transition-transform"
                   title="Click to talk with Bass AI"
                 >
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white/90 p-1.5 shadow-lg border-2 border-blue-100 flex items-center justify-center overflow-hidden">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white p-1.5 shadow-md border-2 border-[#D9E2EC] flex items-center justify-center overflow-hidden">
                     <img
                       src={bassRobotImage}
                       alt="Bass - TNU AI Voice Assistant"
-                      className="w-full h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
+                      className="w-full h-full object-contain drop-shadow-xs group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
-                  {/* Subtle live indicator badge on avatar */}
-                  <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white ring-1 ring-emerald-300" />
+                  {/* Status indicator: Green #19B87A (Rule 15) */}
+                  <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-[#19B87A] border-2 border-white ring-1 ring-emerald-200" />
                 </div>
               </div>
 
               {/* Glowing Microphone Button + Equalizer Waves Row */}
               <div className="flex items-center justify-center lg:justify-end gap-3 w-full pr-2 sm:pr-8 py-1">
-                {/* Big Glowing Circular Blue Microphone Button */}
+                {/* Circular Blue Microphone Button (#0057B8) */}
                 <button
                   type="button"
                   onClick={() => setIsVoiceModalOpen(true)}
                   aria-label="Start Voice Conversation with Bass"
-                  className="relative w-14 h-14 rounded-full bg-gradient-to-tr from-[#0D52BD] via-[#1A67DD] to-[#2B79F5] text-white flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer ring-4 ring-blue-100/90 group"
+                  className="relative w-14 h-14 rounded-full bg-[#0057B8] hover:bg-[#003B68] text-white flex items-center justify-center shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer ring-4 ring-[#EAF4FF] group"
                 >
-                  <span className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-20 pointer-events-none" />
+                  <span className="absolute inset-0 rounded-full bg-[#0066CC] animate-ping opacity-25 pointer-events-none" />
                   <Mic className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
                 </button>
 
                 {/* Animated Sound Equalizer Waves */}
                 <div className="flex items-center gap-1 h-7">
-                  <span className="w-1 bg-[#0D52BD] rounded-full animate-[pulse_1s_ease-in-out_infinite] h-3" />
-                  <span className="w-1 bg-[#1A67DD] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] h-5" />
-                  <span className="w-1 bg-[#0D52BD] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] h-6" />
-                  <span className="w-1 bg-[#2B79F5] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] h-4" />
-                  <span className="w-1 bg-[#0D52BD] rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-2.5" />
+                  <span className="w-1 bg-[#0057B8] rounded-full animate-[pulse_1s_ease-in-out_infinite] h-3" />
+                  <span className="w-1 bg-[#0066CC] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] h-5" />
+                  <span className="w-1 bg-[#0057B8] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] h-6" />
+                  <span className="w-1 bg-[#0066CC] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] h-4" />
+                  <span className="w-1 bg-[#0057B8] rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-2.5" />
                 </div>
               </div>
 
@@ -290,10 +290,10 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                 onClick={() => {
                   setIsVoiceModalOpen(true);
                 }}
-                className="bg-white/95 backdrop-blur-md border border-gray-200/90 hover:border-[#0D52BD] rounded-xl px-4 py-2 shadow-sm hover:shadow-md transition-all cursor-pointer flex items-center gap-2 text-xs group"
+                className="bg-white border border-[#D9E2EC] hover:border-[#0057B8] rounded-xl px-4 py-2 shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center gap-2 text-xs group"
               >
-                <span className="text-[11px] text-gray-500 font-medium">Try saying...</span>
-                <div className="flex items-center gap-1.5 text-[#0D52BD] font-semibold group-hover:underline">
+                <span className="text-[11px] text-[#71869A] font-medium">Try saying...</span>
+                <div className="flex items-center gap-1.5 text-[#0057B8] font-semibold group-hover:underline">
                   <Mic className="w-3.5 h-3.5" />
                   <span>"Show available positions"</span>
                 </div>
@@ -307,33 +307,33 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
       {/* 3. MODALS (Candidate Login, Staff Login, About, Help, Voice) */}
       {/* ========================================================= */}
 
-      {/* Candidate Login Modal */}
+      {/* Candidate Login Modal (Rule 14) */}
       {showCandidateLogin && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-[#003B68]/30 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl relative border border-[#D9E2EC] animate-in fade-in zoom-in-95 duration-200">
             <button
               onClick={() => {
                 setShowCandidateLogin(false);
                 setCandidateLoginMsg('');
               }}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+              className="absolute top-4 right-4 text-[#71869A] hover:text-[#123B5D] p-1 rounded-lg"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0D52BD] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-[#EAF4FF] text-[#0057B8] flex items-center justify-center">
                 <User className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-[#0D2A54]">Candidate Portal Login</h3>
-                <p className="text-xs text-gray-500">Access your application dossier and track status</p>
+                <h3 className="text-lg font-bold text-[#003B68]">Candidate Portal Login</h3>
+                <p className="text-xs text-[#52708A]">Access your application dossier and track status</p>
               </div>
             </div>
 
             <form onSubmit={handleCandidateLogin} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-[#123B5D] mb-1">
                   Application ID or Registered Email
                 </label>
                 <input
@@ -342,12 +342,12 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                   placeholder="e.g. FAC-2026-8942 or name@domain.com"
                   value={candidateId}
                   onChange={(e) => setCandidateId(e.target.value)}
-                  className="w-full text-sm px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD] focus:ring-1 focus:ring-blue-100"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-[#123B5D] mb-1">
                   Password or Date of Birth (YYYY-MM-DD)
                 </label>
                 <input
@@ -356,39 +356,39 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                   placeholder="••••••••"
                   value={candidatePass}
                   onChange={(e) => setCandidatePass(e.target.value)}
-                  className="w-full text-sm px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD] focus:ring-1 focus:ring-blue-100"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               {candidateLoginMsg && (
-                <div className="p-2.5 bg-blue-50 border border-blue-200 text-xs font-semibold text-[#0D52BD] rounded-lg">
+                <div className="p-2.5 bg-[#E8F8F2] border border-[#19B87A]/30 text-xs font-semibold text-[#16865F] rounded-lg">
                   {candidateLoginMsg}
                 </div>
               )}
 
               <button
                 type="submit"
-                className="w-full py-2.5 bg-[#0D52BD] hover:bg-[#0A4197] text-white font-semibold rounded-xl text-sm shadow-xs transition-colors cursor-pointer"
+                className="btn-primary-portal w-full py-2.5 text-sm cursor-pointer"
               >
                 Sign In to Candidate Dashboard
               </button>
             </form>
 
-            <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+            <div className="mt-4 pt-3 border-t border-[#D9E2EC] flex items-center justify-between text-xs text-[#52708A]">
               <button
                 type="button"
                 onClick={() => {
                   setShowCandidateLogin(false);
                   onNavigateToSchools();
                 }}
-                className="text-[#0D52BD] hover:underline font-semibold"
+                className="text-[#0057B8] hover:underline font-semibold"
               >
                 New Applicant? Apply Now
               </button>
               <button
                 type="button"
                 onClick={() => setShowHelpModal(true)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-[#71869A] hover:text-[#123B5D]"
               >
                 Forgot Credentials?
               </button>
@@ -399,31 +399,31 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
 
       {/* Staff Login Modal */}
       {showStaffLogin && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-[#003B68]/30 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl relative border border-[#D9E2EC] animate-in fade-in zoom-in-95 duration-200">
             <button
               onClick={() => {
                 setShowStaffLogin(false);
                 setStaffLoginMsg('');
               }}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+              className="absolute top-4 right-4 text-[#71869A] hover:text-[#123B5D] p-1 rounded-lg"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0D52BD] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-[#EAF4FF] text-[#0057B8] flex items-center justify-center">
                 <Lock className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-[#0D2A54]">Staff & Screening Committee Login</h3>
-                <p className="text-xs text-gray-500">Authorized administrative and scrutiny desk</p>
+                <h3 className="text-lg font-bold text-[#003B68]">Staff & Screening Committee Login</h3>
+                <p className="text-xs text-[#52708A]">Authorized administrative and scrutiny desk</p>
               </div>
             </div>
 
             <form onSubmit={handleStaffLogin} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-[#123B5D] mb-1">
                   Institutional Staff ID or Email
                 </label>
                 <input
@@ -432,12 +432,12 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                   placeholder="e.g. dean.tech@tnu.ac.in"
                   value={staffId}
                   onChange={(e) => setStaffId(e.target.value)}
-                  className="w-full text-sm px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD] focus:ring-1 focus:ring-blue-100"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                <label className="block text-xs font-semibold text-[#123B5D] mb-1">
                   Institutional Password
                 </label>
                 <input
@@ -446,19 +446,19 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                   placeholder="••••••••"
                   value={staffPass}
                   onChange={(e) => setStaffPass(e.target.value)}
-                  className="w-full text-sm px-3.5 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD] focus:ring-1 focus:ring-blue-100"
+                  className="portal-input w-full text-sm px-3.5 py-2.5"
                 />
               </div>
 
               {staffLoginMsg && (
-                <div className="p-2.5 bg-blue-50 border border-blue-200 text-xs font-semibold text-[#0D52BD] rounded-lg">
+                <div className="p-2.5 bg-[#E8F8F2] border border-[#19B87A]/30 text-xs font-semibold text-[#16865F] rounded-lg">
                   {staffLoginMsg}
                 </div>
               )}
 
               <button
                 type="submit"
-                className="w-full py-2.5 bg-[#0D52BD] hover:bg-[#0A4197] text-white font-semibold rounded-xl text-sm shadow-xs transition-colors cursor-pointer"
+                className="btn-primary-portal w-full py-2.5 text-sm cursor-pointer"
               >
                 Access Recruitment Administration
               </button>
@@ -469,11 +469,11 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
 
       {/* About TNU Modal */}
       {showAboutModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative border border-gray-100 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-[#003B68]/30 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl relative border border-[#D9E2EC] max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setShowAboutModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+              className="absolute top-4 right-4 text-[#71869A] hover:text-[#123B5D] p-1 rounded-lg"
             >
               <X className="w-5 h-5" />
             </button>
@@ -482,22 +482,22 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               <TnuLogo className="h-10" />
             </div>
 
-            <h3 className="text-xl font-bold text-[#0D2A54] mb-2">About The Neotia University (TNU)</h3>
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
+            <h3 className="text-xl font-bold text-[#003B68] mb-2">About The Neotia University (TNU)</h3>
+            <p className="text-xs sm:text-sm text-[#52708A] leading-relaxed mb-4">
               The Neotia University is a premier multidisciplinary institution established by the West Bengal State Legislature and promoted by the distinguished Ambuja Neotia Group. Spread across a sprawling 50+ acre lush green campus in Sarisha, South 24 Parganas, TNU is committed to academic rigor, futuristic pedagogy, and high-impact scholarly research.
             </p>
 
-            <div className="space-y-2.5 text-xs text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4">
-              <div className="flex items-center gap-2 font-semibold text-[#0D2A54]">
-                <CheckCircle2 className="w-4 h-4 text-[#0D52BD]" />
+            <div className="space-y-2.5 text-xs text-[#123B5D] bg-[#F7F9FC] p-4 rounded-xl border border-[#D9E2EC] mb-4">
+              <div className="flex items-center gap-2 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-[#0057B8]" />
                 <span>Statutory UGC Recognition & AICTE / PCI / BCI / DG Shipping Approvals</span>
               </div>
-              <div className="flex items-center gap-2 font-semibold text-[#0D2A54]">
-                <CheckCircle2 className="w-4 h-4 text-[#0D52BD]" />
+              <div className="flex items-center gap-2 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-[#0057B8]" />
                 <span>Modern R&D Centres, Robotics & Nvidia AI Computing Clusters</span>
               </div>
-              <div className="flex items-center gap-2 font-semibold text-[#0D2A54]">
-                <CheckCircle2 className="w-4 h-4 text-[#0D52BD]" />
+              <div className="flex items-center gap-2 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-[#0057B8]" />
                 <span>7th CPC Scale implementation with faculty research grants</span>
               </div>
             </div>
@@ -506,7 +506,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               <button
                 type="button"
                 onClick={() => setShowAboutModal(false)}
-                className="px-4 py-2 bg-[#0D52BD] text-white rounded-lg text-xs font-semibold"
+                className="btn-primary-portal px-4 py-2 text-xs"
               >
                 Close
               </button>
@@ -517,31 +517,31 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
 
       {/* Help & Support Modal */}
       {showHelpModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-gray-100">
+        <div className="fixed inset-0 z-50 bg-[#003B68]/30 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl relative border border-[#D9E2EC]">
             <button
               onClick={() => setShowHelpModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+              className="absolute top-4 right-4 text-[#71869A] hover:text-[#123B5D] p-1 rounded-lg"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="text-lg font-bold text-[#0D2A54] mb-1">Help & Recruitment Support</h3>
-            <p className="text-xs text-gray-500 mb-4">
+            <h3 className="text-lg font-bold text-[#003B68] mb-1">Help & Recruitment Support</h3>
+            <p className="text-xs text-[#52708A] mb-4">
               Office of Academic Appointments & Faculty Affairs
             </p>
 
-            <div className="space-y-3 text-xs text-gray-700 bg-blue-50/50 p-4 rounded-xl border border-blue-100 mb-4">
+            <div className="space-y-3 text-xs text-[#123B5D] bg-[#F7F9FC] p-4 rounded-xl border border-[#D9E2EC] mb-4">
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#0D52BD]" />
+                <Mail className="w-4 h-4 text-[#0057B8]" />
                 <span>recruitment@tnu.ac.in</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#0D52BD]" />
+                <Phone className="w-4 h-4 text-[#0057B8]" />
                 <span>+91 33 2456 7890 / Ext. 204</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-[#0D52BD]" />
+                <ShieldCheck className="w-4 h-4 text-[#0066CC]" />
                 <span>Monday – Friday: 9:30 AM – 5:30 PM IST</span>
               </div>
             </div>
@@ -550,7 +550,7 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               <button
                 type="button"
                 onClick={() => setShowHelpModal(false)}
-                className="px-4 py-2 bg-[#0D52BD] text-white rounded-lg text-xs font-semibold"
+                className="btn-primary-portal px-4 py-2 text-xs"
               >
                 Done
               </button>
@@ -561,25 +561,25 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
 
       {/* Quick Search Modal */}
       {showSearchModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-start justify-center pt-20 p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-5 shadow-2xl relative border border-gray-100">
+        <div className="fixed inset-0 z-50 bg-[#003B68]/30 backdrop-blur-xs flex items-start justify-center pt-20 p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-5 shadow-xl relative border border-[#D9E2EC]">
             <button
               onClick={() => setShowSearchModal(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1 rounded-lg"
+              className="absolute top-4 right-4 text-[#71869A] hover:text-[#123B5D] p-1 rounded-lg"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <h4 className="text-base font-bold text-[#0D2A54] mb-3">Search Portal</h4>
+            <h4 className="text-base font-bold text-[#003B68] mb-3">Search Portal</h4>
             <div className="relative mb-4">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#71869A]" />
               <input
                 type="text"
                 autoFocus
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search computer science, AI, pharmacy, management..."
-                className="w-full text-sm pl-9 pr-3 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-[#0D52BD]"
+                className="portal-input w-full text-sm pl-9 pr-3 py-2.5"
               />
             </div>
 
@@ -592,13 +592,13 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
                     if (onSelectSchool) onSelectSchool(s);
                     else onNavigateToSchools();
                   }}
-                  className="p-3 rounded-lg hover:bg-blue-50/70 border border-gray-100 cursor-pointer flex items-center justify-between"
+                  className="p-3 rounded-lg hover:bg-[#F5F9FD] border border-[#D9E2EC] cursor-pointer flex items-center justify-between transition-colors"
                 >
                   <div>
-                    <h5 className="text-xs font-bold text-[#0D2A54]">{s.name}</h5>
-                    <p className="text-[11px] text-gray-500">{s.streamLabel}</p>
+                    <h5 className="text-xs font-bold text-[#003B68]">{s.name}</h5>
+                    <p className="text-[11px] text-[#52708A]">{s.streamLabel}</p>
                   </div>
-                  <span className="text-[10px] font-bold text-[#0D52BD] bg-blue-50 px-2 py-0.5 rounded-full">
+                  <span className="text-[10px] font-semibold text-[#0057B8] bg-[#EAF4FF] border border-[#BFDDF5] px-2 py-0.5 rounded-full">
                     {s.openPositionsCount || 0} Openings
                   </span>
                 </div>
