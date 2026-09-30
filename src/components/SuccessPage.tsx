@@ -9,18 +9,32 @@ import {
   Clock,
   FileCheck,
   ArrowRight,
+  ShieldCheck,
+  Sparkles,
+  LayoutDashboard,
+  Layers,
+  Building,
+  UserCheck,
 } from 'lucide-react';
-import { ApplicationFormData } from '../types';
+import { ApplicationFormData, VacantPosition, School } from '../types';
 
 interface SuccessPageProps {
   applicationId: string;
   formData: ApplicationFormData;
+  position?: VacantPosition | null;
+  school?: School | null;
+  onGoToCandidatePortal: () => void;
+  onTrackApplication: () => void;
   onBackToCareers: () => void;
 }
 
 export const SuccessPage: React.FC<SuccessPageProps> = ({
   applicationId,
   formData,
+  position,
+  school,
+  onGoToCandidatePortal,
+  onTrackApplication,
   onBackToCareers,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -42,170 +56,221 @@ export const SuccessPage: React.FC<SuccessPageProps> = ({
     }, 1200);
   };
 
+  const displayPosition =
+    position?.area || 'Assistant Professor — Computer Science & Engineering';
+  const displaySchool = school?.name || 'School of Technology';
+  const displayDept = position?.department || 'Department of Computer Science & Engineering';
+  const submissionDate = new Date().toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
   return (
     <div className="w-full min-h-[calc(100vh-64px)] pb-20 relative z-10 page-enter select-none bg-[#F7F9FC]">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 flex flex-col gap-6">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 flex flex-col gap-6">
         {/* Stage Progress Pill */}
-        <div className="bg-white p-2.5 px-4 rounded-full flex items-center justify-between shadow-xs border border-[#D9E2EC]">
+        <div className="bg-white p-3 px-5 rounded-2xl flex items-center justify-between shadow-xs border border-[#D9E2EC]">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#19B87A] animate-pulse" />
-            <span className="text-[11px] sm:text-[12px] text-[#52708A] font-semibold tracking-wider uppercase">
-              Stage 5 of 5 Complete
+            <span className="w-2.5 h-2.5 rounded-full bg-[#19B87A] animate-pulse" />
+            <span className="text-xs text-[#52708A] font-bold tracking-wider uppercase">
+              Recruitment Dossier Lodged
             </span>
           </div>
-          <div className="inline-flex items-center gap-1.5 bg-[#E8F8F2] text-[#16865F] border border-emerald-200 px-3 py-0.5 rounded-full text-[11px] sm:text-[12px] font-semibold tracking-wider uppercase">
+          <div className="inline-flex items-center gap-1.5 bg-[#E8F8F2] text-[#16865F] border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase">
             <CheckCircle className="w-3.5 h-3.5 text-[#19B87A]" />
-            <span>Dossier Lodged</span>
+            <span>Application Complete</span>
           </div>
         </div>
 
         {/* Centered Success Card */}
-        <div className="bg-white p-6 sm:p-8 flex flex-col items-center text-center shadow-md rounded-[18px] relative overflow-hidden border border-[#D9E2EC]">
-          {/* Top Blue Accent Stripe */}
-          <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#0057B8]" />
+        <div className="bg-white p-6 sm:p-10 flex flex-col items-center text-center shadow-md rounded-3xl relative overflow-hidden border border-[#D9E2EC]">
+          {/* Top Brand Accent Stripe */}
+          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#003B68] via-[#0057B8] to-[#0074E4]" />
 
-          {/* Success Icon with Soft Green Pop (Rule 10) */}
-          <div className="relative mb-4 mt-2">
-            <div className="w-20 h-20 rounded-full bg-[#E8F8F2] border border-emerald-200 flex items-center justify-center shadow-xs">
-              <div className="w-14 h-14 rounded-full bg-[#19B87A] text-white flex items-center justify-center shadow-sm">
-                <Check className="w-8 h-8 stroke-[3]" />
+          {/* Success Check Icon */}
+          <div className="relative mb-5 mt-2">
+            <div className="w-24 h-24 rounded-full bg-[#E8F8F2] border-2 border-emerald-200 flex items-center justify-center shadow-inner">
+              <div className="w-16 h-16 rounded-full bg-[#19B87A] text-white flex items-center justify-center shadow-md">
+                <Check className="w-9 h-9 stroke-[3]" />
               </div>
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#EAF4FF] text-[#0057B8] border border-[#BFDDF5] rounded-full mb-3 shadow-2xs">
-            <FileCheck className="w-3.5 h-3.5 text-[#0057B8]" />
-            <span className="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider">
-              Office of Academic Appointments & Faculty Affairs
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 bg-[#EAF4FF] text-[#0057B8] border border-[#BFDDF5] rounded-full mb-3 shadow-2xs">
+            <ShieldCheck className="w-4 h-4 text-[#0057B8]" />
+            <span className="text-[11px] font-bold uppercase tracking-wider">
+              The Neotia University • Office of Academic Appointments
             </span>
           </div>
 
-          {/* Heading (Rule 3: Dark navy #003B68) */}
-          <h1 className="text-2xl sm:text-3xl text-[#003B68] font-bold mb-2 tracking-tight">
+          {/* Main Headings */}
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl text-[#003B68] font-bold mb-2 tracking-tight">
             Application Submitted Successfully
           </h1>
-          <p className="text-[15px] text-[#52708A] max-w-md leading-relaxed mb-6 font-normal">
-            Thank you for submitting your faculty candidature. Your comprehensive academic portfolio is registered with the University Selection Secretariat.
+          <p className="text-sm sm:text-base text-[#52708A] max-w-xl leading-relaxed mb-6 font-normal">
+            Thank you for applying. Your faculty application has been officially registered with The Neotia University Selection Secretariat.
           </p>
 
-          {/* Official ID Block */}
-          <div className="w-full bg-[#F5F9FD] border border-[#D9E2EC] p-4 rounded-xl flex items-center justify-between shadow-2xs mb-5">
-            <div className="flex flex-col text-left">
-              <span className="text-[11px] text-[#71869A] font-semibold uppercase tracking-wider">
-                Official Application Tracking ID
-              </span>
-              <span className="text-xl sm:text-2xl font-bold text-[#0057B8]">
-                {applicationId}
-              </span>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleCopyId}
-              className="btn-secondary-portal flex items-center gap-1.5 px-3.5 py-2 text-[13px] cursor-pointer shadow-2xs"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-[#16865F]" />
-                  <span className="text-[#16865F]">Copied!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5 text-[#0057B8]" />
-                  <span>Copy ID</span>
-                </>
-              )}
-            </button>
-          </div>
-
-          {/* Dossier Confirmation Details Grid */}
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-xs mb-5">
-            <div className="bg-[#F7F9FC] border border-[#D9E2EC] p-3 rounded-xl shadow-2xs flex flex-col">
-              <span className="text-[11px] text-[#71869A] uppercase tracking-wider font-semibold">
-                Position
-              </span>
-              <span className="font-semibold text-[#123B5D] text-[14px] mt-0.5">
-                Assistant / Associate Professor
-              </span>
-            </div>
-
-            <div className="bg-[#F7F9FC] border border-[#D9E2EC] p-3 rounded-xl shadow-2xs flex flex-col">
-              <span className="text-[11px] text-[#71869A] uppercase tracking-wider font-semibold">
-                School
-              </span>
-              <span className="font-semibold text-[#123B5D] text-[14px] mt-0.5">
-                School of Technology
-              </span>
-            </div>
-
-            <div className="bg-[#F7F9FC] border border-[#D9E2EC] p-3 rounded-xl shadow-2xs flex flex-col">
-              <span className="text-[11px] text-[#71869A] uppercase tracking-wider font-semibold">
-                Discipline Area
-              </span>
-              <span className="font-medium text-[#123B5D] text-[13px] mt-0.5">
-                Artificial Intelligence & Machine Learning
-              </span>
-            </div>
-
-            <div className="bg-[#F7F9FC] border border-[#D9E2EC] p-3 rounded-xl shadow-2xs flex flex-col">
-              <span className="text-[11px] text-[#71869A] uppercase tracking-wider font-semibold">
-                Submission Verification
-              </span>
-              <div className="flex items-center gap-1.5 font-medium text-[#123B5D] text-[13px] mt-0.5">
-                <Clock className="w-3.5 h-3.5 text-[#0057B8]" />
-                <span>March 2026 • Dossier Verified</span>
+          {/* CANDIDATE PORTAL ACTIVATED CALLOUT */}
+          <div className="w-full bg-[#F5F9FD] border-2 border-[#BFDDF5] rounded-2xl p-4 sm:p-5 text-left mb-6 shadow-sm relative overflow-hidden">
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-[#0057B8] text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5">
+                <UserCheck className="w-5 h-5" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0057B8] bg-[#EAF4FF] px-2.5 py-0.5 rounded-full border border-[#BFDDF5]">
+                    CANDIDATE PORTAL ACTIVATED
+                  </span>
+                  <span className="text-xs text-[#16865F] font-bold flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" />
+                    Session Linked to Application ID
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-[#123B5D] mt-1.5 leading-relaxed">
+                  Your personal <strong>Candidate Portal</strong> is now active. You do <strong>not</strong> need to apply again—you can now monitor your complete recruitment journey from HR screening to statutory committee interview, letter of intent (LOI), and joining formalities.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Current Dossier Status */}
-          <div className="w-full bg-[#EAF4FF] border border-[#BFDDF5] rounded-xl p-3.5 flex items-start gap-3 shadow-2xs text-left mb-6">
-            <FileCheck className="w-4 h-4 text-[#0057B8] shrink-0 mt-0.5" />
-            <div className="flex flex-col min-w-0">
-              <span className="text-[11px] font-bold text-[#0057B8] uppercase tracking-wider">
-                Current Dossier Status
-              </span>
-              <span className="text-[13px] font-bold text-[#003B68]">
-                Under Initial Academic Screening by Selection Secretariat
-              </span>
-              <span className="text-[12px] text-[#52708A] mt-0.5 font-medium">
-                Candidate registered: {formData.firstName} {formData.lastName} ({formData.email})
+          {/* Official Application Summary Table / Block */}
+          <div className="w-full bg-[#F7F9FC] border border-[#D9E2EC] rounded-2xl p-5 text-left mb-6 space-y-3.5 shadow-2xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9E2EC] gap-2">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#71869A] block">
+                  Application ID
+                </span>
+                <span className="text-xl sm:text-2xl font-bold text-[#0057B8]">
+                  {applicationId}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleCopyId}
+                className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-[#EAF4FF] text-[#0057B8] text-xs font-bold border border-[#BFDDF5] shadow-2xs cursor-pointer transition-all active:scale-95"
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-[#16865F]" />
+                    <span className="text-[#16865F]">Copied to Clipboard</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>Copy Application ID</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
+              <div className="bg-white p-3 rounded-xl border border-[#D9E2EC]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#71869A] block">
+                  Position Applied For
+                </span>
+                <span className="font-bold text-[#123B5D] text-sm mt-0.5 block leading-snug">
+                  {displayPosition}
+                </span>
+              </div>
+
+              <div className="bg-white p-3 rounded-xl border border-[#D9E2EC]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#71869A] block">
+                  School / Department
+                </span>
+                <span className="font-bold text-[#123B5D] text-sm mt-0.5 block leading-snug">
+                  {displaySchool}
+                </span>
+                <span className="text-[#52708A] text-[11px] block mt-0.5">{displayDept}</span>
+              </div>
+
+              <div className="bg-white p-3 rounded-xl border border-[#D9E2EC]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#71869A] block">
+                  Submission Date
+                </span>
+                <span className="font-bold text-[#123B5D] text-sm mt-0.5 flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-[#0057B8]" />
+                  {submissionDate}
+                </span>
+              </div>
+
+              <div className="bg-white p-3 rounded-xl border border-[#D9E2EC]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#71869A] block">
+                  Current Application Status
+                </span>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EAF4FF] text-[#0057B8] border border-[#BFDDF5]">
+                    Application Submitted
+                  </span>
+                  <span className="text-[11px] text-[#16865F] font-semibold">Stage 1 Active</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 text-[11px] text-[#52708A] flex items-center gap-2">
+              <Mail className="w-3.5 h-3.5 text-[#0057B8]" />
+              <span>
+                Registered applicant email: <strong>{formData.email}</strong> • Mobile: <strong>{formData.mobile}</strong>
               </span>
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* PRIMARY PROMINENT CALL TO ACTIONS */}
           <div className="w-full flex flex-col gap-3">
+            {/* 1. GO TO CANDIDATE PORTAL (PROMINENT PRIMARY BUTTON) */}
             <button
               type="button"
-              onClick={handleDownloadPdf}
-              className="btn-secondary-portal w-full h-11 text-sm font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+              onClick={onGoToCandidatePortal}
+              className="w-full py-4 px-6 rounded-2xl bg-[#0057B8] hover:bg-[#003B68] text-white text-base sm:text-lg font-bold flex items-center justify-center gap-3 shadow-md hover:shadow-lg transition-all cursor-pointer border border-[#003B68] active:scale-[0.99] group"
             >
-              <Download className="w-4 h-4 text-[#0057B8]" />
-              <span>
-                {downloading
-                  ? 'Generating Dossier PDF...'
-                  : downloaded
-                  ? '✓ Application PDF Downloaded'
-                  : 'Download Application Copy (PDF)'}
-              </span>
+              <LayoutDashboard className="w-5 h-5 text-white" />
+              <span className="tracking-wide">GO TO CANDIDATE PORTAL</span>
+              <ArrowRight className="w-5 h-5 text-white transition-transform duration-200 group-hover:translate-x-1.5" />
             </button>
 
+            {/* 2. Track Application button */}
             <button
               type="button"
-              onClick={onBackToCareers}
-              className="btn-primary-portal w-full h-12 text-sm font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-sm group"
+              onClick={onTrackApplication}
+              className="w-full py-3 px-6 rounded-2xl bg-white hover:bg-[#EAF4FF] text-[#0057B8] text-sm font-bold flex items-center justify-center gap-2 border-2 border-[#0057B8] shadow-xs transition-all cursor-pointer active:scale-[0.99]"
             >
-              <Compass className="w-4 h-4" />
-              <span>Back to Career Opportunities</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+              <Layers className="w-4 h-4" />
+              <span>Track Application (10-Stage Lifecycle)</span>
             </button>
+
+            {/* Secondary actions */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-1">
+              <button
+                type="button"
+                onClick={handleDownloadPdf}
+                className="py-2.5 px-4 rounded-xl bg-white hover:bg-[#F7F9FC] text-[#52708A] hover:text-[#0057B8] text-xs font-semibold flex items-center justify-center gap-1.5 border border-[#D9E2EC] cursor-pointer"
+              >
+                <Download className="w-3.5 h-3.5 text-[#0057B8]" />
+                <span>
+                  {downloading
+                    ? 'Generating Dossier PDF...'
+                    : downloaded
+                    ? '✓ Application PDF Saved'
+                    : 'Download Application Copy (PDF)'}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={onBackToCareers}
+                className="py-2.5 px-4 rounded-xl bg-white hover:bg-[#F7F9FC] text-[#52708A] hover:text-[#0057B8] text-xs font-semibold flex items-center justify-center gap-1.5 border border-[#D9E2EC] cursor-pointer"
+              >
+                <Compass className="w-3.5 h-3.5" />
+                <span>Back to Career Opportunities</span>
+              </button>
+            </div>
           </div>
 
-          {/* Confirmation Notice */}
-          <div className="flex items-center justify-center gap-2 text-center text-[13px] text-[#52708A] mt-5 font-normal">
-            <Mail className="w-3.5 h-3.5 text-[#0057B8]" />
-            <span>Formal acknowledgment has been dispatched to applicant's registered email address.</span>
+          {/* Official Footer Note */}
+          <div className="flex items-center justify-center gap-2 text-center text-xs text-[#71869A] mt-6 font-normal">
+            <Building className="w-3.5 h-3.5 text-[#0057B8]" />
+            <span>The Neotia University Statutory Selection Secretariat • Recruitment Cycle 2026-27</span>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ interface HeaderProps {
   badge?: string;
   onBack?: () => void;
   showBack?: boolean;
+  onOpenCandidatePortal?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   badge = 'HIRING 2026-27',
   onBack,
   showBack = false,
+  onOpenCandidatePortal,
 }) => {
   const [showHelpModal, setShowHelpModal] = useState(false);
 
@@ -69,12 +71,14 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="hidden md:inline">Helpline</span>
             </button>
 
-            <div
-              className="w-8 h-8 rounded-full bg-[#0057B8] text-white flex items-center justify-center shadow-xs cursor-default ring-2 ring-[#EAF4FF]"
-              title="Academic Applicant Portal"
+            <button
+              type="button"
+              onClick={onOpenCandidatePortal}
+              className="w-8 h-8 rounded-full bg-[#0057B8] hover:bg-[#003B68] text-white flex items-center justify-center shadow-xs cursor-pointer ring-2 ring-[#EAF4FF] transition-all"
+              title="Open Candidate Secretariat & CV Portal"
             >
               <User className="w-3.5 h-3.5" />
-            </div>
+            </button>
           </div>
         </div>
       </header>

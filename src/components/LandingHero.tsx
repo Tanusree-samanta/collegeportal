@@ -24,11 +24,13 @@ interface LandingHeroProps {
   onNavigateToSchools: () => void;
   onApplyNow?: () => void;
   onSelectSchool?: (school: School) => void;
+  onOpenCandidatePortal?: () => void;
 }
 
 export const LandingHero: React.FC<LandingHeroProps> = ({
   onNavigateToSchools,
   onSelectSchool,
+  onOpenCandidatePortal,
 }) => {
   // Modal states
   const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
@@ -69,8 +71,11 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
       setTimeout(() => {
         setShowCandidateLogin(false);
         setCandidateLoginMsg('');
-      }, 1200);
-    }, 900);
+        if (onOpenCandidatePortal) {
+          onOpenCandidatePortal();
+        }
+      }, 700);
+    }, 600);
   };
 
   const handleStaffLogin = (e: React.FormEvent) => {
@@ -125,39 +130,6 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
               Help & Support
             </button>
           </nav>
-
-          {/* Right Controls: Search + Candidate Login + Staff Login */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            {/* Search Button */}
-            <button
-              type="button"
-              onClick={() => setShowSearchModal(true)}
-              aria-label="Search Open Positions"
-              className="p-2 text-[#52708A] hover:text-[#0057B8] hover:bg-[#EAF4FF] rounded-full transition-colors cursor-pointer"
-            >
-              <Search className="w-4 h-4" />
-            </button>
-
-            {/* Candidate Login Button (Rule 1: border #0057B8, text #0057B8, background: white) */}
-            <button
-              type="button"
-              onClick={() => setShowCandidateLogin(true)}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-lg border border-[#0057B8] text-[#0057B8] bg-white hover:bg-[#EAF4FF] active:scale-95 transition-all text-xs sm:text-[13px] font-semibold cursor-pointer shadow-xs"
-            >
-              <User className="w-3.5 h-3.5" />
-              <span>Candidate Login</span>
-            </button>
-
-            {/* Primary Staff Login Button (Rule 1: background: #0057B8, text: white, hover #003B68) */}
-            <button
-              type="button"
-              onClick={() => setShowStaffLogin(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-lg bg-[#0057B8] hover:bg-[#003B68] active:scale-95 text-white transition-all text-xs sm:text-[13px] font-semibold shadow-xs cursor-pointer"
-            >
-              <User className="w-3.5 h-3.5" />
-              <span>Staff Login</span>
-            </button>
-          </div>
         </div>
       </header>
 

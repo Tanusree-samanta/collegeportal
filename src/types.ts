@@ -44,6 +44,19 @@ export interface VacantPosition {
   preferredSkills: string[];
   description: string;
   isFeatured?: boolean;
+  // Candidate module extensions
+  positionType?: 'Faculty' | 'Lab Technician' | 'Non-Faculty';
+  experienceRequired?: string;
+  minQualification?: string;
+  salaryScale?: string;
+  responsibilities?: string[];
+  eligibilityNorms?: string[];
+  requiredDocuments?: string[];
+  importantDates?: {
+    announced: string;
+    deadline: string;
+    interviewTentative?: string;
+  };
 }
 
 export interface Qualification {
@@ -82,6 +95,9 @@ export interface EmploymentRecord {
   description: string;
   focus: string;
   isCurrent?: boolean;
+  startDate?: string;
+  endDate?: string;
+  employmentType?: string;
 }
 
 export interface ReferenceContact {
@@ -160,4 +176,170 @@ export interface ApplicationFormData {
 
   // Declaration
   declarationAccepted: boolean;
+}
+
+// =========================================================
+// CANDIDATE MODULE TYPES & MODELS
+// =========================================================
+
+export interface CandidateProfile {
+  id: string;
+  fullName: string;
+  email: string;
+  mobile: string;
+  avatarInitials: string;
+  currentDesignation?: string;
+  currentOrganization?: string;
+  highestDegree?: string;
+  totalExperienceYears?: string;
+  location?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  address?: string;
+  pinCode?: string;
+}
+
+export interface CandidateDocument {
+  id: string;
+  name: string;
+  type: 'cv' | 'degree' | 'experience' | 'id_proof' | 'other';
+  required: boolean;
+  fileName: string;
+  fileSize: string;
+  status: 'uploaded' | 'pending' | 'under_review' | 'verified' | 'rejected';
+  uploadedDate: string;
+  version: string;
+  rejectionReason?: string;
+}
+
+export interface InterviewDetails {
+  round:
+    | 'Technical Round'
+    | 'HR Round'
+    | 'Selection Committee Meeting'
+    | 'Management Round'
+    | 'Selection Committee Technical Interview'
+    | string;
+  date: string;
+  time: string;
+  mode: 'Online' | 'Offline';
+  venue: string;
+  instructions: string;
+  calendarLink?: string;
+  status: 'Scheduled' | 'Completed' | 'Rescheduled';
+}
+
+export interface LetterOfIntent {
+  refNumber: string;
+  position: string;
+  schoolName: string;
+  candidateName: string;
+  issueDate: string;
+  acceptanceDeadline: string;
+  basicPay: string;
+  scale: string;
+  status: 'Pending' | 'Accepted' | 'Declined';
+  acceptedDate?: string;
+  declineReason?: string;
+}
+
+export interface NoticePeriodDetails {
+  currentOrganization: string;
+  currentlyEmployed: boolean;
+  noticePeriodDays: number;
+  lastWorkingDate: string;
+  expectedJoiningDate: string;
+  submittedAt?: string;
+}
+
+export interface VerificationItem {
+  id: string;
+  docName: string;
+  status: 'Pending' | 'Uploaded' | 'Under Verification' | 'Verified' | 'Rejected';
+  remarks?: string;
+  lastUpdated: string;
+}
+
+export interface PreOnboardingTask {
+  id: string;
+  label: string;
+  isCompleted: boolean;
+  completedAt?: string;
+}
+
+export interface ApplicationTimelineStage {
+  stageKey:
+    | 'submitted'
+    | 'received'
+    | 'screening'
+    | 'shortlisted'
+    | 'interview'
+    | 'selection'
+    | 'loi_issued'
+    | 'loi_accepted'
+    | 'verification'
+    | 'joining';
+  label: string;
+  date: string;
+  description: string;
+  status: 'COMPLETED' | 'CURRENT' | 'PENDING';
+}
+
+export interface CandidateApplication {
+  id: string;
+  vacancyId: string;
+  jobTitle: string;
+  schoolName: string;
+  department: string;
+  positionType: 'Faculty' | 'Lab Technician' | 'Non-Faculty';
+  location: string;
+  appliedDate: string;
+  lastUpdated: string;
+  applicationStatus:
+    | 'Submitted'
+    | 'Under Review'
+    | 'Shortlisted'
+    | 'Interview Scheduled'
+    | 'Selected'
+    | 'LOI Issued'
+    | 'LOI Accepted'
+    | 'Verification'
+    | 'Yet to Join'
+    | 'Joined'
+    | 'Not Selected';
+  interviewStatus: 'Not Scheduled' | 'Scheduled' | 'Completed' | 'Not Required';
+  selectionStatus: 'Pending' | 'Selected' | 'Not Selected';
+  loiStatus: 'Not Issued' | 'Issued' | 'Accepted' | 'Declined';
+  verificationStatus: 'Not Started' | 'Under Verification' | 'In Progress' | 'Verified' | 'Action Required' | 'Rejected — Re-upload Required';
+  joiningStatus: 'Not Started' | 'Notice Period Active' | 'Notice Period Submitted' | 'Pre-Onboarding' | 'Yet to Join' | 'Joined';
+  timeline: ApplicationTimelineStage[];
+  interviewDetails?: InterviewDetails;
+  loiDetails?: LetterOfIntent;
+  noticePeriodDetails?: NoticePeriodDetails;
+  verificationChecklist: VerificationItem[];
+  preOnboardingTasks: PreOnboardingTask[];
+  formDataSnapshot?: Partial<ApplicationFormData>;
+}
+
+export interface DraftApplication {
+  id: string;
+  vacancyId: string;
+  jobTitle: string;
+  schoolName: string;
+  positionType: string;
+  currentStep: number;
+  totalSteps: number;
+  lastSaved: string;
+  formData: Partial<ApplicationFormData>;
+}
+
+export interface CandidateNotification {
+  id: string;
+  type: 'status' | 'interview' | 'loi' | 'document' | 'general';
+  title: string;
+  message: string;
+  timestamp: string;
+  read: boolean;
+  actionLabel?: string;
+  actionTarget?: string;
 }
