@@ -4,7 +4,6 @@ import {
   Search,
   User,
   Send,
-  Mic,
   X,
   Lock,
   Mail,
@@ -14,10 +13,8 @@ import {
 } from 'lucide-react';
 import { TnuLogo } from './TnuLogo';
 import { Footer } from './Footer';
-import { VoiceConversationModal } from './VoiceConversationModal';
 import { SCHOOLS_DATA } from '../data/schools';
 import { School } from '../types';
-import bassRobotImage from '../assets/images/bass_robot.jpg';
 import tnuCampusPhoto from '../assets/images/tnu_campus_building.jpg';
 
 interface LandingHeroProps {
@@ -33,7 +30,6 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
   onOpenCandidatePortal,
 }) => {
   // Modal states
-  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
   const [showCandidateLogin, setShowCandidateLogin] = useState(false);
   const [showStaffLogin, setShowStaffLogin] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
@@ -149,12 +145,17 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
         </div>
 
         {/* Hero Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Left Column: Heading, Subtitle, Primary Action Button */}
-          <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-5 max-w-2xl">
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 md:py-16 flex flex-col items-start justify-center">
+          <div className="flex flex-col gap-4 sm:gap-5 max-w-2xl">
             {/* Top Logo / Brand Identity inside Hero */}
             <div className="flex items-center gap-2">
               <TnuLogo className="h-10 sm:h-12" />
+            </div>
+
+            {/* Cycle Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EAF4FF] text-[#0057B8] border border-[#BFDDF5] text-xs font-semibold self-start shadow-2xs">
+              <span className="w-2 h-2 rounded-full bg-[#19B87A] animate-pulse" />
+              <span>FACULTY RECRUITMENT 2026–2027 • OPEN CYCLE</span>
             </div>
 
             {/* Main Headline (Rule 3: Dark navy #003B68) */}
@@ -165,110 +166,34 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
 
             {/* Subtitle (Rule 3: Secondary text #52708A) */}
             <p className="text-sm sm:text-base md:text-lg text-[#52708A] leading-relaxed font-normal">
-              Apply for opportunities. Track your application. <br className="hidden sm:inline" />
-              Build your career with TNU.
+              Apply for opportunities across our 12 academic schools. Track your application journey from screening to appointment. Build your academic career with TNU.
             </p>
 
             {/* Primary Action Button: Career (Rule 4: background #0057B8, hover #003B68, radius 8px) */}
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 type="button"
                 onClick={onNavigateToSchools}
-                className="btn-primary-portal inline-flex items-center justify-center gap-2 px-6 py-3 text-sm cursor-pointer whitespace-nowrap"
+                className="btn-primary-portal inline-flex items-center justify-center gap-2 px-7 py-3 text-sm cursor-pointer whitespace-nowrap shadow-md hover:shadow-lg transition-all"
               >
                 <Send className="w-4 h-4 -rotate-45" />
-                <span>Career</span>
+                <span>Explore Careers & Vacancies</span>
               </button>
             </div>
-          </div>
 
-          {/* Right Column: AI Voice Assistant "Bass" Interactive Widget (Rule 15) */}
-          <div className="lg:col-span-5 flex flex-col items-center lg:items-end justify-center pt-4 lg:pt-0">
-            <div className="relative flex flex-col items-center lg:items-end gap-3 max-w-sm sm:max-w-md w-full">
-              {/* Row with Speech Bubble on Left and Robot Mascot on Right */}
-              <div className="flex items-start gap-3 w-full justify-end">
-                {/* Speech Bubble Card (White, subtle shadow, #D9E2EC border) */}
-                <div className="relative bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-[#D9E2EC] text-left max-w-[270px] sm:max-w-[290px] transition-all">
-                  {/* Speech Bubble Arrow pointing to the robot */}
-                  <div className="hidden sm:block absolute -right-2 top-8 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-l-8 border-l-white/95" />
-
-                  <div className="flex items-center gap-1.5 mb-0.5">
-                    <span className="font-bold text-[14px] text-[#003B68]">
-                      Hi! I'm Bass
-                    </span>
-                    <span className="text-sm">👋</span>
-                  </div>
-
-                  <p className="font-semibold text-xs text-[#0057B8] mb-1.5">
-                    Your AI voice assistant.
-                  </p>
-
-                  <p className="text-[11px] sm:text-xs text-[#52708A] leading-relaxed mb-2 font-normal">
-                    I can help you find vacancies, check your application status, answer your queries and more.
-                  </p>
-
-                  <button
-                    type="button"
-                    onClick={() => setIsVoiceModalOpen(true)}
-                    className="text-[12px] font-semibold text-[#0057B8] hover:underline inline-flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>Just say what you need!</span>
-                  </button>
-                </div>
-
-                {/* Robot Mascot: Bass */}
-                <div
-                  onClick={() => setIsVoiceModalOpen(true)}
-                  className="relative shrink-0 cursor-pointer group hover:scale-105 transition-transform"
-                  title="Click to talk with Bass AI"
-                >
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white p-1.5 shadow-md border-2 border-[#D9E2EC] flex items-center justify-center overflow-hidden">
-                    <img
-                      src={bassRobotImage}
-                      alt="Bass - TNU AI Voice Assistant"
-                      className="w-full h-full object-contain drop-shadow-xs group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                  {/* Status indicator: Green #19B87A (Rule 15) */}
-                  <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-[#19B87A] border-2 border-white ring-1 ring-emerald-200" />
-                </div>
+            {/* Institutional Trust Highlights */}
+            <div className="flex flex-wrap items-center gap-4 pt-4 text-xs text-[#52708A] border-t border-[#D9E2EC]/80 mt-2">
+              <div className="flex items-center gap-1.5 font-medium">
+                <ShieldCheck className="w-4 h-4 text-[#0057B8]" />
+                <span>UGC / AICTE Norms Approved</span>
               </div>
-
-              {/* Glowing Microphone Button + Equalizer Waves Row */}
-              <div className="flex items-center justify-center lg:justify-end gap-3 w-full pr-2 sm:pr-8 py-1">
-                {/* Circular Blue Microphone Button (#0057B8) */}
-                <button
-                  type="button"
-                  onClick={() => setIsVoiceModalOpen(true)}
-                  aria-label="Start Voice Conversation with Bass"
-                  className="relative w-14 h-14 rounded-full bg-[#0057B8] hover:bg-[#003B68] text-white flex items-center justify-center shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer ring-4 ring-[#EAF4FF] group"
-                >
-                  <span className="absolute inset-0 rounded-full bg-[#0066CC] animate-ping opacity-25 pointer-events-none" />
-                  <Mic className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
-                </button>
-
-                {/* Animated Sound Equalizer Waves */}
-                <div className="flex items-center gap-1 h-7">
-                  <span className="w-1 bg-[#0057B8] rounded-full animate-[pulse_1s_ease-in-out_infinite] h-3" />
-                  <span className="w-1 bg-[#0066CC] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] h-5" />
-                  <span className="w-1 bg-[#0057B8] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] h-6" />
-                  <span className="w-1 bg-[#0066CC] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] h-4" />
-                  <span className="w-1 bg-[#0057B8] rounded-full animate-[pulse_0.9s_ease-in-out_infinite] h-2.5" />
-                </div>
+              <div className="flex items-center gap-1.5 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-[#19B87A]" />
+                <span>7th CPC Professorial Pay Scales</span>
               </div>
-
-              {/* "Try saying..." Prompt Card */}
-              <div
-                onClick={() => {
-                  setIsVoiceModalOpen(true);
-                }}
-                className="bg-white border border-[#D9E2EC] hover:border-[#0057B8] rounded-xl px-4 py-2 shadow-xs hover:shadow-sm transition-all cursor-pointer flex items-center gap-2 text-xs group"
-              >
-                <span className="text-[11px] text-[#71869A] font-medium">Try saying...</span>
-                <div className="flex items-center gap-1.5 text-[#0057B8] font-semibold group-hover:underline">
-                  <Mic className="w-3.5 h-3.5" />
-                  <span>"Show available positions"</span>
-                </div>
+              <div className="flex items-center gap-1.5 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0057B8]" />
+                <span>12 Diverse Academic Schools</span>
               </div>
             </div>
           </div>
@@ -579,12 +504,6 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
           </div>
         </div>
       )}
-
-      {/* Live AI Voice Assistant Modal with Bass */}
-      <VoiceConversationModal
-        isOpen={isVoiceModalOpen}
-        onClose={() => setIsVoiceModalOpen(false)}
-      />
 
       {/* ========================================================= */}
       {/* 4. FOOTER                                                 */}
